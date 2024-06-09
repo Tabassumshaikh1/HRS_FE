@@ -1,11 +1,10 @@
-import React from "react";
-import logo from "./logo.svg";
+
 import "./App.css";
-import { Button } from "@mui/material";
-import Login from "./pages/Login";
+import Body from "./pages/Body";
+
 
 function App() {
-  return <Login />;
+  return <Body />;
 }
 
 export default App;
