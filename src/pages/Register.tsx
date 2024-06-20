@@ -1,4 +1,4 @@
-import { Container, Button, Checkbox } from "@mui/material";
+import { Container, Button } from "@mui/material";
 import { BreakPoints } from "../data/app.constant";
 import { useState } from "react";
 import FormControl from "@mui/material/FormControl";
@@ -9,11 +9,14 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SignUpSchema } from "../schemas/auth.schema";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const initialValues = {
+  file: "",
   name: "",
   userName: "",
   email: "",
@@ -22,10 +25,18 @@ const initialValues = {
 };
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+  // const [error, setError] = useState(null);
 
   const handleClickShowPassword = () => {
     setShowPassword((show) => !show);
+  };
+
+  const change = (e: any) => {
+    console.log(e.target.files[0]);
   };
 
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } = useFormik({
@@ -34,6 +45,8 @@ const Register = () => {
 
     onSubmit: (values) => {
       console.log(values);
+      dispatch(addUser(values));
+      navigate("/dashboard");
     },
   });
 
@@ -48,6 +61,12 @@ const Register = () => {
         <div className="justify-content-center">
           <form onSubmit={handleSubmit}>
             <div className="row">
+              <div className="col-lg-12">
+                <FormControl fullWidth variant="outlined" className="mt-4">
+                  <OutlinedInput fullWidth name="file" value={values.file} onChange={change} onBlur={handleBlur} type="file" label="" />
+                </FormControl>
+                {errors.file && touched.file ? <p className="text-danger text-sm">{errors.file}</p> : null}
+              </div>
               <div className="col-lg-6 col-md-12 mt-4">
                 <FormControl variant="outlined" fullWidth>
                   <InputLabel className={errors.name && touched.name ? "text-danger" : ""} htmlFor="outlined-adornment-password">

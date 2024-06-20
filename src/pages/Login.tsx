@@ -13,6 +13,13 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { useFormik } from "formik";
 import { LoginSchema } from "../schemas/auth.schema";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { API } from "../data/app.constant";
+
+type loginData = {
+  userName: string;
+  password: string;
+};
 
 const initialValues = {
   userName: "",
@@ -27,9 +34,18 @@ const Login = () => {
     validationSchema: LoginSchema,
 
     onSubmit: (values) => {
-      console.log(values);
+      fetchData(values);
     },
   });
+
+  const fetchData = async (value: loginData) => {
+    try {
+      const response = await axios.post(API.LOGIN_API, value);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleClickShowPassword = () => {
     setShowPassword((show) => !show);
