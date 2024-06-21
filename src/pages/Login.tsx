@@ -41,9 +41,9 @@ const Login = () => {
   const fetchData = async (value: loginData) => {
     try {
       const response = await axios.post(API.LOGIN_API, value);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
+      console.log("adil", response);
+    } catch (error: any) {
+      console.log(error.response.data.message);
     }
   };
 
