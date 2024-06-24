@@ -1,6 +1,6 @@
 import { Container, Button, Checkbox } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
-import { BreakPoints } from "../data/app.constant";
+import { AppMessages, BreakPoints } from "../data/app.constant";
 import { useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -12,14 +12,13 @@ import IconButton from "@mui/material/IconButton";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useFormik } from "formik";
 import { LoginSchema } from "../schemas/auth.schema";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API } from "../data/app.constant";
-
-type loginData = {
-  userName: string;
-  password: string;
-};
+import { signInWithGooglePopup } from "../utils/firebase.utils";
+import { IGoogleLoginCredentials, ILoginCredentials } from "../interfaces/login-credentials.interface";
+import { UserCredential } from "firebase/auth";
+import { AppNotificationService } from "../services/app-notification.service";
 
 const initialValues = {
   userName: "",
@@ -27,23 +26,35 @@ const initialValues = {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const notifySvc = new AppNotificationService();
 
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
     validationSchema: LoginSchema,
 
     onSubmit: (values) => {
-      fetchData(values);
+      login(values);
     },
   });
 
-  const fetchData = async (value: loginData) => {
+  const login = async (payload: ILoginCredentials) => {
     try {
-      const response = await axios.post(API.LOGIN_API, value);
-      console.log("adil", response);
-    } catch (error: any) {
-      console.log(error.response.data.message);
+      const response = await axios.post(API.LOGIN_API, payload);
+      navigate("/dashboard");
+    } catch (error) {
+      notifySvc.showError(error);
+    }
+  };
+
+  const loginWithGoogle = async (payload: IGoogleLoginCredentials) => {
+    try {
+      const response = await axios.post(API.GOOGLE_LOGIN_API, payload);
+      notifySvc.showSucces(AppMessages.LOGIN_SUCCESS);
+      navigate("/dashboard");
+    } catch (error) {
+      notifySvc.showError(error);
     }
   };
 
@@ -55,13 +66,31 @@ const Login = () => {
     event.preventDefault();
   };
 
+  const signInWithGoogle = async () => {
+    try {
+      const response: UserCredential = await signInWithGooglePopup();
+      if (response?.user) {
+        const payload: IGoogleLoginCredentials = {
+          name: response.user.displayName || "",
+          email: response.user.email || "",
+          googleId: response.user.uid,
+        };
+        loginWithGoogle(payload);
+      } else {
+        throw new Error(AppMessages.DEFAULT_ERROR);
+      }
+    } catch (error) {
+      notifySvc.showError(error);
+    }
+  };
+
   return (
     <div className="login-container">
       <Container maxWidth={BreakPoints.XS} className="bg-light rounded py-3">
         <>
           <h2 className="text-center text-blueviolet mt-2 ">Hi, Welcome Back</h2>
           <p className="text-center --bs-secondary-color ">Enter your credentials to continue</p>
-          <Button startIcon={<GoogleIcon />} fullWidth className="google-signIn-btn">
+          <Button startIcon={<GoogleIcon />} fullWidth className="google-signIn-btn" onClick={() => signInWithGoogle()}>
             Sign In With Google
           </Button>
         </>

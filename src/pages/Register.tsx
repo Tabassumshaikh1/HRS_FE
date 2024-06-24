@@ -39,7 +39,7 @@ const Register = () => {
     console.log(e.target.files[0]);
   };
 
-  const { values, touched, errors, handleBlur, handleChange, handleSubmit } = useFormik({
+  const { values, touched, errors, handleBlur, handleChange, handleSubmit, setFieldValue } = useFormik({
     initialValues: initialValues,
     validationSchema: SignUpSchema,
 
@@ -63,7 +63,16 @@ const Register = () => {
             <div className="row">
               <div className="col-lg-12">
                 <FormControl fullWidth variant="outlined" className="mt-4">
-                  <OutlinedInput fullWidth name="file" value={values.file} onChange={change} onBlur={handleBlur} type="file" label="" />
+                  <OutlinedInput
+                    fullWidth
+                    name="file"
+                    onChange={(event: any) => {
+                      setFieldValue("file", event?.target?.files?.[0] || null);
+                    }}
+                    onBlur={handleBlur}
+                    type="file"
+                    label=""
+                  />
                 </FormControl>
                 {errors.file && touched.file ? <p className="text-danger text-sm">{errors.file}</p> : null}
               </div>
