@@ -1,6 +1,6 @@
 import { Container, Button } from "@mui/material";
 import { BreakPoints } from "../data/app.constant";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -14,6 +14,7 @@ import { SignUpSchema } from "../schemas/auth.schema";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import ImageCropper from "../shared/components/ImageCropper";
 
 const initialValues = {
   file: "",
@@ -27,21 +28,18 @@ const initialValues = {
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const fileInputRef = useRef<any>(null);
   const [showPassword, setShowPassword] = useState(false);
-
-  // const [error, setError] = useState(null);
+  const [showCropper, setShowCropper] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword((show) => !show);
   };
 
-  const change = (e: any) => {
-    console.log(e.target.files[0]);
-  };
-
   const { values, touched, errors, handleBlur, handleChange, handleSubmit, setFieldValue } = useFormik({
     initialValues: initialValues,
     validationSchema: SignUpSchema,
+    validateOnChange: true,
 
     onSubmit: (values) => {
       console.log(values);
@@ -50,6 +48,22 @@ const Register = () => {
     },
   });
 
+  const handleFileChange = async (event: any) => {
+    const file = event?.target?.files?.[0] || null;
+    const formErrors = await setFieldValue("file", file);
+    if (!formErrors?.file && file) {
+      setShowCropper(true);
+    }
+  };
+
+  const onImageCrop = (file: Blob | null) => {
+    if (!file) {
+      fileInputRef.current.value = file;
+    }
+    setFieldValue("file", file);
+    setShowCropper(false);
+  };
+
   return (
     <div className="register-container">
       <Container maxWidth={BreakPoints.XS} className=" my-4 bg-light rounded py-3">
@@ -57,6 +71,7 @@ const Register = () => {
           <h2 className="text-center text-blueviolet ">Sign Up</h2>
           <p className="text-center --bs-secondary-color ">Enter your credentials to continue</p>
         </>
+        {showCropper ? <ImageCropper file={values.file} onCrop={onImageCrop} /> : null}
 
         <div className="justify-content-center">
           <form onSubmit={handleSubmit}>
@@ -64,11 +79,10 @@ const Register = () => {
               <div className="col-lg-12">
                 <FormControl fullWidth variant="outlined" className="mt-4">
                   <OutlinedInput
+                    inputRef={fileInputRef}
                     fullWidth
                     name="file"
-                    onChange={(event: any) => {
-                      setFieldValue("file", event?.target?.files?.[0] || null);
-                    }}
+                    onChange={(event: any) => handleFileChange(event)}
                     onBlur={handleBlur}
                     type="file"
                     label=""

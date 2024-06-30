@@ -21,7 +21,7 @@
 }
 
 .text-blueviolet {
-  color: blueviolet;
+  color: blueviolet !important;
 }
 
 .google-signIn-btn {
@@ -63,4 +63,16 @@
 .border-red {
   border: 2px solid red !important;
   border-radius: 5px;
+}
+.image-cropper-dialog-wrapper .MuiPaper-root {
+  height: calc(100% - 100px);
+  width: 100%;
+}
+
+.image-cropper-loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
