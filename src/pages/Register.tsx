@@ -1,5 +1,5 @@
 import { Container, Button } from "@mui/material";
-import { BreakPoints } from "../data/app.constant";
+import { AppMessages, BreakPoints } from "../data/app.constant";
 import { useState, useRef } from "react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -13,8 +13,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { SignUpSchema } from "../schemas/auth.schema";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { addUser } from "../utils/userSlice";
 import ImageCropper from "../shared/components/ImageCropper";
+import { setLoggedInUser } from "../redux/slices/loggedInUser.slice";
+import { IRegisterUser } from "../interfaces/auth.interface";
+import { AuthService } from "../services/auth.service";
+import { AppNotificationService } from "../services/app-notification.service";
+import { UtilService } from "../services/util.service";
 
 const initialValues = {
   file: "",
@@ -31,6 +35,9 @@ const Register = () => {
   const fileInputRef = useRef<any>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showCropper, setShowCropper] = useState(false);
+  const authSvc = new AuthService();
+  const notifySvc = new AppNotificationService();
+  const utilSvc = new UtilService();
 
   const handleClickShowPassword = () => {
     setShowPassword((show) => !show);
@@ -41,10 +48,28 @@ const Register = () => {
     validationSchema: SignUpSchema,
     validateOnChange: true,
 
-    onSubmit: (values) => {
-      console.log(values);
-      dispatch(addUser(values));
-      navigate("/dashboard");
+    onSubmit: async (values: IRegisterUser) => {
+      try {
+        utilSvc.showLoader();
+        const formData = new FormData();
+        if (values.file) {
+          formData.append("file", values.file || "");
+        }
+        formData.append("contactNumber", values.contactNumber || "");
+        formData.append("email", values.email || "");
+        formData.append("name", values.name || "");
+        formData.append("password", values.password || "");
+        formData.append("userName", values.userName || "");
+        await authSvc.register(formData);
+        notifySvc.showSucces(AppMessages.REGISTER_SUCCESS);
+        navigate("/");
+        // TODO: Need to check navigatiion code, remove window.location.reload
+        window.location.reload();
+      } catch (error) {
+        notifySvc.showError(error);
+      } finally {
+        utilSvc.hideLoader();
+      }
     },
   });
 

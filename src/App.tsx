@@ -1,20 +1,20 @@
-import "./App.css";
-import Body from "./pages/Body";
-import { Provider } from "react-redux";
-import appStore from "./utils/appStore";
+import "cropperjs/dist/cropper.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "cropperjs/dist/cropper.css";
+import "./App.css";
+import Body from "./pages/Body";
+import { useAppSelector } from "./redux/hooks";
+import Loader from "./shared/components/Loader";
 
-function App() {
+const App = () => {
+  const showLoader = useAppSelector((state) => state.loader);
   return (
     <div>
-      <Provider store={appStore}>
-        <Body />
-        <ToastContainer />
-      </Provider>
+      <Body />
+      <ToastContainer />
+      {showLoader ? <Loader /> : null}
     </div>
   );
-}
+};
 
 export default App;

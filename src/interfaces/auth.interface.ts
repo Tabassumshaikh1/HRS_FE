@@ -8,3 +8,12 @@ export interface IGoogleLoginCredentials {
   email: string;
   googleId: string;
 }
+
+export interface IRegisterUser {
+  file: string | File;
+  name: string;
+  userName: string;
+  email: string;
+  contactNumber: string;
+  password: string;
+}

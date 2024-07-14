@@ -1,8 +1,7 @@
-import Login from "./Login";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Register from "./Register";
 import Dashboard from "./Dashboard";
-import Header from "./Header";
+import Login from "./Login";
+import Register from "./Register";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
@@ -19,11 +18,7 @@ const Body = () => {
       element: <Dashboard />,
     },
   ]);
-  return (
-    <div>
-      <RouterProvider router={appRouter} />
-    </div>
-  );
+  return <RouterProvider router={appRouter} />;
 };
 
 export default Body;

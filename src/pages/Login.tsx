@@ -1,24 +1,24 @@
-import { Container, Button, Checkbox } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
-import { AppMessages, BreakPoints } from "../data/app.constant";
-import { useState } from "react";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
+import { Button, Checkbox, Container } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { useFormik } from "formik";
-import { LoginSchema } from "../schemas/auth.schema";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API } from "../data/app.constant";
-import { signInWithGooglePopup } from "../utils/firebase.utils";
-import { IGoogleLoginCredentials, ILoginCredentials } from "../interfaces/login-credentials.interface";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
 import { UserCredential } from "firebase/auth";
+import { useFormik } from "formik";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AppMessages, BreakPoints } from "../data/app.constant";
+import { IGoogleLoginCredentials, ILoginCredentials } from "../interfaces/auth.interface";
+import { LoginSchema } from "../schemas/auth.schema";
 import { AppNotificationService } from "../services/app-notification.service";
+import { AuthService } from "../services/auth.service";
+import { signInWithGooglePopup } from "../utils/firebase.utils";
+import { UtilService } from "../services/util.service";
 
 const initialValues = {
   userName: "",
@@ -29,6 +29,8 @@ const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const notifySvc = new AppNotificationService();
+  const authSvc = new AuthService();
+  const utilSvc = new UtilService();
 
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
@@ -41,20 +43,31 @@ const Login = () => {
 
   const login = async (payload: ILoginCredentials) => {
     try {
-      const response = await axios.post(API.LOGIN_API, payload);
+      utilSvc.showLoader();
+      await authSvc.login(payload);
+      notifySvc.showSucces(AppMessages.LOGIN_SUCCESS);
       navigate("/dashboard");
+      // TODO: Need to check navigatiion code, remove window.location.reload
+      window.location.reload();
     } catch (error) {
       notifySvc.showError(error);
+    } finally {
+      utilSvc.hideLoader();
     }
   };
 
   const loginWithGoogle = async (payload: IGoogleLoginCredentials) => {
     try {
-      const response = await axios.post(API.GOOGLE_LOGIN_API, payload);
+      utilSvc.showLoader();
+      await authSvc.loginWithGoogle(payload);
       notifySvc.showSucces(AppMessages.LOGIN_SUCCESS);
       navigate("/dashboard");
+      // TODO: Need to check navigatiion code, remove window.location.reload
+      window.location.reload();
     } catch (error) {
       notifySvc.showError(error);
+    } finally {
+      utilSvc.hideLoader();
     }
   };
 

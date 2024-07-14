@@ -18,7 +18,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import { useDispatch } from "react-redux";
 import Sidebar from "./Sidebar";
 import { useNavigate } from "react-router-dom";
-import { removeUser } from "../utils/userSlice";
+import { removeLoggedInUser } from "../redux/slices/loggedInUser.slice";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -87,7 +87,7 @@ export default function Header() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
   const logout = () => {
-    dispatch(removeUser(null));
+    dispatch(removeLoggedInUser(null));
     navigate("/");
   };
 

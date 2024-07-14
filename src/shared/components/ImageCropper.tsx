@@ -1,14 +1,15 @@
-import { useState, useEffect, useRef } from "react";
-import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Cropper, { ReactCropperElement } from "react-cropper";
+import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/material/styles";
+import { useEffect, useRef, useState } from "react";
+import Cropper, { ReactCropperElement } from "react-cropper";
+import { UtilService } from "../../services/util.service";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -27,41 +28,22 @@ interface ImageCropperProps {
 const ImageCropper = (props: ImageCropperProps) => {
   const [imgSrc, setImgSrc] = useState<string>("");
   const cropperRef = useRef<ReactCropperElement>(null);
+  const utilSvc = new UtilService();
 
   useEffect(() => {
-    const reader = new FileReader();
-    reader.readAsDataURL(props.file as File);
-    reader.onload = () => {
-      setImgSrc(reader.result as string);
+    return () => {
+      const processFile = async () => {
+        const src = await utilSvc.convertFileToBase64(props.file as File);
+        setImgSrc(src);
+      };
+      processFile();
     };
   }, []);
 
   const onCrop = () => {
     const cropper = cropperRef.current?.cropper;
-    const croppedFile: Blob = convertBase64ToBlob(cropper?.getCroppedCanvas().toDataURL() as string);
+    const croppedFile: Blob = utilSvc.convertBase64ToBlob(cropper?.getCroppedCanvas().toDataURL() as string);
     props.onCrop(croppedFile);
-  };
-
-  const convertBase64ToBlob = (base64Image: string) => {
-    // Split into two parts
-    const parts = base64Image.split(";base64,");
-
-    // Hold the content type
-    const imageType = parts[0].split(":")[1];
-
-    // Decode Base64 string
-    const decodedData = window.atob(parts[1]);
-
-    // Create UNIT8ARRAY of size same as row data length
-    const uInt8Array = new Uint8Array(decodedData.length);
-
-    // Insert all character code into uInt8Array
-    for (let i = 0; i < decodedData.length; ++i) {
-      uInt8Array[i] = decodedData.charCodeAt(i);
-    }
-
-    // Return BLOB image after conversion
-    return new Blob([uInt8Array], { type: imageType });
   };
 
   return (

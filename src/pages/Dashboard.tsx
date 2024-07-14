@@ -1,9 +1,9 @@
 import DriverDashboard from "../components/DriverDashboard";
+import { useAppSelector } from "../redux/hooks";
 import Header from "./Header";
-import { useSelector } from "react-redux";
 
 const Dashboard = () => {
-  const user = useSelector((store: any) => store?.user);
+  const user = useAppSelector((store) => store.loggedInUser);
   return (
     <div>
       {user && <Header />}
