@@ -1,24 +1,22 @@
-import { Container, Button } from "@mui/material";
-import { AppMessages, BreakPoints } from "../data/app.constant";
-import { useState, useRef } from "react";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import InputAdornment from "@mui/material/InputAdornment";
+import { Button, Container } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
 import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import { useRef, useState } from "react";
+import { AppMessages, BreakPoints } from "../../data/app.constant";
 
-import { Link, useNavigate } from "react-router-dom";
-import { SignUpSchema } from "../schemas/auth.schema";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
-import ImageCropper from "../shared/components/ImageCropper";
-import { setLoggedInUser } from "../redux/slices/loggedInUser.slice";
-import { IRegisterUser } from "../interfaces/auth.interface";
-import { AuthService } from "../services/auth.service";
-import { AppNotificationService } from "../services/app-notification.service";
-import { UtilService } from "../services/util.service";
+import { Link, useNavigate } from "react-router-dom";
+import { IRegisterUser } from "../../interfaces/auth.interface";
+import { SignUpSchema } from "../../schemas/auth.schema";
+import { AppNotificationService } from "../../services/app-notification.service";
+import { AuthService } from "../../services/auth.service";
+import { UtilService } from "../../services/util.service";
+import ImageCropper from "../../shared/components/ImageCropper";
 
 const initialValues = {
   file: "",
@@ -30,7 +28,6 @@ const initialValues = {
 };
 
 const Register = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const fileInputRef = useRef<any>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -62,9 +59,7 @@ const Register = () => {
         formData.append("userName", values.userName || "");
         await authSvc.register(formData);
         notifySvc.showSucces(AppMessages.REGISTER_SUCCESS);
-        navigate("/");
-        // TODO: Need to check navigatiion code, remove window.location.reload
-        window.location.reload();
+        navigate("/login");
       } catch (error) {
         notifySvc.showError(error);
       } finally {
@@ -223,7 +218,7 @@ const Register = () => {
         </div>
         <>
           <p className="text-center fw-bold ">
-            <Link className="text-decoration-none text-blueviolet" to={"/"}>
+            <Link className="text-decoration-none text-blueviolet" to={"/login"}>
               Already have an account?
             </Link>
           </p>

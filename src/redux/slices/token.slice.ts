@@ -12,7 +12,7 @@ const tokenSlice = createSlice({
       storageSvc.setItem(LocalStorageKeys.TOKEN, action.payload);
       return action.payload;
     },
-    removeToken: (state, action) => {
+    removeToken: (state) => {
       storageSvc.removeItem(LocalStorageKeys.TOKEN);
       return null;
     },

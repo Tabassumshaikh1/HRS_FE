@@ -1,24 +1,32 @@
-import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import MenuIcon from "@mui/icons-material/Menu";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { useDispatch } from "react-redux";
-import Sidebar from "./Sidebar";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import SearchIcon from "@mui/icons-material/Search";
+import AppBar from "@mui/material/AppBar";
+import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import InputBase from "@mui/material/InputBase";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { alpha, styled } from "@mui/material/styles";
+import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { removeLoggedInUser } from "../redux/slices/loggedInUser.slice";
+import { AppMessages } from "../../data/app.constant";
+import { AppNotificationService } from "../../services/app-notification.service";
+import { AuthService } from "../../services/auth.service";
+import { UtilService } from "../../services/util.service";
+import Sidebar from "../../shared/components/Sidebar";
+import Divider from "@mui/material/Divider";
+import Avatar from "@mui/material/Avatar";
+import Settings from "@mui/icons-material/Settings";
+import Logout from "@mui/icons-material/Logout";
+import { useAppSelector } from "../../redux/hooks";
+import { IUser } from "../../interfaces/user.interface";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -61,8 +69,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const loggedInUser: IUser = useAppSelector((store) => store.loggedInUser);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const authSvc = new AuthService();
+  const utilSvc = new UtilService();
+  const notifySvc = new AppNotificationService();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -86,9 +97,17 @@ export default function Header() {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  const logout = () => {
-    dispatch(removeLoggedInUser(null));
-    navigate("/");
+  const logout = async () => {
+    try {
+      utilSvc.showLoader();
+      await authSvc.logout();
+      notifySvc.showSucces(AppMessages.LOGOUT_SUCCESS);
+      navigate("/login");
+    } catch (error) {
+      notifySvc.showError(error);
+    } finally {
+      utilSvc.hideLoader();
+    }
   };
 
   const menuId = "primary-search-account-menu";
@@ -108,10 +127,15 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile </MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Avatar className="me-2 profile-avatar" /> Profile
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Settings className="me-2" /> Settings
+      </MenuItem>
+      <Divider />
       <MenuItem onClick={logout} className="text-danger">
-        Logout
+        <Logout className="me-2" /> Logout
       </MenuItem>
     </Menu>
   );
@@ -166,12 +190,12 @@ export default function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" className="bg-primary">
         <Toolbar>
           <Sidebar />
 
           <Typography variant="h6" noWrap component="div" sx={{ display: { xs: "none", sm: "block" } }}>
-            MUI
+            HRS
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -200,7 +224,7 @@ export default function Header() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              {loggedInUser?.imageUrl ? <Avatar alt={loggedInUser.name} src={loggedInUser.imageUrl} /> : <AccountCircle />}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

@@ -1,4 +1,3 @@
-import GoogleIcon from "@mui/icons-material/Google";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Button, Checkbox, Container } from "@mui/material";
@@ -12,13 +11,13 @@ import { UserCredential } from "firebase/auth";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AppMessages, BreakPoints } from "../data/app.constant";
-import { IGoogleLoginCredentials, ILoginCredentials } from "../interfaces/auth.interface";
-import { LoginSchema } from "../schemas/auth.schema";
-import { AppNotificationService } from "../services/app-notification.service";
-import { AuthService } from "../services/auth.service";
-import { signInWithGooglePopup } from "../utils/firebase.utils";
-import { UtilService } from "../services/util.service";
+import { AppMessages, BreakPoints } from "../../data/app.constant";
+import { IGoogleLoginCredentials, ILoginCredentials } from "../../interfaces/auth.interface";
+import { LoginSchema } from "../../schemas/auth.schema";
+import { AppNotificationService } from "../../services/app-notification.service";
+import { AuthService } from "../../services/auth.service";
+import { signInWithGooglePopup } from "../../utils/firebase.utils";
+import { UtilService } from "../../services/util.service";
 
 const initialValues = {
   userName: "",
@@ -47,8 +46,6 @@ const Login = () => {
       await authSvc.login(payload);
       notifySvc.showSucces(AppMessages.LOGIN_SUCCESS);
       navigate("/dashboard");
-      // TODO: Need to check navigatiion code, remove window.location.reload
-      window.location.reload();
     } catch (error) {
       notifySvc.showError(error);
     } finally {
@@ -62,8 +59,6 @@ const Login = () => {
       await authSvc.loginWithGoogle(payload);
       notifySvc.showSucces(AppMessages.LOGIN_SUCCESS);
       navigate("/dashboard");
-      // TODO: Need to check navigatiion code, remove window.location.reload
-      window.location.reload();
     } catch (error) {
       notifySvc.showError(error);
     } finally {
@@ -103,7 +98,17 @@ const Login = () => {
         <>
           <h2 className="text-center text-blueviolet mt-2 ">Hi, Welcome Back</h2>
           <p className="text-center --bs-secondary-color ">Enter your credentials to continue</p>
-          <Button startIcon={<GoogleIcon />} fullWidth className="google-signIn-btn" onClick={() => signInWithGoogle()}>
+          <Button
+            startIcon={
+              <img
+                className="h-20-px"
+                src="https://firebasestorage.googleapis.com/v0/b/hrs-uat.appspot.com/o/UI%2FGoogle%20Logo.png?alt=media&token=17d8fb7c-cd9f-4f22-983d-79f51741d04e"
+              />
+            }
+            fullWidth
+            className="google-signIn-btn"
+            onClick={() => signInWithGoogle()}
+          >
             Sign In With Google
           </Button>
         </>

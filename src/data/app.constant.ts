@@ -7,6 +7,7 @@ export enum AppMessages {
   REQUIRED = "This field is required",
   LOGIN_SUCCESS = "Login successfully",
   REGISTER_SUCCESS = "Registered successfully",
+  LOGOUT_SUCCESS = "Logged out successfully",
 }
 
 export enum AppDefaults {
@@ -19,6 +20,7 @@ export const API_URLS = {
   LOGIN: `${API_HOST}/auth/login`,
   GOOGLE_LOGIN: `${API_HOST}/auth/google-login`,
   REGISTER: `${API_HOST}/auth/register`,
+  LOGOUT: `${API_HOST}/auth/logout`,
 };
 
 export enum ImageMimeType {

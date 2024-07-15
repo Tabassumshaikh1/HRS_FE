@@ -13,7 +13,7 @@ const loggedInUserSlice = createSlice({
       storageSvc.setItem(LocalStorageKeys.LOGGED_IN_USER, action.payload);
       return action.payload;
     },
-    removeLoggedInUser: (state: IUser, action): null => {
+    removeLoggedInUser: (state: IUser): null => {
       storageSvc.removeItem(LocalStorageKeys.LOGGED_IN_USER);
       return null;
     },
