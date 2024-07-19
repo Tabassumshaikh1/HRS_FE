@@ -88,7 +88,7 @@ const Register = () => {
     <div className="register-container">
       <Container maxWidth={BreakPoints.XS} className=" my-4 bg-light rounded py-3">
         <>
-          <h2 className="text-center text-blueviolet ">Sign Up</h2>
+          <h2 className="text-center text-primary heading">Sign Up</h2>
           <p className="text-center --bs-secondary-color ">Enter your credentials to continue</p>
         </>
         {showCropper ? <ImageCropper file={values.file} onCrop={onImageCrop} /> : null}
@@ -217,8 +217,8 @@ const Register = () => {
           <hr className="mt-4 border" />
         </div>
         <>
-          <p className="text-center fw-bold ">
-            <Link className="text-decoration-none text-blueviolet" to={"/login"}>
+          <p className="text-center link">
+            <Link className="text-decoration-none text-primary" to={"/login"}>
               Already have an account?
             </Link>
           </p>

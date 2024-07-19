@@ -10,10 +10,14 @@ const tokenSlice = createSlice({
   reducers: {
     setToken: (state, action) => {
       storageSvc.setItem(LocalStorageKeys.TOKEN, action.payload);
+      // TODO: Need to remove this hard relaod check the routes.ts files login
+      window.location.reload();
       return action.payload;
     },
     removeToken: (state) => {
       storageSvc.removeItem(LocalStorageKeys.TOKEN);
+      // TODO: Need to remove this hard relaod check the routes.ts files login
+      window.location.reload();
       return null;
     },
   },

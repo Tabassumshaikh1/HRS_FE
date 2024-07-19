@@ -194,7 +194,13 @@ export default function Header() {
         <Toolbar>
           <Sidebar />
 
-          <Typography variant="h6" noWrap component="div" sx={{ display: { xs: "none", sm: "block" } }}>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: "none", sm: "block", cursor: "pointer" } }}
+            onClick={() => navigate("/dashboard")}
+          >
             HRS
           </Typography>
           <Search>

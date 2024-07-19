@@ -96,7 +96,7 @@ const Login = () => {
     <div className="login-container">
       <Container maxWidth={BreakPoints.XS} className="bg-light rounded py-3">
         <>
-          <h2 className="text-center text-blueviolet mt-2 ">Hi, Welcome Back</h2>
+          <h2 className="text-center text-primary mt-2 heading">Hi, Welcome Back</h2>
           <p className="text-center --bs-secondary-color ">Enter your credentials to continue</p>
           <Button
             startIcon={
@@ -168,9 +168,8 @@ const Login = () => {
               />
             </FormControl>
             {errors.password && touched.password ? <p className="text-danger text-sm ">{errors.password}</p> : null}
-            <div className="d-flex justify-content-between mt-3 ">
-              <FormControlLabel control={<Checkbox defaultChecked />} label="Remember me" />
-              <span className="mt-2 text-blueviolet fw-bold">Forgot Password?</span>
+            <div className="d-flex justify-content-end my-3">
+              <span className="mt-2 text-primary link">Forgot Password?</span>
             </div>
             <>
               <Button type="submit" fullWidth className="submit-btn font-weight">
@@ -181,8 +180,8 @@ const Login = () => {
           <hr className="border mt-4 " />
         </div>
         <>
-          <p className="text-center fw-bold ">
-            <Link className="text-decoration-none text-blueviolet" to={"/register"}>
+          <p className="text-center fw-bold">
+            <Link className="text-decoration-none text-primary link" to={"/register"}>
               Don't have an account?
             </Link>
           </p>

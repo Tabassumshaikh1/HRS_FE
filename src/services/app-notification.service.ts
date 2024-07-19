@@ -1,7 +1,14 @@
 import { toast } from "react-toastify";
-import { AppMessages } from "../data/app.constant";
+import { AppMessages, HttpStatus } from "../data/app.constant";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../redux/hooks";
+import { removeLoggedInUser } from "../redux/slices/loggedInUser.slice";
+import { removeToken } from "../redux/slices/token.slice";
 
 export class AppNotificationService {
+  private navigate = useNavigate();
+  private appDispatch = useAppDispatch();
+
   showSucces(msg: string) {
     toast.success(msg, {
       autoClose: 2500,
@@ -22,5 +29,10 @@ export class AppNotificationService {
       theme: "colored",
       pauseOnHover: false,
     });
+    if (error?.response?.status === HttpStatus.UNAUTHORIZED) {
+      this.appDispatch(removeLoggedInUser());
+      this.appDispatch(removeToken());
+      this.navigate("/login");
+    }
   }
 }

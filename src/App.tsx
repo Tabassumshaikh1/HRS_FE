@@ -10,9 +10,9 @@ const App = () => {
   const showLoader = useAppSelector((state) => state.loader);
   return (
     <>
+      <RouterElement />
       <ToastContainer />
       {showLoader ? <Loader /> : null}
-      <RouterElement />
     </>
   );
 };
