@@ -32,10 +32,27 @@
   font-size: 1.5rem;
   font-weight: 700;
 }
+.data-grid-table .MuiDataGrid-overlayWrapper {
+  height: 50px !important;
+}
+
+p {
+  margin-bottom: unset !important;
+}
 
 .link {
   font-size: 0.875rem;
   font-weight: 700;
+}
+
+.external-link {
+  color: unset;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.external-link:hover {
+  text-decoration: underline;
 }
 
 label {
@@ -48,6 +65,15 @@ hr {
 
 .curson-pointer {
   cursor: pointer;
+}
+
+.MuiDataGrid-cell,
+.MuiDataGrid-columnHeader {
+  outline: none !important;
+}
+
+.MuiDataGrid-columnHeader .MuiDataGrid-menuIcon {
+  display: none !important;
 }
 
 .google-signIn-btn {
@@ -164,4 +190,15 @@ input[type="file"]::file-selector-button:active {
   color: rgb(18, 25, 38);
   line-height: 1.167;
   font-weight: 500;
+}
+
+.reset-filters {
+  text-align: right;
+  font-style: italic;
+  color: rgb(103, 58, 183);
+  cursor: pointer;
+}
+
+.reset-filters:hover {
+  text-decoration: underline;
 }

@@ -1,5 +1,8 @@
+import { DateFormats } from "../data/app.constant";
 import { useAppDispatch } from "../redux/hooks";
 import { hideLoader, showLoader } from "../redux/slices/loader.slice";
+import moment from "moment";
+import XLSX from "xlsx-js-style";
 
 export class UtilService {
   private appDespatch = useAppDispatch();
@@ -41,5 +44,29 @@ export class UtilService {
 
   hideLoader() {
     this.appDespatch(hideLoader());
+  }
+
+  formatDate(date: string | Date, format: string = DateFormats.DD_MM_YYYY): string {
+    return moment(date).format(format);
+  }
+
+  getParams(filters: any = {}) {
+    const params: any = {};
+    Object.keys(filters).forEach((key) => {
+      if (filters[key]) {
+        params[key] = filters[key];
+      }
+    });
+    return params;
+  }
+
+  exportAsExcel(data: any[], fileName: string) {
+    const wb = XLSX.utils.book_new();
+
+    const ws = XLSX.utils.json_to_sheet(data);
+    XLSX.utils.book_append_sheet(wb, ws, "sheet");
+
+    fileName = `${fileName}.xlsx`;
+    XLSX.writeFile(wb, fileName);
   }
 }

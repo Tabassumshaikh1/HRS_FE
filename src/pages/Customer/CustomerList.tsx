@@ -1,163 +1,85 @@
 import DownloadTwoToneIcon from "@mui/icons-material/DownloadTwoTone";
 import FilterListTwoToneIcon from "@mui/icons-material/FilterListTwoTone";
 import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
-import { Card, CardContent, CardHeader, FormControl, InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
-import Divider from "@mui/material/Divider";
-import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { IUser } from "../../interfaces/user.interface";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Chip,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
+import Divider from "@mui/material/Divider";
+import { DataGrid, GridColDef, GridSortDirection } from "@mui/x-data-grid";
+import { IUser } from "../../interfaces/user.interface";
+import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
+import { AccountType, ActivityStatus, DateFormats, SortBy } from "../../data/app.constant";
+import { UtilService } from "../../services/util.service";
+import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { useDebouncedCallback } from "use-debounce";
+import { ICustomerFilters } from "../../interfaces/filter.interface";
+import { AppNotificationService } from "../../services/app-notification.service";
+import { CustomerService } from "../../services/customer.service";
+import { useEffect, useState } from "react";
+import { IListResponse } from "../../interfaces/response.interface";
 
 const columns: GridColDef[] = [
   {
     field: "imageUrl",
     headerName: "",
     sortable: false,
-    filterable: false,
-    hideable: false,
-    width: 60,
+    width: 100,
     renderCell: (params) => <CustomerImage {...params} />,
   },
   {
     field: "name",
     headerName: "Name",
     sortable: true,
-    filterable: false,
-    hideable: false,
     width: 200,
   },
   {
     field: "email",
     headerName: "Email",
     sortable: true,
-    filterable: false,
-    hideable: false,
-    width: 200,
+    width: 230,
     renderCell: (params) => <CustomerEmail {...params} />,
   },
-  { field: "lastName", headerName: "Last name", sortable: true, filterable: false, hideable: false, width: 200 },
   {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
+    field: "contactNumber",
+    headerName: "Contact Number",
     sortable: true,
-    filterable: false,
-    hideable: false,
     width: 200,
-  },
-];
-
-const rows = [
-  {
-    _id: "66758b8703b7bf49dc35e29b",
-    name: "Amir khan",
-    userName: "",
-    email: "khanmdamir062@gmail.com",
-    contactNumber: "",
-    licenseNumber: "",
-    role: "CUSTOMER",
-    imageUrl: null,
-    accountType: "google",
-    status: "Active",
-    createdAt: "2024-06-21T14:17:43.718Z",
-    updatedAt: "2024-06-21T14:17:43.718Z",
-    __v: 0,
+    renderCell: (params) => <CustomerContactNo {...params} />,
   },
   {
-    _id: "66791465cb649b8937f33f71",
-    name: "Md Adil Khan",
-    userName: "",
-    email: "khanmdadil063@gmail.com",
-    contactNumber: "",
-    licenseNumber: "",
-    role: "CUSTOMER",
-    imageUrl: null,
-    accountType: "google",
-    status: "Active",
-    createdAt: "2024-06-24T06:38:29.870Z",
-    updatedAt: "2024-06-24T06:38:29.870Z",
-    __v: 0,
+    field: "status",
+    headerName: "Status",
+    sortable: true,
+    width: 200,
+    renderCell: (params) => <CustomerStatus {...params} />,
   },
   {
-    _id: "6693a32b4040f127e483a0b6",
-    name: "My Name",
-    userName: "myname",
-    email: "myname@gmail.com",
-    contactNumber: "9898989898",
-    licenseNumber: "",
-    role: "CUSTOMER",
-    imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/hrs-uat.appspot.com/o/customer%2Fblob-1720951591932.png?alt=media&token=41a3aefa-4979-4e24-b79e-a83c0724f4cd",
-    accountType: "local",
-    status: "Active",
-    createdAt: "2024-07-14T10:06:35.224Z",
-    updatedAt: "2024-07-14T10:06:35.224Z",
-    __v: 0,
+    field: "createdAt",
+    headerName: "Created On",
+    sortable: true,
+    width: 200,
+    renderCell: (params) => <CustomerCreatedOn {...params} />,
   },
   {
-    _id: "6693eddd4040f127e483a0d3",
-    name: "New Name",
-    userName: "newname",
-    email: "newname@gmail.com",
-    contactNumber: "2313213123",
-    licenseNumber: "",
-    role: "CUSTOMER",
-    imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/hrs-uat.appspot.com/o/customer%2Fblob-1720971432451.png?alt=media&token=fe1567e7-8382-4130-b0cc-da5fcfddbc96",
-    accountType: "local",
-    status: "Active",
-    createdAt: "2024-07-14T15:25:17.160Z",
-    updatedAt: "2024-07-14T15:25:17.160Z",
-    __v: 0,
-  },
-  {
-    _id: "6693f0ab4040f127e483a0e1",
-    name: "Test",
-    userName: "test",
-    email: "test@gmail.com",
-    contactNumber: "1234567890",
-    licenseNumber: "",
-    role: "CUSTOMER",
-    imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/hrs-uat.appspot.com/o/customer%2Fblob-1720971432451.png?alt=media&token=fe1567e7-8382-4130-b0cc-da5fcfddbc96",
-    accountType: "local",
-    status: "Active",
-    createdAt: "2024-07-14T15:37:15.569Z",
-    updatedAt: "2024-07-14T15:37:15.569Z",
-    __v: 0,
-  },
-  {
-    _id: "6694f70a4ce283bad8cfdc3a",
-    name: "My User",
-    userName: "myuser",
-    email: "myuser@gmail.com",
-    contactNumber: "9090909090",
-    licenseNumber: "",
-    role: "CUSTOMER",
-    imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/hrs-uat.appspot.com/o/customer%2Fblob-1721038599935.png?alt=media&token=230e9496-9fe6-4176-ac24-5d2a5cb5b0d4",
-    accountType: "local",
-    status: "Active",
-    createdAt: "2024-07-15T10:16:42.746Z",
-    updatedAt: "2024-07-15T10:16:42.746Z",
-    __v: 0,
-  },
-  {
-    _id: "66963e6d138815507db594d6",
-    name: "Amir",
-    userName: "Khan",
-    email: "amir@email.com",
-    contactNumber: "6363636345",
-    licenseNumber: "",
-    role: "CUSTOMER",
-    imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/hrs-uat.appspot.com/o/customer%2Fblob-1721122409696.png?alt=media&token=2dea0045-97a6-47e7-9a4a-03ceaeeabfb1",
-    accountType: "local",
-    status: "Active",
-    createdAt: "2024-07-16T09:33:33.443Z",
-    updatedAt: "2024-07-16T09:33:33.443Z",
-    __v: 0,
+    field: "action",
+    headerName: "Action",
+    sortable: false,
+    width: 200,
+    renderCell: (params) => <CustomerAction {...params} />,
   },
 ];
 
@@ -180,15 +102,138 @@ function CustomerImage({ row }: { row: IUser }) {
 function CustomerEmail({ row }: { row: IUser }) {
   return (
     <>
-      <a className="text-primary" href={`mailto:${row.email}`}>
+      <a className="external-link" href={`mailto:${row.email}`}>
         {row.email}
       </a>
     </>
   );
 }
 
+function CustomerContactNo({ row }: { row: IUser }) {
+  return (
+    <>
+      <a className="external-link" href={`tel:${row.contactNumber}`}>
+        {row.contactNumber}
+      </a>
+    </>
+  );
+}
+
+function CustomerStatus({ row }: { row: IUser }) {
+  return (
+    <>
+      {row.status === ActivityStatus.ACTIVE ? (
+        <Chip variant="outlined" color="success" size="small" label={row.status} />
+      ) : (
+        <Chip variant="outlined" color="error" size="small" label={row.status} />
+      )}
+    </>
+  );
+}
+
+function CustomerCreatedOn({ row }: { row: IUser }) {
+  return <>{new UtilService().formatDate(row.createdAt)}</>;
+}
+
+function CustomerAction({ row }: { row: IUser }) {
+  const navigate = useNavigate();
+  return (
+    <>
+      <BootstrapTooltip title="Details">
+        <IconButton color="primary" onClick={() => navigate(`/customers/${row._id}`)}>
+          <VisibilityTwoToneIcon />
+        </IconButton>
+      </BootstrapTooltip>
+    </>
+  );
+}
+
+const initialValues = {
+  q: "",
+  status: "",
+  page: 0,
+  limit: 5,
+  sort: "createdAt",
+  sortBy: "desc",
+  accountType: "",
+};
+
 const CustomerList = () => {
-  return <div>CustomerList</div>;
+  const [customers, setCustomers] = useState<IListResponse>({
+    total: 0,
+    data: [],
+  });
+  const [showFilters, setShowFilters] = useState<boolean>(false);
+  const notifySvc = new AppNotificationService();
+  const customerSvc = new CustomerService();
+  const utilSvc = new UtilService();
+
+  const { values, setFieldValue } = useFormik({
+    initialValues,
+
+    onSubmit: (values) => {},
+
+    validate: (values: any) => {
+      debounced(values);
+      return {};
+    },
+  });
+
+  const debounced = useDebouncedCallback((formData: ICustomerFilters) => {
+    loadCustomers(formData);
+  }, 500);
+
+  useEffect(() => {
+    loadCustomers(initialValues as ICustomerFilters);
+  }, []);
+
+  const loadCustomers = async (filters: ICustomerFilters) => {
+    try {
+      utilSvc.showLoader();
+      filters = { ...filters, page: (filters.page || 0) + 1 };
+      const response = await customerSvc.getCustomers(filters);
+      setCustomers(response);
+    } catch (error) {
+      notifySvc.showError(error);
+    } finally {
+      utilSvc.hideLoader();
+    }
+  };
+
+  const exportCustomers = async () => {
+    try {
+      utilSvc.showLoader();
+      const response = await customerSvc.getCustomers({
+        q: values.q,
+        status: values.status,
+        accountType: values.accountType,
+        sort: values.sort,
+        sortBy: values.sortBy,
+      } as ICustomerFilters);
+      const excelData: any[] = [];
+      response.data.forEach((customer: IUser, index: number) => {
+        excelData.push({
+          "S No.": index + 1,
+          Name: customer.name,
+          Email: customer.email,
+          Username: customer.userName,
+          "Contact Number": customer.contactNumber,
+          Status: customer.status,
+          "Account Type": customer.accountType === AccountType.LOCAL ? "HRS Local" : "Google",
+          "Created On": utilSvc.formatDate(customer.createdAt),
+          "Updated On": utilSvc.formatDate(customer.updatedAt),
+        });
+      });
+      let fileName = "Customers";
+      const timestamp = utilSvc.formatDate(new Date(), DateFormats.DD_MM_YYYY_H_MM_A);
+      fileName = `${fileName}-${timestamp}`;
+      utilSvc.exportAsExcel(excelData, fileName);
+    } catch (error) {
+      notifySvc.showError(error);
+    } finally {
+      utilSvc.hideLoader();
+    }
+  };
   return (
     <div className="content-wrapper">
       <Card>
@@ -196,17 +241,23 @@ const CustomerList = () => {
         <Divider />
         <CardContent>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-6 col-9">
               <FormControl variant="outlined">
                 <InputLabel size="small" htmlFor="outlined-adornment-search">
                   Search
                 </InputLabel>
                 <OutlinedInput
                   size="small"
-                  name="search"
+                  name="q"
                   id="outlined-adornment-search"
                   type="search"
                   label="Search"
+                  value={values.q}
+                  onChange={async (e) => {
+                    setFieldValue("q", e.target.value);
+                    await setFieldValue("page", 0);
+                    await setFieldValue("limit", values.limit);
+                  }}
                   startAdornment={
                     <InputAdornment position="start">
                       <SearchTwoToneIcon />
@@ -215,29 +266,129 @@ const CustomerList = () => {
                 />
               </FormControl>
             </div>
-            <div className="col-md-6 text-end">
-              <BootstrapTooltip title="Download">
+            <div className="col-md-6 col-3 text-end">
+              <BootstrapTooltip title="Download" onClick={exportCustomers}>
                 <DownloadTwoToneIcon className="me-3 curson-pointer" />
               </BootstrapTooltip>
-              <BootstrapTooltip title="Filter">
+              <BootstrapTooltip title="Filter" onClick={() => setShowFilters(!showFilters)}>
                 <FilterListTwoToneIcon className="curson-pointer" />
               </BootstrapTooltip>
             </div>
-            <div className="col-12">
-              <div>
-                <DataGrid
-                  rows={rows}
-                  columns={columns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: 0, pageSize: 5 },
-                    },
-                  }}
-                  pageSizeOptions={[5, 10]}
-                  getRowId={(row) => row._id}
-                  rowSelection={false}
-                />
+            {showFilters ? (
+              <div className="col-12 mt-4">
+                <div className="row">
+                  <div className="col-md-6 col-6">
+                    <FormControl fullWidth size="small">
+                      <InputLabel id="demo-select-small-label">Status</InputLabel>
+                      <Select
+                        name="status"
+                        labelId="demo-select-small-label"
+                        id="demo-select-small"
+                        value={values.status}
+                        label="Status"
+                        onChange={async (e) => {
+                          setFieldValue("status", e.target.value);
+                          await setFieldValue("page", 0);
+                          await setFieldValue("limit", values.limit);
+                        }}
+                      >
+                        <MenuItem value="">
+                          <em>All</em>
+                        </MenuItem>
+                        <MenuItem value={ActivityStatus.ACTIVE}>{ActivityStatus.ACTIVE}</MenuItem>
+                        <MenuItem value={ActivityStatus.INACTIVE}>{ActivityStatus.INACTIVE}</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <div className="col-md-6 col-6">
+                    <FormControl fullWidth size="small">
+                      <InputLabel id="demo-select-small-label">Account Type</InputLabel>
+                      <Select
+                        name="accountType"
+                        labelId="demo-select-small-label"
+                        id="demo-select-small"
+                        value={values.accountType}
+                        label="Account Type"
+                        onChange={async (e) => {
+                          setFieldValue("accountType", e.target.value);
+                          await setFieldValue("page", 0);
+                          await setFieldValue("limit", values.limit);
+                        }}
+                      >
+                        <MenuItem value="">
+                          <em>All</em>
+                        </MenuItem>
+                        <MenuItem value={AccountType.LOCAL}>HRS Local</MenuItem>
+                        <MenuItem value={AccountType.GOOGLE}>Google</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <div className="col-12 text-end mt-2">
+                    <Button
+                      color="inherit"
+                      disabled={!values.status && !values.accountType}
+                      onClick={async () => {
+                        setFieldValue("status", "");
+                        setFieldValue("accountType", "");
+                        await setFieldValue("page", 0);
+                        await setFieldValue("limit", values.limit);
+                      }}
+                    >
+                      <i>Reset Filters</i>
+                    </Button>
+                  </div>
+                </div>
               </div>
+            ) : null}
+
+            <div className="col-12 mt-4">
+              <DataGrid
+                className="data-grid-table"
+                rows={customers.data}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: values.page, pageSize: values.limit },
+                  },
+                  sorting: {
+                    sortModel: [
+                      {
+                        field: values.sort,
+                        sort: values.sortBy as GridSortDirection,
+                      },
+                    ],
+                  },
+                }}
+                paginationMode="server"
+                sortingMode="server"
+                rowCount={customers.total}
+                pageSizeOptions={[5, 10, 25, 50]}
+                getRowId={(row) => row._id}
+                rowSelection={false}
+                disableColumnResize={true}
+                paginationModel={{ page: values.page, pageSize: values.limit }}
+                rowHeight={50}
+                sortModel={[
+                  {
+                    field: values.sort,
+                    sort: values.sortBy as GridSortDirection,
+                  },
+                ]}
+                onPaginationModelChange={async (model) => {
+                  if (model.pageSize !== values.limit) {
+                    await setFieldValue("page", 0);
+                    await setFieldValue("limit", model.pageSize);
+                  } else {
+                    await setFieldValue("page", model.page);
+                    await setFieldValue("limit", model.pageSize);
+                  }
+                }}
+                onSortModelChange={async (model) => {
+                  console.log(model);
+                  await setFieldValue("sort", model?.[0]?.field || values.sort);
+                  await setFieldValue("sortBy", model?.[0]?.sort || SortBy.ASC);
+                }}
+              />
             </div>
           </div>
         </CardContent>

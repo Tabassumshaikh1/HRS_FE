@@ -17,10 +17,14 @@ export enum AppDefaults {
 const API_HOST = process.env.REACT_APP_API_HOST;
 
 export const API_URLS = {
+  // Auth
   LOGIN: `${API_HOST}/auth/login`,
   GOOGLE_LOGIN: `${API_HOST}/auth/google-login`,
   REGISTER: `${API_HOST}/auth/register`,
   LOGOUT: `${API_HOST}/auth/logout`,
+
+  // Customers
+  CUSTOMERS: `${API_HOST}/customers`,
 };
 
 export enum ImageMimeType {
@@ -59,6 +63,16 @@ export enum AccountType {
 export enum RouteType {
   PUBLIC = "public",
   PRIVATE = "private",
+}
+
+export enum DateFormats {
+  DD_MM_YYYY = "DD/MM/YYYY",
+  DD_MM_YYYY_H_MM_A = "DD/MM/YYYY h:mm A",
+}
+
+export enum SortBy {
+  ASC = "asc",
+  DESC = "desc",
 }
 
 export enum HttpStatus {
