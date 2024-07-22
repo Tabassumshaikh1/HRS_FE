@@ -1,0 +1,124 @@
+import ArrowBackTwoToneIcon from "@mui/icons-material/ArrowBackTwoTone";
+import BlockTwoToneIcon from "@mui/icons-material/BlockTwoTone";
+import CallTwoToneIcon from "@mui/icons-material/CallTwoTone";
+import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
+import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
+import { Button, Card, CardContent, CardHeader } from "@mui/material";
+import Divider from "@mui/material/Divider";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ActivityStatus, StatusColors } from "../../data/app.constant";
+import { IUser } from "../../interfaces/user.interface";
+import { AppNotificationService } from "../../services/app-notification.service";
+import { CustomerService } from "../../services/customer.service";
+import { UtilService } from "../../services/util.service";
+import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
+import CustomerImage from "./components/CustomerImage";
+
+const CustomerDetails = () => {
+  const [customer, setCustomer] = useState<IUser | null>(null);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const notifySvc = new AppNotificationService();
+  const customerSvc = new CustomerService();
+  const utilSvc = new UtilService();
+
+  useEffect(() => {
+    loadCustomer();
+  }, []);
+
+  const loadCustomer = async () => {
+    try {
+      utilSvc.showLoader();
+      const response = await customerSvc.getSingleCustomer(id as string);
+      setCustomer(response);
+    } catch (error) {
+      notifySvc.showError(error);
+    } finally {
+      utilSvc.hideLoader();
+    }
+  };
+
+  const updateStatus = async () => {
+    try {
+      utilSvc.showLoader();
+      const payload = {
+        status: customer?.status === ActivityStatus.ACTIVE ? ActivityStatus.INACTIVE : ActivityStatus.ACTIVE,
+      };
+      await customerSvc.updateCustomerStatus(id as string, payload);
+      loadCustomer();
+    } catch (error) {
+      notifySvc.showError(error);
+    } finally {
+      utilSvc.hideLoader();
+    }
+  };
+  return <div>CustomerDetails</div>;
+  //   return (
+  //     <div className="content-wrapper">
+  //       <div className="row mb-4">
+  //         <div className="col-12">
+  //           <Button variant="outlined" color="inherit" startIcon={<ArrowBackTwoToneIcon />} onClick={() => navigate(-1)}>
+  //             Back
+  //           </Button>
+  //         </div>
+  //       </div>
+  //       <Card>
+  //         <CardHeader title="Customer Details" className="card-heading"></CardHeader>
+  //         <Divider />
+  //         {customer?._id ? (
+  //           <CardContent>
+  //             <div className="row">
+  //               <div
+  //                 className="col-lg-3 col-md-6 col-sm-12 col-12 align-center border rounded p-4 ms-4"
+  //                 style={{
+  //                   background: `linear-gradient(0deg, #FFFFFF 45%, ${
+  //                     customer.status === ActivityStatus.ACTIVE ? StatusColors.ACTIVE : StatusColors.INACTIVE
+  //                   } 83%)`,
+  //                 }}
+  //               >
+  //                 <div className="row">
+  //                   <div className="col-12 align-center mb-4">
+  //                     <CustomerImage customer={customer} height={220} width={220} />
+  //                   </div>
+  //                   <div className="col-12 align-center">
+  //                     <BootstrapTooltip title="Call">
+  //                       <a href={`tel:${customer.contactNumber}`}>
+  //                         <Button variant="outlined" color="primary">
+  //                           <CallTwoToneIcon />
+  //                         </Button>
+  //                       </a>
+  //                     </BootstrapTooltip>
+  //                     <BootstrapTooltip title="Email">
+  //                       <a href={`mailto:${customer.email}`}>
+  //                         <Button variant="outlined" color="secondary" className="mx-3">
+  //                           <EmailTwoToneIcon />
+  //                         </Button>
+  //                       </a>
+  //                     </BootstrapTooltip>
+  //                     {customer.status === ActivityStatus.ACTIVE ? (
+  //                       <BootstrapTooltip title="Deactivate Customer">
+  //                         <Button variant="outlined" color="error" onClick={updateStatus}>
+  //                           <BlockTwoToneIcon className="me-2" /> Deactivate
+  //                         </Button>
+  //                       </BootstrapTooltip>
+  //                     ) : (
+  //                       <BootstrapTooltip title="Activate Customer">
+  //                         <Button variant="outlined" color="success" onClick={updateStatus}>
+  //                           <DoneTwoToneIcon className="me-2" /> Activate
+  //                         </Button>
+  //                       </BootstrapTooltip>
+  //                     )}
+  //                   </div>
+  //                 </div>
+  //               </div>
+  //               <div className="col-lg-9 col-md-6 col-sm-12 col-12"></div>
+  //             </div>
+  //           </CardContent>
+  //         ) : null}
+  //       </Card>
+  //     </div>
+  //   );
+};
+
+export default CustomerDetails;

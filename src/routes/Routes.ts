@@ -30,6 +30,12 @@ export function RouterElement() {
         ? LazyLoadRoutes("Customer", "CustomerList")
         : AuthenticateRoute("/login"),
     },
+    {
+      path: "customers/:id",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
+        ? LazyLoadRoutes("Customer", "CustomerDetails")
+        : AuthenticateRoute("/login"),
+    },
   ];
 
   const routing = useRoutes(routes);

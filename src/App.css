@@ -202,3 +202,9 @@ input[type="file"]::file-selector-button:active {
 .reset-filters:hover {
   text-decoration: underline;
 }
+
+.align-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

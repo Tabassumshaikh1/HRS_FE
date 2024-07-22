@@ -6,31 +6,32 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Chip,
   FormControl,
-  IconButton,
   InputAdornment,
   InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
 } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import { DataGrid, GridColDef, GridSortDirection } from "@mui/x-data-grid";
-import { IUser } from "../../interfaces/user.interface";
-import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
-import { AccountType, ActivityStatus, DateFormats, SortBy } from "../../data/app.constant";
-import { UtilService } from "../../services/util.service";
-import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
-import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import { AccountType, ActivityStatus, AppDefaults, DateFormats, SortBy } from "../../data/app.constant";
 import { ICustomerFilters } from "../../interfaces/filter.interface";
+import { IListResponse } from "../../interfaces/response.interface";
+import { IUser } from "../../interfaces/user.interface";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { CustomerService } from "../../services/customer.service";
-import { useEffect, useState } from "react";
-import { IListResponse } from "../../interfaces/response.interface";
+import { UtilService } from "../../services/util.service";
+import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
+import CustomerAction from "./components/CustomerAction";
+import CustomerContactNo from "./components/CustomerContactNo";
+import CustomerCreatedOn from "./components/CustomerCreatedOn";
+import CustomerEmail from "./components/CustomerEmail";
+import CustomerImage from "./components/CustomerImage";
+import CustomerStatus from "./components/CustomerStatus";
 
 const columns: GridColDef[] = [
   {
@@ -38,7 +39,7 @@ const columns: GridColDef[] = [
     headerName: "",
     sortable: false,
     width: 100,
-    renderCell: (params) => <CustomerImage {...params} />,
+    renderCell: (params) => <CustomerImage customer={{ ...params.row }} />,
   },
   {
     field: "name",
@@ -51,111 +52,46 @@ const columns: GridColDef[] = [
     headerName: "Email",
     sortable: true,
     width: 230,
-    renderCell: (params) => <CustomerEmail {...params} />,
+    renderCell: (params) => <CustomerEmail customer={{ ...params.row }} />,
   },
   {
     field: "contactNumber",
     headerName: "Contact Number",
     sortable: true,
     width: 200,
-    renderCell: (params) => <CustomerContactNo {...params} />,
+    renderCell: (params) => <CustomerContactNo customer={{ ...params.row }} />,
   },
   {
     field: "status",
     headerName: "Status",
     sortable: true,
     width: 200,
-    renderCell: (params) => <CustomerStatus {...params} />,
+    renderCell: (params) => <CustomerStatus customer={{ ...params.row }} />,
   },
   {
     field: "createdAt",
     headerName: "Created On",
     sortable: true,
     width: 200,
-    renderCell: (params) => <CustomerCreatedOn {...params} />,
+    renderCell: (params) => <CustomerCreatedOn customer={{ ...params.row }} />,
   },
   {
     field: "action",
     headerName: "Action",
     sortable: false,
     width: 200,
-    renderCell: (params) => <CustomerAction {...params} />,
+    renderCell: (params) => <CustomerAction customer={{ ...params.row }} />,
   },
 ];
 
-function CustomerImage({ row }: { row: IUser }) {
-  return (
-    <>
-      {row?.imageUrl ? (
-        <Avatar alt={row.name} src={row.imageUrl} className="mt-1" />
-      ) : (
-        <Avatar
-          alt={row.name}
-          className="mt-1"
-          src="https://firebasestorage.googleapis.com/v0/b/hrs-uat.appspot.com/o/UI%2Fdefault-profile.png?alt=media&token=11f8d0c2-9d39-4721-a356-c872f6ee64fb"
-        />
-      )}
-    </>
-  );
-}
-
-function CustomerEmail({ row }: { row: IUser }) {
-  return (
-    <>
-      <a className="external-link" href={`mailto:${row.email}`}>
-        {row.email}
-      </a>
-    </>
-  );
-}
-
-function CustomerContactNo({ row }: { row: IUser }) {
-  return (
-    <>
-      <a className="external-link" href={`tel:${row.contactNumber}`}>
-        {row.contactNumber}
-      </a>
-    </>
-  );
-}
-
-function CustomerStatus({ row }: { row: IUser }) {
-  return (
-    <>
-      {row.status === ActivityStatus.ACTIVE ? (
-        <Chip variant="outlined" color="success" size="small" label={row.status} />
-      ) : (
-        <Chip variant="outlined" color="error" size="small" label={row.status} />
-      )}
-    </>
-  );
-}
-
-function CustomerCreatedOn({ row }: { row: IUser }) {
-  return <>{new UtilService().formatDate(row.createdAt)}</>;
-}
-
-function CustomerAction({ row }: { row: IUser }) {
-  const navigate = useNavigate();
-  return (
-    <>
-      <BootstrapTooltip title="Details">
-        <IconButton color="primary" onClick={() => navigate(`/customers/${row._id}`)}>
-          <VisibilityTwoToneIcon />
-        </IconButton>
-      </BootstrapTooltip>
-    </>
-  );
-}
-
-const initialValues = {
+const initialValues: any = {
   q: "",
   status: "",
-  page: 0,
-  limit: 5,
-  sort: "createdAt",
-  sortBy: "desc",
   accountType: "",
+  page: AppDefaults.PAGE_NO,
+  limit: AppDefaults.PAGE_LIMIT,
+  sort: AppDefaults.SORT,
+  sortBy: AppDefaults.SORT_BY,
 };
 
 const CustomerList = () => {
@@ -270,7 +206,7 @@ const CustomerList = () => {
               <BootstrapTooltip title="Download" onClick={exportCustomers}>
                 <DownloadTwoToneIcon className="me-3 curson-pointer" />
               </BootstrapTooltip>
-              <BootstrapTooltip title="Filter" onClick={() => setShowFilters(!showFilters)}>
+              <BootstrapTooltip title="Filters" onClick={() => setShowFilters(!showFilters)}>
                 <FilterListTwoToneIcon className="curson-pointer" />
               </BootstrapTooltip>
             </div>
