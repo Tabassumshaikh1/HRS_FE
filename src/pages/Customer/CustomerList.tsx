@@ -204,7 +204,7 @@ const CustomerList = () => {
             </div>
             <div className="col-md-6 col-3 text-end">
               <BootstrapTooltip title="Download" onClick={exportCustomers}>
-                <DownloadTwoToneIcon className="me-3 curson-pointer" />
+                <DownloadTwoToneIcon className="me-4 curson-pointer" />
               </BootstrapTooltip>
               <BootstrapTooltip title="Filters" onClick={() => setShowFilters(!showFilters)}>
                 <FilterListTwoToneIcon className="curson-pointer" />

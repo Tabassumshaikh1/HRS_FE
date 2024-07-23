@@ -16,6 +16,8 @@ import { useAppSelector } from "../../redux/hooks";
 import { IUser } from "../../interfaces/user.interface";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { styled } from "@mui/material/styles";
+import { SidebarService } from "../../services/sidebar.service";
+import { useNavigate } from "react-router-dom";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -28,12 +30,16 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function Sidebar() {
   const loggedInUser: IUser = useAppSelector((store) => store.loggedInUser);
+  const sidebarSvc = new SidebarService();
+  const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
+
+  const sidebarItems = sidebarSvc.getSidebarItems();
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
@@ -43,7 +49,6 @@ export default function Sidebar() {
           <h5>
             <i>Transport</i>
           </h5>
-          {/* <p>Transport</p> */}
         </div>
         <IconButton onClick={toggleDrawer(false)}>
           <ChevronLeftIcon />
@@ -51,22 +56,20 @@ export default function Sidebar() {
       </DrawerHeader>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+        {sidebarItems.map((item, index) => (
+          <ListItem key={index} disablePadding>
+            <ListItemButton
+              onClick={() => {
+                toggleDrawer(false);
+                setTimeout(() => {
+                  navigate(item.path);
+                }, 250);
+              }}
+            >
+              <ListItemIcon>
+                <item.iconComp />
+              </ListItemIcon>
+              <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>
         ))}
