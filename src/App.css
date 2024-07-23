@@ -208,3 +208,18 @@ input[type="file"]::file-selector-button:active {
   justify-content: center;
   align-items: center;
 }
+
+.detail-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgb(18, 25, 38);
+  line-height: 1.75;
+}
+
+.detail-value {
+  letter-spacing: 0em;
+  font-weight: 400;
+  line-height: 1.5em;
+  color: rgb(54, 65, 82);
+  font-size: 1rem;
+}

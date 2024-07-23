@@ -47,6 +47,9 @@ export class UtilService {
   }
 
   formatDate(date: string | Date, format: string = DateFormats.DD_MM_YYYY): string {
+    if (!date) {
+      return "";
+    }
     return moment(date).format(format);
   }
 
