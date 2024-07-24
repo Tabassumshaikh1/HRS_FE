@@ -1,24 +1,12 @@
 import DownloadTwoToneIcon from "@mui/icons-material/DownloadTwoTone";
 import FilterListTwoToneIcon from "@mui/icons-material/FilterListTwoTone";
-import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-} from "@mui/material";
+import { Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { DataGrid, GridColDef, GridSortDirection } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridPaginationModel, GridSortDirection, GridSortModel } from "@mui/x-data-grid";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { AccountType, ActivityStatus, AppDefaults, DateFormats, SortBy } from "../../data/app.constant";
+import { AccountType, AccountTypeLabel, AppDefaults, DateFormats, PageSizeOptions, SortBy } from "../../data/app.constant";
 import { ICustomerFilters } from "../../interfaces/filter.interface";
 import { IListResponse } from "../../interfaces/response.interface";
 import { IUser } from "../../interfaces/user.interface";
@@ -30,8 +18,10 @@ import CustomerAction from "./components/CustomerAction";
 import CustomerContactNo from "./components/CustomerContactNo";
 import CustomerCreatedOn from "./components/CustomerCreatedOn";
 import CustomerEmail from "./components/CustomerEmail";
+import CustomerFilters from "./components/CustomerFilters";
 import CustomerImage from "./components/CustomerImage";
 import CustomerStatus from "./components/CustomerStatus";
+import SearchBox from "../../shared/components/SearchBox";
 
 const columns: GridColDef[] = [
   {
@@ -155,7 +145,7 @@ const CustomerList = () => {
           Username: customer.userName,
           "Contact Number": customer.contactNumber,
           Status: customer.status,
-          "Account Type": customer.accountType === AccountType.LOCAL ? "HRS Local" : "Google",
+          "Account Type": customer.accountType === AccountType.LOCAL ? AccountTypeLabel.LOCAL : AccountTypeLabel.GOOGLE,
           "Created On": utilSvc.formatDate(customer.createdAt),
           "Updated On": utilSvc.formatDate(customer.updatedAt),
         });
@@ -170,6 +160,22 @@ const CustomerList = () => {
       utilSvc.hideLoader();
     }
   };
+
+  const paginatorModelChange = async (model: GridPaginationModel) => {
+    if (model.pageSize !== values.limit) {
+      await setFieldValue("page", 0);
+      await setFieldValue("limit", model.pageSize);
+    } else {
+      await setFieldValue("page", model.page);
+      await setFieldValue("limit", model.pageSize);
+    }
+  };
+
+  const sortingModelChange = async (model: GridSortModel) => {
+    await setFieldValue("sort", model?.[0]?.field || values.sort);
+    await setFieldValue("sortBy", model?.[0]?.sort || SortBy.ASC);
+  };
+
   return (
     <div className="content-wrapper">
       <Card>
@@ -178,29 +184,7 @@ const CustomerList = () => {
         <CardContent>
           <div className="row">
             <div className="col-md-6 col-9">
-              <FormControl variant="outlined">
-                <InputLabel size="small" htmlFor="outlined-adornment-search">
-                  Search
-                </InputLabel>
-                <OutlinedInput
-                  size="small"
-                  name="q"
-                  id="outlined-adornment-search"
-                  type="search"
-                  label="Search"
-                  value={values.q}
-                  onChange={async (e) => {
-                    setFieldValue("q", e.target.value);
-                    await setFieldValue("page", 0);
-                    await setFieldValue("limit", values.limit);
-                  }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <SearchTwoToneIcon />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
+              <SearchBox values={values} setFieldValue={setFieldValue} />
             </div>
             <div className="col-md-6 col-3 text-end">
               <BootstrapTooltip title="Download" onClick={exportCustomers}>
@@ -212,68 +196,7 @@ const CustomerList = () => {
             </div>
             {showFilters ? (
               <div className="col-12 mt-4">
-                <div className="row">
-                  <div className="col-md-6 col-6">
-                    <FormControl fullWidth size="small">
-                      <InputLabel id="demo-select-small-label">Status</InputLabel>
-                      <Select
-                        name="status"
-                        labelId="demo-select-small-label"
-                        id="demo-select-small"
-                        value={values.status}
-                        label="Status"
-                        onChange={async (e) => {
-                          setFieldValue("status", e.target.value);
-                          await setFieldValue("page", 0);
-                          await setFieldValue("limit", values.limit);
-                        }}
-                      >
-                        <MenuItem value="">
-                          <em>All</em>
-                        </MenuItem>
-                        <MenuItem value={ActivityStatus.ACTIVE}>{ActivityStatus.ACTIVE}</MenuItem>
-                        <MenuItem value={ActivityStatus.INACTIVE}>{ActivityStatus.INACTIVE}</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <div className="col-md-6 col-6">
-                    <FormControl fullWidth size="small">
-                      <InputLabel id="demo-select-small-label">Account Type</InputLabel>
-                      <Select
-                        name="accountType"
-                        labelId="demo-select-small-label"
-                        id="demo-select-small"
-                        value={values.accountType}
-                        label="Account Type"
-                        onChange={async (e) => {
-                          setFieldValue("accountType", e.target.value);
-                          await setFieldValue("page", 0);
-                          await setFieldValue("limit", values.limit);
-                        }}
-                      >
-                        <MenuItem value="">
-                          <em>All</em>
-                        </MenuItem>
-                        <MenuItem value={AccountType.LOCAL}>HRS Local</MenuItem>
-                        <MenuItem value={AccountType.GOOGLE}>Google</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <div className="col-12 text-end mt-2">
-                    <Button
-                      color="inherit"
-                      disabled={!values.status && !values.accountType}
-                      onClick={async () => {
-                        setFieldValue("status", "");
-                        setFieldValue("accountType", "");
-                        await setFieldValue("page", 0);
-                        await setFieldValue("limit", values.limit);
-                      }}
-                    >
-                      <i>Reset Filters</i>
-                    </Button>
-                  </div>
-                </div>
+                <CustomerFilters values={values} setFieldValue={setFieldValue} />
               </div>
             ) : null}
 
@@ -295,35 +218,23 @@ const CustomerList = () => {
                     ],
                   },
                 }}
-                paginationMode="server"
-                sortingMode="server"
+                paginationMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
+                sortingMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
                 rowCount={customers.total}
-                pageSizeOptions={[5, 10, 25, 50]}
+                pageSizeOptions={PageSizeOptions}
                 getRowId={(row) => row._id}
                 rowSelection={false}
                 disableColumnResize={true}
                 paginationModel={{ page: values.page, pageSize: values.limit }}
-                rowHeight={50}
+                rowHeight={AppDefaults.LIST_ROW_HEIGHT as number}
                 sortModel={[
                   {
                     field: values.sort,
                     sort: values.sortBy as GridSortDirection,
                   },
                 ]}
-                onPaginationModelChange={async (model) => {
-                  if (model.pageSize !== values.limit) {
-                    await setFieldValue("page", 0);
-                    await setFieldValue("limit", model.pageSize);
-                  } else {
-                    await setFieldValue("page", model.page);
-                    await setFieldValue("limit", model.pageSize);
-                  }
-                }}
-                onSortModelChange={async (model) => {
-                  console.log(model);
-                  await setFieldValue("sort", model?.[0]?.field || values.sort);
-                  await setFieldValue("sortBy", model?.[0]?.sort || SortBy.ASC);
-                }}
+                onPaginationModelChange={paginatorModelChange}
+                onSortModelChange={sortingModelChange}
               />
             </div>
           </div>

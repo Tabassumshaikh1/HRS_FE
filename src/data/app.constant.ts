@@ -21,6 +21,8 @@ export enum AppDefaults {
   PAGE_LIMIT = 5,
   SORT = "createdAt",
   SORT_BY = "desc",
+  LIST_ROW_HEIGHT = 50,
+  PAGINATION_AND_SORTING_MODE = "server",
 }
 
 const API_HOST = process.env.REACT_APP_API_HOST;
@@ -69,6 +71,11 @@ export enum AccountType {
   GOOGLE = "google",
 }
 
+export enum AccountTypeLabel {
+  LOCAL = "HRS Local",
+  GOOGLE = "Google",
+}
+
 export enum RouteType {
   PUBLIC = "public",
   PRIVATE = "private",
@@ -83,6 +90,8 @@ export enum StatusColors {
   ACTIVE = "#4caf50",
   INACTIVE = "#f44336",
 }
+
+export const PageSizeOptions = [5, 10, 25, 50];
 
 export enum HttpStatus {
   CONTINUE = 100,

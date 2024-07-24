@@ -7,7 +7,7 @@ import { Button, Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AccountType, ActivityStatus, DateFormats, StatusColors } from "../../data/app.constant";
+import { AccountType, AccountTypeLabel, ActivityStatus, DateFormats, StatusColors } from "../../data/app.constant";
 import { IUser } from "../../interfaces/user.interface";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { CustomerService } from "../../services/customer.service";
@@ -127,7 +127,9 @@ const CustomerDetails = () => {
                   </div>
                   <div className="col-6 mb-4">
                     <p className="detail-label">Account Type</p>
-                    <p className="detail-value">{customer.accountType === AccountType.GOOGLE ? "Google" : "HRS Local"}</p>
+                    <p className="detail-value">
+                      {customer.accountType === AccountType.GOOGLE ? AccountTypeLabel.GOOGLE : AccountTypeLabel.LOCAL}
+                    </p>
                   </div>
                   <div className="col-6 mb-4">
                     <p className="detail-label">Created On</p>
