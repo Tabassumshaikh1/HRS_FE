@@ -8,6 +8,10 @@ export enum AppMessages {
   LOGIN_SUCCESS = "Login successfully",
   REGISTER_SUCCESS = "Registered successfully",
   LOGOUT_SUCCESS = "Logged out successfully",
+  DRIVER_ADDED = "Driver added successfully",
+  DRIVER_UPDATED = "Driver update successfully",
+  DRIVER_DELETED = "Driver deleted successfully",
+  DRIVER_DELETE_CONFIRM = "Do you want to delete this driver?",
 }
 
 export enum SortBy {
@@ -34,8 +38,8 @@ export const API_URLS = {
   REGISTER: `${API_HOST}/auth/register`,
   LOGOUT: `${API_HOST}/auth/logout`,
 
-  // Customers
   CUSTOMERS: `${API_HOST}/customers`,
+  DRIVERS: `${API_HOST}/drivers`,
 };
 
 export enum ImageMimeType {

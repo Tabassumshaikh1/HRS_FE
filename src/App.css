@@ -21,11 +21,11 @@
 }
 
 .text-primary {
-  color: rgb(103, 58, 183) !important;
+  color: #9c27b0 !important;
 }
 
 .bg-primary {
-  background-color: rgb(103, 58, 183) !important;
+  background-color: #9c27b0 !important;
 }
 
 .heading {
@@ -103,7 +103,7 @@ hr {
 }
 
 .submit-btn {
-  background-color: rgb(103, 58, 183) !important;
+  background-color: #9c27b0 !important;
   color: white !important;
 }
 
@@ -119,6 +119,11 @@ hr {
 .image-cropper-dialog-wrapper .MuiPaper-root {
   height: calc(100% - 100px);
   width: 100%;
+}
+
+.confirm-dialog-wrapper .MuiPaper-root {
+  height: 200px;
+  width: 500px;
 }
 
 .image-cropper-loader {
@@ -150,7 +155,7 @@ hr {
 
 .sidebar-branding {
   margin-right: 100px;
-  color: rgb(103, 58, 183);
+  color: #9c27b0;
 }
 
 .h-20-px {
@@ -195,7 +200,7 @@ input[type="file"]::file-selector-button:active {
 .reset-filters {
   text-align: right;
   font-style: italic;
-  color: rgb(103, 58, 183);
+  color: #9c27b0;
   cursor: pointer;
 }
 

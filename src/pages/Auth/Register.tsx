@@ -130,7 +130,7 @@ const Register = () => {
               <div className="col-lg-6 col-md-12 mt-4">
                 <FormControl variant="outlined" fullWidth>
                   <InputLabel className={errors.userName && touched.userName ? "text-danger" : ""} htmlFor="outlined-adornment-password">
-                    User Name
+                    Username
                   </InputLabel>
                   <OutlinedInput
                     error={errors.userName && touched.userName ? true : undefined}

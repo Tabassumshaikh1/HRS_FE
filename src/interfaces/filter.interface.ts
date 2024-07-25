@@ -12,3 +12,8 @@ export interface ICustomerFilters extends CommonFilters {
   status?: `${ActivityStatus}`;
   accountType?: `${AccountType}`;
 }
+
+export interface IDriverFilters extends CommonFilters {
+  status?: `${ActivityStatus}`;
+  accountType?: `${AccountType}`;
+}

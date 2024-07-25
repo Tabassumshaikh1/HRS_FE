@@ -1,6 +1,7 @@
+import Diversity3TwoToneIcon from "@mui/icons-material/Diversity3TwoTone";
+import Groups2TwoToneIcon from "@mui/icons-material/Groups2TwoTone";
 import { UserRoles } from "../data/app.constant";
 import { ISidebarItem } from "../interfaces/sidebar-item.interface";
-import Groups2TwoToneIcon from "@mui/icons-material/Groups2TwoTone";
 import { IUser } from "../interfaces/user.interface";
 import { useAppSelector } from "../redux/hooks";
 
@@ -12,6 +13,12 @@ export class SidebarService {
       name: "Customers",
       path: "/customers",
       iconComp: Groups2TwoToneIcon,
+      roles: [UserRoles.ADMIN],
+    },
+    {
+      name: "Drivers",
+      path: "/drivers",
+      iconComp: Diversity3TwoToneIcon,
       roles: [UserRoles.ADMIN],
     },
   ];

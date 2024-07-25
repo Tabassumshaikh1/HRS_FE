@@ -36,6 +36,30 @@ export function RouterElement() {
         ? LazyLoadRoutes("Customer", "CustomerDetails")
         : AuthenticateRoute("/login"),
     },
+    {
+      path: "drivers",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
+        ? LazyLoadRoutes("Driver", "DriverList")
+        : AuthenticateRoute("/login"),
+    },
+    {
+      path: "drivers/:id",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
+        ? LazyLoadRoutes("Driver", "DriverDetails")
+        : AuthenticateRoute("/login"),
+    },
+    {
+      path: "drivers/new",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
+        ? LazyLoadRoutes("Driver", "AddEditDriver")
+        : AuthenticateRoute("/login"),
+    },
+    {
+      path: "drivers/:id/edit",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
+        ? LazyLoadRoutes("Driver", "AddEditDriver")
+        : AuthenticateRoute("/login"),
+    },
   ];
 
   const routing = useRoutes(routes);

@@ -1,24 +1,14 @@
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
-import { styled } from "@mui/material/styles";
 import { useEffect, useRef, useState } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import { UtilService } from "../../services/util.service";
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
-  },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
-  },
-}));
+import BootstrapDialog from "./BootstrapDialog";
 
 interface ImageCropperProps {
   file: File | string;
@@ -31,14 +21,13 @@ const ImageCropper = (props: ImageCropperProps) => {
   const utilSvc = new UtilService();
 
   useEffect(() => {
-    return () => {
-      const processFile = async () => {
-        const src = await utilSvc.convertFileToBase64(props.file as File);
-        setImgSrc(src);
-      };
-      processFile();
-    };
+    processFile();
   }, []);
+
+  const processFile = async () => {
+    const src = await utilSvc.convertFileToBase64(props.file as File);
+    setImgSrc(src);
+  };
 
   const onCrop = () => {
     const cropper = cropperRef.current?.cropper;
