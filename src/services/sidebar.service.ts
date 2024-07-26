@@ -1,3 +1,4 @@
+import CommuteTwoToneIcon from "@mui/icons-material/CommuteTwoTone";
 import Diversity3TwoToneIcon from "@mui/icons-material/Diversity3TwoTone";
 import Groups2TwoToneIcon from "@mui/icons-material/Groups2TwoTone";
 import { UserRoles } from "../data/app.constant";
@@ -19,6 +20,12 @@ export class SidebarService {
       name: "Drivers",
       path: "/drivers",
       iconComp: Diversity3TwoToneIcon,
+      roles: [UserRoles.ADMIN],
+    },
+    {
+      name: "Vehicle Types",
+      path: "/vehicle-types",
+      iconComp: CommuteTwoToneIcon,
       roles: [UserRoles.ADMIN],
     },
   ];

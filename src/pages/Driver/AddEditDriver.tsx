@@ -143,7 +143,11 @@ const AddEditDriver = () => {
                         label=""
                       />
                     </FormControl>
-                    {errors.file && touched.file ? <p className="text-danger text-sm">{errors.file}</p> : null}
+                    {errors.file && touched.file ? (
+                      <p className="text-danger text-sm">{errors.file}</p>
+                    ) : (
+                      <p className="text-danger text-sm invisible">&nbsp;</p>
+                    )}
                     {showCropper ? <ImageCropper file={values.file} onCrop={onImageCrop} /> : null}
                   </div>
                   <div className="col-12 align-center my-4">
@@ -168,7 +172,11 @@ const AddEditDriver = () => {
                         onBlur={handleBlur}
                       />
                     </FormControl>
-                    {errors.name && touched.name ? <p className="text-danger text-sm">{errors.name}</p> : null}
+                    {errors.name && touched.name ? (
+                      <p className="text-danger text-sm">{errors.name}</p>
+                    ) : (
+                      <p className="text-danger text-sm invisible">&nbsp;</p>
+                    )}
                   </div>
                   <div className="col-md-6 col-12 mt-4">
                     <FormControl variant="outlined" fullWidth>
@@ -188,7 +196,11 @@ const AddEditDriver = () => {
                         onBlur={handleBlur}
                       />
                     </FormControl>
-                    {errors.userName && touched.userName ? <p className="text-danger text-sm">{errors.userName}</p> : null}
+                    {errors.userName && touched.userName ? (
+                      <p className="text-danger text-sm">{errors.userName}</p>
+                    ) : (
+                      <p className="text-danger text-sm invisible">&nbsp;</p>
+                    )}
                   </div>
                   <div className="col-md-6 col-12 mt-4">
                     <FormControl variant="outlined" fullWidth>
@@ -205,7 +217,11 @@ const AddEditDriver = () => {
                         onBlur={handleBlur}
                       />
                     </FormControl>
-                    {errors.email && touched.email ? <p className="text-danger text-sm">{errors.email}</p> : null}
+                    {errors.email && touched.email ? (
+                      <p className="text-danger text-sm">{errors.email}</p>
+                    ) : (
+                      <p className="text-danger text-sm invisible">&nbsp;</p>
+                    )}
                   </div>
                   <div className="col-md-6 col-12 mt-4">
                     <FormControl variant="outlined" fullWidth>
@@ -225,7 +241,11 @@ const AddEditDriver = () => {
                         onBlur={handleBlur}
                       />
                     </FormControl>
-                    {errors.contactNumber && touched.contactNumber ? <p className="text-danger text-sm">{errors.contactNumber}</p> : null}
+                    {errors.contactNumber && touched.contactNumber ? (
+                      <p className="text-danger text-sm">{errors.contactNumber}</p>
+                    ) : (
+                      <p className="text-danger text-sm invisible">&nbsp;</p>
+                    )}
                   </div>
                   <div className={`${id ? "col-md-12" : "col-md-6"} col-12 mt-4`}>
                     <FormControl variant="outlined" fullWidth>
@@ -245,7 +265,11 @@ const AddEditDriver = () => {
                         onBlur={handleBlur}
                       />
                     </FormControl>
-                    {errors.licenseNumber && touched.licenseNumber ? <p className="text-danger text-sm">{errors.licenseNumber}</p> : null}
+                    {errors.licenseNumber && touched.licenseNumber ? (
+                      <p className="text-danger text-sm">{errors.licenseNumber}</p>
+                    ) : (
+                      <p className="text-danger text-sm invisible">&nbsp;</p>
+                    )}
                   </div>
                   {!id ? (
                     <div className="col-md-6 col-12 mt-4">
@@ -268,7 +292,11 @@ const AddEditDriver = () => {
                           label="Password"
                         />
                       </FormControl>
-                      {errors.password && touched.password ? <p className="text-danger text-sm">{errors.password}</p> : null}
+                      {errors.password && touched.password ? (
+                        <p className="text-danger text-sm">{errors.password}</p>
+                      ) : (
+                        <p className="text-danger text-sm invisible">&nbsp;</p>
+                      )}
                     </div>
                   ) : null}
                 </div>

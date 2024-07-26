@@ -126,6 +126,11 @@ hr {
   width: 500px;
 }
 
+.vehicle-add-dialog-wrapper .MuiPaper-root {
+  height: 230px;
+  width: 500px;
+}
+
 .image-cropper-loader {
   position: absolute;
   left: 50%;

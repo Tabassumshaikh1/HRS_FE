@@ -60,6 +60,12 @@ export function RouterElement() {
         ? LazyLoadRoutes("Driver", "AddEditDriver")
         : AuthenticateRoute("/login"),
     },
+    {
+      path: "vehicle-types",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
+        ? LazyLoadRoutes("VehicleType", "VehicleTypeList")
+        : AuthenticateRoute("/login"),
+    },
   ];
 
   const routing = useRoutes(routes);

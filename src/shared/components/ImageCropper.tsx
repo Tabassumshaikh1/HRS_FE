@@ -68,7 +68,7 @@ const ImageCropper = (props: ImageCropperProps) => {
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => props.onCrop(null)} className="text-primary">
+        <Button variant="outlined" color="inherit" onClick={() => props.onCrop(null)}>
           Cancel
         </Button>
         <Button autoFocus variant="contained" className="submit-btn" onClick={onCrop}>

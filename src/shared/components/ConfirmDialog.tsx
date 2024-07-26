@@ -37,7 +37,7 @@ const ConfirmDialog = (props: IProps) => {
       </IconButton>
       <DialogContent dividers>{props.message}</DialogContent>
       <DialogActions>
-        <Button onClick={() => props.onClose(false)} className="text-primary">
+        <Button variant="outlined" color="inherit" onClick={() => props.onClose(false)}>
           No
         </Button>
         <Button autoFocus variant="contained" className="submit-btn" onClick={() => props.onClose(true)}>

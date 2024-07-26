@@ -12,6 +12,10 @@ export enum AppMessages {
   DRIVER_UPDATED = "Driver update successfully",
   DRIVER_DELETED = "Driver deleted successfully",
   DRIVER_DELETE_CONFIRM = "Do you want to delete this driver?",
+  VEHICLE_TYPE_ADDED = "Vehicle type added successfully",
+  VEHICLE_TYPE_UPDATED = "Vehicle type update successfully",
+  VEHICLE_TYPE_DELETED = "Vehicle type deleted successfully",
+  VEHICLE_TYPE_DELETE_CONFIRM = "Do you want to delete this vehicle type?",
 }
 
 export enum SortBy {
@@ -40,6 +44,7 @@ export const API_URLS = {
 
   CUSTOMERS: `${API_HOST}/customers`,
   DRIVERS: `${API_HOST}/drivers`,
+  VEHICLE_TYPES: `${API_HOST}/vehicle-type`,
 };
 
 export enum ImageMimeType {
