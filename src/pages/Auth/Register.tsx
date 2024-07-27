@@ -15,7 +15,6 @@ import { IRegisterUser } from "../../interfaces/auth.interface";
 import { SignUpSchema } from "../../schemas/auth.schema";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { AuthService } from "../../services/auth.service";
-import { UtilService } from "../../services/util.service";
 import ImageCropper from "../../shared/components/ImageCropper";
 
 const initialValues = {
@@ -34,7 +33,6 @@ const Register = () => {
   const [showCropper, setShowCropper] = useState(false);
   const authSvc = new AuthService();
   const notifySvc = new AppNotificationService();
-  const utilSvc = new UtilService();
 
   const handleClickShowPassword = () => {
     setShowPassword((show) => !show);
@@ -47,7 +45,6 @@ const Register = () => {
 
     onSubmit: async (values: IRegisterUser) => {
       try {
-        utilSvc.showLoader();
         const formData = new FormData();
         if (values.file) {
           formData.append("file", values.file || "");
@@ -62,8 +59,6 @@ const Register = () => {
         navigate("/login");
       } catch (error) {
         notifySvc.showError(error);
-      } finally {
-        utilSvc.hideLoader();
       }
     },
   });
@@ -86,7 +81,7 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <Container maxWidth={BreakPoints.XS} className=" my-4 bg-light rounded py-3">
+      <Container maxWidth={BreakPoints.XS} className="bg-light rounded py-3">
         <>
           <h2 className="text-center text-primary heading">Sign Up</h2>
           <p className="text-center --bs-secondary-color ">Enter your credentials to continue</p>

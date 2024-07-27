@@ -11,7 +11,6 @@ import { AppMessages } from "../../../data/app.constant";
 import { IVehicleType } from "../../../interfaces/vehicle-type.interface";
 import { AddEditVehicleTypeSchema } from "../../../schemas/vehicle-type.schema";
 import { AppNotificationService } from "../../../services/app-notification.service";
-import { UtilService } from "../../../services/util.service";
 import { VehicleTypeService } from "../../../services/vehicle-type.service";
 import BootstrapDialog from "../../../shared/components/BootstrapDialog";
 
@@ -28,7 +27,6 @@ const initialValues = {
 const AddEditVehicleType = ({ vehicleType, onAddUpdate, onCancel }: IProps) => {
   const notifySvc = new AppNotificationService();
   const vehicleTypeSvc = new VehicleTypeService();
-  const utilSvc = new UtilService();
 
   const { values, touched, errors, handleBlur, handleChange, handleSubmit, setFieldValue } = useFormik({
     initialValues: initialValues,
@@ -37,7 +35,6 @@ const AddEditVehicleType = ({ vehicleType, onAddUpdate, onCancel }: IProps) => {
 
     onSubmit: async (values) => {
       try {
-        utilSvc.showLoader();
         if (vehicleType?._id) {
           await vehicleTypeSvc.updateVehicleType(vehicleType._id, values);
           notifySvc.showSucces(AppMessages.VEHICLE_TYPE_UPDATED);
@@ -48,8 +45,6 @@ const AddEditVehicleType = ({ vehicleType, onAddUpdate, onCancel }: IProps) => {
         onAddUpdate();
       } catch (error) {
         notifySvc.showError(error);
-      } finally {
-        utilSvc.hideLoader();
       }
     },
   });

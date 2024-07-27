@@ -20,6 +20,7 @@ const SearchBox = ({ values, setFieldValue }: IProps) => {
         type="search"
         label="Search"
         value={values.q}
+        fullWidth
         onChange={async (e) => {
           setFieldValue("q", e.target.value);
           await setFieldValue("page", 0);

@@ -16,6 +16,8 @@ export enum AppMessages {
   VEHICLE_TYPE_UPDATED = "Vehicle type update successfully",
   VEHICLE_TYPE_DELETED = "Vehicle type deleted successfully",
   VEHICLE_TYPE_DELETE_CONFIRM = "Do you want to delete this vehicle type?",
+  FILE_SIZE = "File size should be less than 2MB",
+  FILE_TYPE = "File type should be an image",
 }
 
 export enum SortBy {

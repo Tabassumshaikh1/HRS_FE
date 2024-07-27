@@ -11,12 +11,8 @@ const SignUpSchema = Yup.object().shape({
   file: Yup.mixed()
     .nullable()
     .notRequired()
-    .test("FILE_SIZE", "Uploaded file is too big.", (value: any) => !value || (value && value?.size <= AppDefaults.MAX_FILE_SIZE))
-    .test(
-      "FILE_FORMAT",
-      "Uploaded file has unsupported format.",
-      (value: any) => !value || (value && Object.keys(ImageMimeType).includes(value.type))
-    ),
+    .test("FILE_SIZE", AppMessages.FILE_SIZE, (value: any) => !value || (value && value?.size <= AppDefaults.MAX_FILE_SIZE))
+    .test("FILE_FORMAT", AppMessages.FILE_TYPE, (value: any) => !value || (value && Object.keys(ImageMimeType).includes(value.type))),
   name: Yup.string().required(AppMessages.REQUIRED),
   userName: Yup.string().required(AppMessages.REQUIRED),
   email: Yup.string().email().required(AppMessages.REQUIRED),

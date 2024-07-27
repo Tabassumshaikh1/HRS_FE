@@ -5,7 +5,7 @@ import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
 import { Button, Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { AccountType, AccountTypeLabel, ActivityStatus, DateFormats, StatusColors } from "../../data/app.constant";
 import { IUser } from "../../interfaces/user.interface";
 import { AppNotificationService } from "../../services/app-notification.service";
@@ -14,11 +14,12 @@ import { UtilService } from "../../services/util.service";
 import BackButton from "../../shared/components/BackButton";
 import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
 import CustomerImage from "./components/CustomerImage";
+import ActivateDeactivateStatus from "../../shared/components/ActivateDeactivateStatus";
+import ChatBubbleTwoToneIcon from "@mui/icons-material/ChatBubbleTwoTone";
 
 const CustomerDetails = () => {
   const [customer, setCustomer] = useState<IUser | null>(null);
   const { id } = useParams();
-  const navigate = useNavigate();
   const notifySvc = new AppNotificationService();
   const customerSvc = new CustomerService();
   const utilSvc = new UtilService();
@@ -29,19 +30,15 @@ const CustomerDetails = () => {
 
   const loadCustomer = async () => {
     try {
-      utilSvc.showLoader();
       const response = await customerSvc.getSingleCustomer(id as string);
       setCustomer(response);
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 
   const updateStatus = async () => {
     try {
-      utilSvc.showLoader();
       const payload = {
         status: customer?.status === ActivityStatus.ACTIVE ? ActivityStatus.INACTIVE : ActivityStatus.ACTIVE,
       };
@@ -49,25 +46,27 @@ const CustomerDetails = () => {
       loadCustomer();
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
   return (
     <div className="content-wrapper">
-      <div className="row mb-4">
+      <div className="row my-4">
         <div className="col-12">
           <BackButton />
         </div>
       </div>
       <Card>
-        <CardHeader title="Customer Details" className="card-heading"></CardHeader>
+        <CardHeader
+          title="Customer Details"
+          className="card-heading"
+          action={customer ? <ActivateDeactivateStatus user={customer} onClick={updateStatus} /> : null}
+        />
         <Divider />
         {customer?._id ? (
           <CardContent>
-            <div className="row px-4">
+            <div className={`row ${utilSvc.isMobile() ? "px-2" : "px-4"}`}>
               <div
-                className="col-lg-4 col-md-6 col-sm-12 col-12 align-center border rounded p-4"
+                className="col-lg-4 col-md-5 col-sm-12 col-12 align-center border rounded p-4"
                 style={{
                   background: `linear-gradient(0deg, #FFFFFF 45%, ${
                     customer.status === ActivityStatus.ACTIVE ? StatusColors.ACTIVE : StatusColors.INACTIVE
@@ -80,37 +79,31 @@ const CustomerDetails = () => {
                   </div>
                   <div className="col-12 align-center">
                     <BootstrapTooltip title="Call">
-                      <a href={`tel:${customer.contactNumber}`}>
+                      <a href={`tel:${customer.contactNumber}`} className="me-3">
                         <Button variant="outlined" color="primary">
                           <CallTwoToneIcon />
                         </Button>
                       </a>
                     </BootstrapTooltip>
+                    <BootstrapTooltip title="Message">
+                      <a href={`sms:${customer.contactNumber}`} className="me-3">
+                        <Button variant="outlined" color="info">
+                          <ChatBubbleTwoToneIcon />
+                        </Button>
+                      </a>
+                    </BootstrapTooltip>
                     <BootstrapTooltip title="Email">
                       <a href={`mailto:${customer.email}`}>
-                        <Button variant="outlined" color="secondary" className="mx-3">
+                        <Button variant="outlined" color="secondary" className="me-3">
                           <EmailTwoToneIcon />
                         </Button>
                       </a>
                     </BootstrapTooltip>
-                    {customer.status === ActivityStatus.ACTIVE ? (
-                      <BootstrapTooltip title="Deactivate Customer">
-                        <Button variant="outlined" color="error" onClick={updateStatus}>
-                          <BlockTwoToneIcon className="me-2" /> Deactivate
-                        </Button>
-                      </BootstrapTooltip>
-                    ) : (
-                      <BootstrapTooltip title="Activate Customer">
-                        <Button variant="outlined" color="success" onClick={updateStatus}>
-                          <DoneTwoToneIcon className="me-2" /> Activate
-                        </Button>
-                      </BootstrapTooltip>
-                    )}
                   </div>
                 </div>
               </div>
-              <div className="col-lg-8 col-md-6 col-sm-12 col-12 mt-4">
-                <div className="row ms-4">
+              <div className="col-lg-8 col-md-7 col-sm-12 col-12 mt-4">
+                <div className={`row ${utilSvc.isMobile() ? "" : "ms-4"}`}>
                   <div className="col-6 mb-4">
                     <p className="detail-label">Name</p>
                     <p className="detail-value">{customer.name}</p>

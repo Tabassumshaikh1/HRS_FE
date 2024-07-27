@@ -10,7 +10,7 @@ interface IProps {
 const DriverFilters = ({ values, setFieldValue }: IProps) => {
   return (
     <div className="row">
-      <div className="col-md-12 col-6">
+      <div className="col-md-12 col-12">
         <FormControl fullWidth size="small">
           <InputLabel id="demo-select-small-label">Status</InputLabel>
           <Select

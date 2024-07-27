@@ -20,6 +20,15 @@
   background-position: center;
 }
 
+.login-container > .MuiContainer-root,
+.register-container > .MuiContainer-root {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  -ms-transform: translate(-50%, -50%) !important;
+  transform: translate(-50%, -50%) !important;
+}
+
 .text-primary {
   color: #9c27b0 !important;
 }

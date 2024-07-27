@@ -71,6 +71,7 @@ const columns: GridColDef[] = [
     sortable: false,
     width: 200,
     renderCell: (params) => <CustomerAction customer={{ ...params.row }} />,
+    cellClassName: "ps-0",
   },
 ];
 
@@ -115,20 +116,16 @@ const CustomerList = () => {
 
   const loadCustomers = async (filters: ICustomerFilters) => {
     try {
-      utilSvc.showLoader();
       filters = { ...filters, page: (filters.page || 0) + 1 };
       const response = await customerSvc.getCustomers(filters);
       setCustomers(response);
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 
   const exportCustomers = async () => {
     try {
-      utilSvc.showLoader();
       const response = await customerSvc.getCustomers({
         q: values.q,
         status: values.status,
@@ -156,8 +153,6 @@ const CustomerList = () => {
       utilSvc.exportAsExcel(excelData, fileName);
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 
@@ -183,10 +178,10 @@ const CustomerList = () => {
         <Divider />
         <CardContent>
           <div className="row">
-            <div className="col-md-6 col-9">
+            <div className="col-md-6 col-8">
               <SearchBox values={values} setFieldValue={setFieldValue} />
             </div>
-            <div className="col-md-6 col-3 text-end">
+            <div className="col-md-6 col-4 text-end">
               <BootstrapTooltip title="Download" onClick={exportCustomers}>
                 <DownloadTwoToneIcon className="me-4 curson-pointer" />
               </BootstrapTooltip>

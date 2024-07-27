@@ -67,8 +67,7 @@ const VehicleTypeList = () => {
       renderCell: (params) => (
         <VehicleTypeAction vehicleType={{ ...params.row }} onUpdate={() => loadVehicleTypes(values)} onDelete={deleteVehicleType} />
       ),
-      headerClassName: "ms-4",
-      cellClassName: "ms-2",
+      cellClassName: "ps-0",
     },
   ];
 
@@ -93,20 +92,16 @@ const VehicleTypeList = () => {
 
   const loadVehicleTypes = async (filters: IVehicleTypeFilters) => {
     try {
-      utilSvc.showLoader();
       filters = { ...filters, page: (filters.page || 0) + 1 };
       const response = await vehicleTypeSvc.getVehicleTypes(filters);
       setVehicleTypes(response);
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 
   const exportVehicleTypes = async () => {
     try {
-      utilSvc.showLoader();
       const response = await vehicleTypeSvc.getVehicleTypes({
         q: values.q,
         sort: values.sort,
@@ -127,21 +122,16 @@ const VehicleTypeList = () => {
       utilSvc.exportAsExcel(excelData, fileName);
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 
   const deleteVehicleType = async (id: string) => {
     try {
-      utilSvc.showLoader();
       await vehicleTypeSvc.deleteVehicleType(id);
       notifySvc.showSucces(AppMessages.VEHICLE_TYPE_DELETED);
       loadVehicleTypes(values);
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 
@@ -162,7 +152,7 @@ const VehicleTypeList = () => {
 
   return (
     <div className="content-wrapper">
-      <div className="row mb-4">
+      <div className="row my-4">
         <div className="col-12 text-end">
           <Button variant="contained" color="secondary" onClick={() => setShowAddDialog(true)}>
             <AddTwoToneIcon fontSize="small" className="me-1" /> Add Vehicle Type
@@ -183,10 +173,10 @@ const VehicleTypeList = () => {
         <Divider />
         <CardContent>
           <div className="row">
-            <div className="col-md-6 col-9">
+            <div className="col-md-6 col-10">
               <SearchBox values={values} setFieldValue={setFieldValue} />
             </div>
-            <div className="col-md-6 col-3 text-end">
+            <div className="col-md-6 col-2 text-end">
               <BootstrapTooltip title="Download" onClick={exportVehicleTypes}>
                 <DownloadTwoToneIcon className="curson-pointer" />
               </BootstrapTooltip>

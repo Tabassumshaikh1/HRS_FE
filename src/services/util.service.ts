@@ -1,11 +1,8 @@
 import { DateFormats } from "../data/app.constant";
-import { useAppDispatch } from "../redux/hooks";
-import { hideLoader, showLoader } from "../redux/slices/loader.slice";
 import moment from "moment";
 import XLSX from "xlsx-js-style";
 
 export class UtilService {
-  private appDespatch = useAppDispatch();
   convertBase64ToBlob(base64Image: string) {
     // Split into two parts
     const parts = base64Image.split(";base64,");
@@ -36,14 +33,6 @@ export class UtilService {
         resolve(reader.result as string);
       };
     });
-  }
-
-  showLoader() {
-    this.appDespatch(showLoader());
-  }
-
-  hideLoader() {
-    this.appDespatch(hideLoader());
   }
 
   formatDate(date: string | Date, format: string = DateFormats.DD_MM_YYYY): string {
@@ -78,5 +67,9 @@ export class UtilService {
     max = Math.floor(max);
 
     return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 }

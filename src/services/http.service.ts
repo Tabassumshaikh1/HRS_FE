@@ -1,41 +1,78 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { useAppSelector } from "../redux/hooks";
+import { LoaderService } from "./loader.service";
 
 export class HttpService {
   private token: string = useAppSelector((store) => store.token);
+  private loaderSvc = new LoaderService();
 
-  get(url: string, config: AxiosRequestConfig = {}) {
-    if (this.token) {
-      config.headers = { Authorization: `Bearer ${this.token}` };
+  async get(url: string, config: AxiosRequestConfig = {}) {
+    try {
+      this.loaderSvc.showLoader();
+      if (this.token) {
+        config.headers = { Authorization: `Bearer ${this.token}` };
+      }
+      return await axios.get(url, config);
+    } catch (error) {
+      throw error;
+    } finally {
+      this.loaderSvc.hideLoader();
     }
-    return axios.get(url, config);
   }
 
-  post(url: string, payload: any, config: AxiosRequestConfig = {}) {
-    if (this.token) {
-      config.headers = { Authorization: `Bearer ${this.token}` };
+  async post(url: string, payload: any, config: AxiosRequestConfig = {}) {
+    try {
+      this.loaderSvc.showLoader();
+      if (this.token) {
+        config.headers = { Authorization: `Bearer ${this.token}` };
+      }
+      return await axios.post(url, payload, config);
+    } catch (error) {
+      throw error;
+    } finally {
+      this.loaderSvc.hideLoader();
     }
-    return axios.post(url, payload, config);
   }
 
-  put(url: string, payload: any, config: AxiosRequestConfig = {}) {
-    if (this.token) {
-      config.headers = { Authorization: `Bearer ${this.token}` };
+  async put(url: string, payload: any, config: AxiosRequestConfig = {}) {
+    try {
+      this.loaderSvc.showLoader();
+      if (this.token) {
+        config.headers = { Authorization: `Bearer ${this.token}` };
+      }
+      return await axios.put(url, payload, config);
+    } catch (error) {
+      throw error;
+    } finally {
+      this.loaderSvc.hideLoader();
     }
-    return axios.put(url, payload, config);
   }
 
-  patch(url: string, payload: any, config: AxiosRequestConfig = {}) {
-    if (this.token) {
-      config.headers = { Authorization: `Bearer ${this.token}` };
+  async patch(url: string, payload: any, config: AxiosRequestConfig = {}) {
+    try {
+      this.loaderSvc.showLoader();
+      if (this.token) {
+        config.headers = { Authorization: `Bearer ${this.token}` };
+      }
+      return await axios.patch(url, payload, config);
+    } catch (error) {
+      throw error;
+    } finally {
+      this.loaderSvc.hideLoader();
     }
-    return axios.patch(url, payload, config);
   }
 
-  delete(url: string, config: AxiosRequestConfig = {}) {
-    if (this.token) {
-      config.headers = { Authorization: `Bearer ${this.token}` };
+  async delete(url: string, config: AxiosRequestConfig = {}) {
+    try {
+      this.loaderSvc.showLoader();
+      if (this.token) {
+        config.headers = { Authorization: `Bearer ${this.token}` };
+      }
+      return await axios.delete(url, config);
+    } catch (error) {
+      throw error;
+    } finally {
+      this.loaderSvc.hideLoader();
     }
-    return axios.delete(url, config);
   }
 }

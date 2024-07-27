@@ -1,19 +1,18 @@
-import React from "react";
+import { Button, Card, CardContent, CardHeader, FormControl, OutlinedInput } from "@mui/material";
+import Divider from "@mui/material/Divider";
+import InputLabel from "@mui/material/InputLabel";
+import { useFormik } from "formik";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { AppMessages } from "../../data/app.constant";
 import { IUser } from "../../interfaces/user.interface";
+import { addDriverSchema, editDriverSchema } from "../../schemas/driver.schema";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { DriverService } from "../../services/driver.service";
 import { UtilService } from "../../services/util.service";
 import BackButton from "../../shared/components/BackButton";
-import { Button, Card, CardContent, CardHeader, FormControl, OutlinedInput } from "@mui/material";
-import Divider from "@mui/material/Divider";
-import DriverImage from "./components/DriverImage";
-import { useFormik } from "formik";
-import { addDriverSchema, editDriverSchema } from "../../schemas/driver.schema";
 import ImageCropper from "../../shared/components/ImageCropper";
-import InputLabel from "@mui/material/InputLabel";
-import { AppMessages } from "../../data/app.constant";
+import DriverImage from "./components/DriverImage";
 
 const initialValues = {
   file: "",
@@ -43,7 +42,6 @@ const AddEditDriver = () => {
 
     onSubmit: async (values) => {
       try {
-        utilSvc.showLoader();
         const formData = new FormData();
         if (values.file) {
           formData.append("file", values.file || "");
@@ -64,8 +62,6 @@ const AddEditDriver = () => {
         navigate(-1);
       } catch (error) {
         notifySvc.showError(error);
-      } finally {
-        utilSvc.hideLoader();
       }
     },
   });
@@ -78,7 +74,6 @@ const AddEditDriver = () => {
 
   const loadDriver = async () => {
     try {
-      utilSvc.showLoader();
       const response = await driverSvc.getSingleDriver(id as string);
       setDriver(response);
       setImageUrl(response?.imageUrl || null);
@@ -89,8 +84,6 @@ const AddEditDriver = () => {
       setFieldValue("licenseNumber", response.licenseNumber || "");
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 
@@ -118,7 +111,7 @@ const AddEditDriver = () => {
 
   return (
     <div className="content-wrapper">
-      <div className="row mb-4">
+      <div className="row my-4">
         <div className="col-12">
           <BackButton />
         </div>
@@ -128,7 +121,7 @@ const AddEditDriver = () => {
         <Divider />
         <CardContent>
           <form onSubmit={handleSubmit}>
-            <div className="row px-4">
+            <div className="row">
               <div className="col-lg-4 col-md-6 col-sm-12 col-12 align-center">
                 <div className="row">
                   <div className="col-12">

@@ -91,8 +91,7 @@ const DriverList = () => {
       sortable: false,
       width: 200,
       renderCell: (params) => <DriverAction driver={{ ...params.row }} onDelete={deleteDriver} />,
-      headerClassName: "ms-5",
-      cellClassName: "ms-2",
+      cellClassName: "ps-0",
     },
   ];
 
@@ -117,20 +116,16 @@ const DriverList = () => {
 
   const loadDrivers = async (filters: IDriverFilters) => {
     try {
-      utilSvc.showLoader();
       filters = { ...filters, page: (filters.page || 0) + 1 };
       const response = await driverSvc.getDrivers(filters);
       setDrivers(response);
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 
   const exportDrivers = async () => {
     try {
-      utilSvc.showLoader();
       const response = await driverSvc.getDrivers({
         q: values.q,
         status: values.status,
@@ -158,21 +153,16 @@ const DriverList = () => {
       utilSvc.exportAsExcel(excelData, fileName);
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 
   const deleteDriver = async (id: string) => {
     try {
-      utilSvc.showLoader();
       await driverSvc.deleteDriver(id);
       notifySvc.showSucces(AppMessages.DRIVER_DELETED);
       loadDrivers(values);
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 
@@ -193,7 +183,7 @@ const DriverList = () => {
 
   return (
     <div className="content-wrapper">
-      <div className="row mb-4">
+      <div className="row my-4">
         <div className="col-12 text-end">
           <Button variant="contained" color="secondary" onClick={() => navigate("/drivers/new")}>
             <AddTwoToneIcon fontSize="small" className="me-1" /> Add Driver
@@ -205,10 +195,10 @@ const DriverList = () => {
         <Divider />
         <CardContent>
           <div className="row">
-            <div className="col-md-6 col-9">
+            <div className="col-md-6 col-8">
               <SearchBox values={values} setFieldValue={setFieldValue} />
             </div>
-            <div className="col-md-6 col-3 text-end">
+            <div className="col-md-6 col-4 text-end">
               <BootstrapTooltip title="Download" onClick={exportDrivers}>
                 <DownloadTwoToneIcon className="me-4 curson-pointer" />
               </BootstrapTooltip>

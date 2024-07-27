@@ -99,14 +99,11 @@ export default function Header() {
   };
   const logout = async () => {
     try {
-      utilSvc.showLoader();
       await authSvc.logout();
       notifySvc.showSucces(AppMessages.LOGOUT_SUCCESS);
       navigate("/login");
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 

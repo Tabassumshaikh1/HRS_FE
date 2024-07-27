@@ -17,7 +17,6 @@ import { LoginSchema } from "../../schemas/auth.schema";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { AuthService } from "../../services/auth.service";
 import { signInWithGooglePopup } from "../../utils/firebase.utils";
-import { UtilService } from "../../services/util.service";
 
 const initialValues = {
   userName: "",
@@ -29,7 +28,6 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const notifySvc = new AppNotificationService();
   const authSvc = new AuthService();
-  const utilSvc = new UtilService();
 
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
@@ -42,27 +40,21 @@ const Login = () => {
 
   const login = async (payload: ILoginCredentials) => {
     try {
-      utilSvc.showLoader();
       await authSvc.login(payload);
       notifySvc.showSucces(AppMessages.LOGIN_SUCCESS);
       navigate("/dashboard");
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 
   const loginWithGoogle = async (payload: IGoogleLoginCredentials) => {
     try {
-      utilSvc.showLoader();
       await authSvc.loginWithGoogle(payload);
       notifySvc.showSucces(AppMessages.LOGIN_SUCCESS);
       navigate("/dashboard");
     } catch (error) {
       notifySvc.showError(error);
-    } finally {
-      utilSvc.hideLoader();
     }
   };
 
