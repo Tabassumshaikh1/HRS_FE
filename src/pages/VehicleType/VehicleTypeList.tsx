@@ -184,10 +184,10 @@ const VehicleTypeList = () => {
         <Divider />
         <CardContent>
           <div className="row">
-            <div className="col-md-6 col-9">
+            <div className="col-md-6 col-8">
               <SearchBox values={values} setFieldValue={setFieldValue} />
             </div>
-            <div className="col-md-6 col-3 text-end">
+            <div className="col-md-6 col-4 text-end">
               {showListView ? (
                 <BootstrapTooltip title="Card View" onClick={toggleListAndCardView}>
                   <WindowTwoToneIcon className="me-3 curson-pointer" />
