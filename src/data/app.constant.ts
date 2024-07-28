@@ -97,11 +97,6 @@ export enum DateFormats {
   DD_MM_YYYY_H_MM_A = "DD/MM/YYYY h:mm A",
 }
 
-export enum StatusColors {
-  ACTIVE = "#4caf50",
-  INACTIVE = "#f44336",
-}
-
 export const PageSizeOptions = [5, 10, 25, 50];
 
 export enum HttpStatus {
@@ -154,38 +149,3 @@ export enum HttpStatus {
   GATEWAY_TIMEOUT = 504,
   HTTP_VERSION_NOT_SUPPORTED = 505,
 }
-
-export const MateialColors = [
-  "#f44336",
-  "#e91e63",
-  "#9c27b0",
-  "#673ab7",
-  "#3f51b5",
-  "#2196f3",
-  "#03a9f4",
-  "#00bcd4",
-  "#009688",
-  "#4caf50",
-  "#8bc34a",
-  "#cddc39",
-  "#ffeb3b",
-  "#ffc107",
-  "#ff9800",
-  "#ff5722",
-  "#ff1744",
-  "#f50057",
-  "#d500f9",
-  "#651fff",
-  "#3d5afe",
-  "#2979ff",
-  "#00b0ff",
-  "#00e5ff",
-  "#1de9b6",
-  "#00e676",
-  "#76ff03",
-  "#c6ff00",
-  "#ffea00",
-  "#ffc400",
-  "#ff9100",
-  "#ff3d00",
-];

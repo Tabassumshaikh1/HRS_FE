@@ -1,22 +1,21 @@
-import BlockTwoToneIcon from "@mui/icons-material/BlockTwoTone";
 import CallTwoToneIcon from "@mui/icons-material/CallTwoTone";
+import ChatBubbleTwoToneIcon from "@mui/icons-material/ChatBubbleTwoTone";
 import CreateTwoToneIcon from "@mui/icons-material/CreateTwoTone";
-import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
 import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
 import { Button, Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ActivityStatus, DateFormats, StatusColors } from "../../data/app.constant";
+import { ActivityStatus, DateFormats } from "../../data/app.constant";
 import { IUser } from "../../interfaces/user.interface";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { DriverService } from "../../services/driver.service";
 import { UtilService } from "../../services/util.service";
+import ActivateDeactivateStatus from "../../shared/components/ActivateDeactivateStatus";
 import BackButton from "../../shared/components/BackButton";
 import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
 import DriverImage from "./components/DriverImage";
-import ActivateDeactivateStatus from "../../shared/components/ActivateDeactivateStatus";
-import ChatBubbleTwoToneIcon from "@mui/icons-material/ChatBubbleTwoTone";
+import { StatusColors } from "../../data/color.constant";
 
 const DriverDetails = () => {
   const [driver, setDriver] = useState<IUser | null>(null);
@@ -101,7 +100,7 @@ const DriverDetails = () => {
                       </a>
                     </BootstrapTooltip>
                     <BootstrapTooltip title="Email">
-                      <a href={`mailto:${driver.email}`} className="me-3">
+                      <a href={`mailto:${driver.email}`}>
                         <Button variant="outlined" color="secondary">
                           <EmailTwoToneIcon />
                         </Button>

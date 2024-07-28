@@ -1,5 +1,7 @@
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import DownloadTwoToneIcon from "@mui/icons-material/DownloadTwoTone";
+import FormatListBulletedTwoToneIcon from "@mui/icons-material/FormatListBulletedTwoTone";
+import WindowTwoToneIcon from "@mui/icons-material/WindowTwoTone";
 import { Button, Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { DataGrid, GridColDef, GridPaginationModel, GridSortDirection, GridSortModel } from "@mui/x-data-grid";
@@ -17,6 +19,7 @@ import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
 import SearchBox from "../../shared/components/SearchBox";
 import AddEditVehicleType from "./components/AddEditVehicleType";
 import VehicleTypeAction from "./components/VehicleTypeAction";
+import VehicleTypeCards from "./components/VehicleTypeCards";
 
 const initialValues: any = {
   q: "",
@@ -27,14 +30,15 @@ const initialValues: any = {
 };
 
 const VehicleTypeList = () => {
+  const notifySvc = new AppNotificationService();
+  const vehicleTypeSvc = new VehicleTypeService();
+  const utilSvc = new UtilService();
   const [vehicleTypes, setVehicleTypes] = useState<IListResponse>({
     total: 0,
     data: [],
   });
   const [showAddDialog, setShowAddDialog] = useState<boolean>(false);
-  const notifySvc = new AppNotificationService();
-  const vehicleTypeSvc = new VehicleTypeService();
-  const utilSvc = new UtilService();
+  const [showListView, setShowListView] = useState<boolean>(!utilSvc.isMobile());
 
   const columns: GridColDef[] = [
     {
@@ -150,6 +154,13 @@ const VehicleTypeList = () => {
     await setFieldValue("sortBy", model?.[0]?.sort || SortBy.ASC);
   };
 
+  const toggleListAndCardView = async () => {
+    if (values.page !== AppDefaults.PAGE_NO) {
+      await setFieldValue("page", 0);
+    }
+    setShowListView(!showListView);
+  };
+
   return (
     <div className="content-wrapper">
       <div className="row my-4">
@@ -173,51 +184,70 @@ const VehicleTypeList = () => {
         <Divider />
         <CardContent>
           <div className="row">
-            <div className="col-md-6 col-10">
+            <div className="col-md-6 col-9">
               <SearchBox values={values} setFieldValue={setFieldValue} />
             </div>
-            <div className="col-md-6 col-2 text-end">
+            <div className="col-md-6 col-3 text-end">
+              {showListView ? (
+                <BootstrapTooltip title="Card View" onClick={toggleListAndCardView}>
+                  <WindowTwoToneIcon className="me-3 curson-pointer" />
+                </BootstrapTooltip>
+              ) : (
+                <BootstrapTooltip title="List View" onClick={toggleListAndCardView}>
+                  <FormatListBulletedTwoToneIcon className="me-3 curson-pointer" />
+                </BootstrapTooltip>
+              )}
               <BootstrapTooltip title="Download" onClick={exportVehicleTypes}>
                 <DownloadTwoToneIcon className="curson-pointer" />
               </BootstrapTooltip>
             </div>
 
             <div className="col-12 mt-4">
-              <DataGrid
-                className="data-grid-table"
-                rows={vehicleTypes.data}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: values.page, pageSize: values.limit },
-                  },
-                  sorting: {
-                    sortModel: [
-                      {
-                        field: values.sort,
-                        sort: values.sortBy as GridSortDirection,
-                      },
-                    ],
-                  },
-                }}
-                paginationMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
-                sortingMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
-                rowCount={vehicleTypes.total}
-                pageSizeOptions={PageSizeOptions}
-                getRowId={(row) => row._id}
-                rowSelection={false}
-                disableColumnResize={true}
-                paginationModel={{ page: values.page, pageSize: values.limit }}
-                rowHeight={AppDefaults.LIST_ROW_HEIGHT as number}
-                sortModel={[
-                  {
-                    field: values.sort,
-                    sort: values.sortBy as GridSortDirection,
-                  },
-                ]}
-                onPaginationModelChange={paginatorModelChange}
-                onSortModelChange={sortingModelChange}
-              />
+              {showListView ? (
+                <DataGrid
+                  className="data-grid-table"
+                  rows={vehicleTypes.data}
+                  columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: values.page, pageSize: values.limit },
+                    },
+                    sorting: {
+                      sortModel: [
+                        {
+                          field: values.sort,
+                          sort: values.sortBy as GridSortDirection,
+                        },
+                      ],
+                    },
+                  }}
+                  paginationMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
+                  sortingMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
+                  rowCount={vehicleTypes.total}
+                  pageSizeOptions={PageSizeOptions}
+                  getRowId={(row) => row._id}
+                  rowSelection={false}
+                  disableColumnResize={true}
+                  paginationModel={{ page: values.page, pageSize: values.limit }}
+                  rowHeight={AppDefaults.LIST_ROW_HEIGHT as number}
+                  sortModel={[
+                    {
+                      field: values.sort,
+                      sort: values.sortBy as GridSortDirection,
+                    },
+                  ]}
+                  onPaginationModelChange={paginatorModelChange}
+                  onSortModelChange={sortingModelChange}
+                />
+              ) : (
+                <VehicleTypeCards
+                  vehicleTypes={vehicleTypes}
+                  values={values}
+                  setFieldValue={setFieldValue}
+                  onUpdate={() => loadVehicleTypes(values)}
+                  onDelete={deleteVehicleType}
+                />
+              )}
             </div>
           </div>
         </CardContent>

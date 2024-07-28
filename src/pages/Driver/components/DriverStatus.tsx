@@ -4,15 +4,16 @@ import { IUser } from "../../../interfaces/user.interface";
 
 interface IProps {
   driver: IUser;
+  verient?: "outlined" | "filled";
 }
 
-const DriverStatus = ({ driver }: IProps) => {
+const DriverStatus = ({ driver, verient = "outlined" }: IProps) => {
   return (
     <>
       {driver.status === ActivityStatus.ACTIVE ? (
-        <Chip variant="outlined" color="success" size="small" label={driver.status} />
+        <Chip variant={verient || "outlined"} color="success" size="small" label={driver.status} />
       ) : (
-        <Chip variant="outlined" color="error" size="small" label={driver.status} />
+        <Chip variant={verient || "outlined"} color="error" size="small" label={driver.status} />
       )}
     </>
   );

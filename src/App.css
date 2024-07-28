@@ -242,3 +242,26 @@ input[type="file"]::file-selector-button:active {
   color: rgb(54, 65, 82);
   font-size: 1rem;
 }
+
+.card-detail-label {
+  font-weight: 500;
+  color: rgb(18, 25, 38);
+  line-height: 1.75;
+  font-size: 0.85rem;
+}
+
+.card-detail-value {
+  letter-spacing: 0em;
+  font-weight: 400;
+  line-height: 1.5em;
+  color: rgb(54, 65, 82);
+  font-size: 0.8rem;
+}
+
+.drawer-items > .active {
+  background-color: #e1bee7;
+}
+
+.card-action-menu li {
+  font-size: 13px;
+}

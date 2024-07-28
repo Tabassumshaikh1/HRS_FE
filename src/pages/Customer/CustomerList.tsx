@@ -1,5 +1,7 @@
 import DownloadTwoToneIcon from "@mui/icons-material/DownloadTwoTone";
 import FilterListTwoToneIcon from "@mui/icons-material/FilterListTwoTone";
+import FormatListBulletedTwoToneIcon from "@mui/icons-material/FormatListBulletedTwoTone";
+import WindowTwoToneIcon from "@mui/icons-material/WindowTwoTone";
 import { Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { DataGrid, GridColDef, GridPaginationModel, GridSortDirection, GridSortModel } from "@mui/x-data-grid";
@@ -14,14 +16,15 @@ import { AppNotificationService } from "../../services/app-notification.service"
 import { CustomerService } from "../../services/customer.service";
 import { UtilService } from "../../services/util.service";
 import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
+import SearchBox from "../../shared/components/SearchBox";
 import CustomerAction from "./components/CustomerAction";
+import CustomerCards from "./components/CustomerCards";
 import CustomerContactNo from "./components/CustomerContactNo";
 import CustomerCreatedOn from "./components/CustomerCreatedOn";
 import CustomerEmail from "./components/CustomerEmail";
 import CustomerFilters from "./components/CustomerFilters";
 import CustomerImage from "./components/CustomerImage";
 import CustomerStatus from "./components/CustomerStatus";
-import SearchBox from "../../shared/components/SearchBox";
 
 const columns: GridColDef[] = [
   {
@@ -29,7 +32,7 @@ const columns: GridColDef[] = [
     headerName: "",
     sortable: false,
     width: 100,
-    renderCell: (params) => <CustomerImage customer={{ ...params.row }} />,
+    renderCell: (params) => <CustomerImage imageUrl={params.row?.imageUrl} />,
   },
   {
     field: "name",
@@ -86,14 +89,15 @@ const initialValues: any = {
 };
 
 const CustomerList = () => {
+  const notifySvc = new AppNotificationService();
+  const customerSvc = new CustomerService();
+  const utilSvc = new UtilService();
   const [customers, setCustomers] = useState<IListResponse>({
     total: 0,
     data: [],
   });
   const [showFilters, setShowFilters] = useState<boolean>(false);
-  const notifySvc = new AppNotificationService();
-  const customerSvc = new CustomerService();
-  const utilSvc = new UtilService();
+  const [showListView, setShowListView] = useState<boolean>(!utilSvc.isMobile());
 
   const { values, setFieldValue } = useFormik({
     initialValues,
@@ -171,6 +175,13 @@ const CustomerList = () => {
     await setFieldValue("sortBy", model?.[0]?.sort || SortBy.ASC);
   };
 
+  const toggleListAndCardView = async () => {
+    if (values.page !== AppDefaults.PAGE_NO) {
+      await setFieldValue("page", 0);
+    }
+    setShowListView(!showListView);
+  };
+
   return (
     <div className="content-wrapper">
       <Card>
@@ -178,12 +189,21 @@ const CustomerList = () => {
         <Divider />
         <CardContent>
           <div className="row">
-            <div className="col-md-6 col-8">
+            <div className="col-md-6 col-7">
               <SearchBox values={values} setFieldValue={setFieldValue} />
             </div>
-            <div className="col-md-6 col-4 text-end">
+            <div className="col-md-6 col-5 text-end">
+              {showListView ? (
+                <BootstrapTooltip title="Card View" onClick={toggleListAndCardView}>
+                  <WindowTwoToneIcon className="me-3 curson-pointer" />
+                </BootstrapTooltip>
+              ) : (
+                <BootstrapTooltip title="List View" onClick={toggleListAndCardView}>
+                  <FormatListBulletedTwoToneIcon className="me-3 curson-pointer" />
+                </BootstrapTooltip>
+              )}
               <BootstrapTooltip title="Download" onClick={exportCustomers}>
-                <DownloadTwoToneIcon className="me-4 curson-pointer" />
+                <DownloadTwoToneIcon className="me-3 curson-pointer" />
               </BootstrapTooltip>
               <BootstrapTooltip title="Filters" onClick={() => setShowFilters(!showFilters)}>
                 <FilterListTwoToneIcon className="curson-pointer" />
@@ -196,41 +216,45 @@ const CustomerList = () => {
             ) : null}
 
             <div className="col-12 mt-4">
-              <DataGrid
-                className="data-grid-table"
-                rows={customers.data}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: values.page, pageSize: values.limit },
-                  },
-                  sorting: {
-                    sortModel: [
-                      {
-                        field: values.sort,
-                        sort: values.sortBy as GridSortDirection,
-                      },
-                    ],
-                  },
-                }}
-                paginationMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
-                sortingMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
-                rowCount={customers.total}
-                pageSizeOptions={PageSizeOptions}
-                getRowId={(row) => row._id}
-                rowSelection={false}
-                disableColumnResize={true}
-                paginationModel={{ page: values.page, pageSize: values.limit }}
-                rowHeight={AppDefaults.LIST_ROW_HEIGHT as number}
-                sortModel={[
-                  {
-                    field: values.sort,
-                    sort: values.sortBy as GridSortDirection,
-                  },
-                ]}
-                onPaginationModelChange={paginatorModelChange}
-                onSortModelChange={sortingModelChange}
-              />
+              {showListView ? (
+                <DataGrid
+                  className="data-grid-table"
+                  rows={customers.data}
+                  columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: values.page, pageSize: values.limit },
+                    },
+                    sorting: {
+                      sortModel: [
+                        {
+                          field: values.sort,
+                          sort: values.sortBy as GridSortDirection,
+                        },
+                      ],
+                    },
+                  }}
+                  paginationMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
+                  sortingMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
+                  rowCount={customers.total}
+                  pageSizeOptions={PageSizeOptions}
+                  getRowId={(row) => row._id}
+                  rowSelection={false}
+                  disableColumnResize={true}
+                  paginationModel={{ page: values.page, pageSize: values.limit }}
+                  rowHeight={AppDefaults.LIST_ROW_HEIGHT as number}
+                  sortModel={[
+                    {
+                      field: values.sort,
+                      sort: values.sortBy as GridSortDirection,
+                    },
+                  ]}
+                  onPaginationModelChange={paginatorModelChange}
+                  onSortModelChange={sortingModelChange}
+                />
+              ) : (
+                <CustomerCards customers={customers} values={values} setFieldValue={setFieldValue} />
+              )}
             </div>
           </div>
         </CardContent>

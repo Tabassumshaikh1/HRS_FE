@@ -11,7 +11,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IUser } from "../../interfaces/user.interface";
 import { useAppSelector } from "../../redux/hooks";
 import { SidebarService } from "../../services/sidebar.service";
@@ -29,6 +29,7 @@ export default function Sidebar() {
   const loggedInUser: IUser = useAppSelector((store) => store.loggedInUser);
   const sidebarSvc = new SidebarService();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [open, setOpen] = React.useState(false);
 
@@ -52,9 +53,9 @@ export default function Sidebar() {
         </IconButton>
       </DrawerHeader>
       <Divider />
-      <List>
+      <List className="drawer-items">
         {sidebarItems.map((item, index) => (
-          <ListItem key={index} disablePadding>
+          <ListItem key={index} disablePadding className={`${location.pathname.includes(item.path) ? "active" : ""}`}>
             <ListItemButton
               onClick={() => {
                 toggleDrawer(false);

@@ -6,7 +6,7 @@ import { Button, Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AccountType, AccountTypeLabel, ActivityStatus, DateFormats, StatusColors } from "../../data/app.constant";
+import { AccountType, AccountTypeLabel, ActivityStatus, DateFormats } from "../../data/app.constant";
 import { IUser } from "../../interfaces/user.interface";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { CustomerService } from "../../services/customer.service";
@@ -16,6 +16,7 @@ import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
 import CustomerImage from "./components/CustomerImage";
 import ActivateDeactivateStatus from "../../shared/components/ActivateDeactivateStatus";
 import ChatBubbleTwoToneIcon from "@mui/icons-material/ChatBubbleTwoTone";
+import { StatusColors } from "../../data/color.constant";
 
 const CustomerDetails = () => {
   const [customer, setCustomer] = useState<IUser | null>(null);
@@ -75,7 +76,7 @@ const CustomerDetails = () => {
               >
                 <div className="row">
                   <div className="col-12 align-center mb-4">
-                    <CustomerImage customer={customer} height={220} width={220} />
+                    <CustomerImage imageUrl={customer.imageUrl} height={220} width={220} />
                   </div>
                   <div className="col-12 align-center">
                     <BootstrapTooltip title="Call">
@@ -94,7 +95,7 @@ const CustomerDetails = () => {
                     </BootstrapTooltip>
                     <BootstrapTooltip title="Email">
                       <a href={`mailto:${customer.email}`}>
-                        <Button variant="outlined" color="secondary" className="me-3">
+                        <Button variant="outlined" color="secondary">
                           <EmailTwoToneIcon />
                         </Button>
                       </a>
