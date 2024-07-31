@@ -12,6 +12,7 @@ import BootstrapDialog from "./BootstrapDialog";
 
 interface ImageCropperProps {
   file: File | string;
+  aspectRatio?: number;
   onCrop: (file: Blob | null) => void;
 }
 
@@ -19,6 +20,8 @@ const ImageCropper = (props: ImageCropperProps) => {
   const [imgSrc, setImgSrc] = useState<string>("");
   const cropperRef = useRef<ReactCropperElement>(null);
   const utilSvc = new UtilService();
+
+  const aspectRatio = props.aspectRatio ? props.aspectRatio : undefined;
 
   useEffect(() => {
     processFile();
@@ -60,7 +63,7 @@ const ImageCropper = (props: ImageCropperProps) => {
       </IconButton>
       <DialogContent dividers>
         {imgSrc ? (
-          <Cropper src={imgSrc} style={{ height: "100%", width: "100%" }} aspectRatio={1 / 1} guides={false} ref={cropperRef} />
+          <Cropper src={imgSrc} style={{ height: "100%", width: "100%" }} aspectRatio={aspectRatio} guides={false} ref={cropperRef} />
         ) : (
           <div className="image-cropper-loader">
             <CircularProgress color="inherit" />

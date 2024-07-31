@@ -18,6 +18,10 @@ export enum AppMessages {
   VEHICLE_TYPE_DELETE_CONFIRM = "Do you want to delete this vehicle type?",
   FILE_SIZE = "File size should be less than 2MB",
   FILE_TYPE = "File type should be an image",
+  VEHICLE_ADDED = "Vehicle added successfully",
+  VEHICLE_UPDATED = "Vehicle update successfully",
+  UPLOADED_IMAGE_DELETE_CONFIRM = "Do you want to delete this uploaded image?",
+  VEHICLE_IMAGE_DELETED = "Vehicle image deleted successfully",
 }
 
 export enum SortBy {
@@ -47,6 +51,7 @@ export const API_URLS = {
   CUSTOMERS: `${API_HOST}/customers`,
   DRIVERS: `${API_HOST}/drivers`,
   VEHICLE_TYPES: `${API_HOST}/vehicle-type`,
+  VEHICLES: `${API_HOST}/vehicles`,
 };
 
 export enum ImageMimeType {

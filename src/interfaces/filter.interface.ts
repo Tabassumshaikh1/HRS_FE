@@ -19,3 +19,8 @@ export interface IDriverFilters extends CommonFilters {
 }
 
 export interface IVehicleTypeFilters extends CommonFilters {}
+
+export interface IVehicleFilters extends CommonFilters {
+  status?: `${ActivityStatus}`;
+  vehicleType?: string;
+}

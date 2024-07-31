@@ -54,22 +54,48 @@ export default function Sidebar() {
       </DrawerHeader>
       <Divider />
       <List className="drawer-items">
-        {sidebarItems.map((item, index) => (
-          <ListItem key={index} disablePadding className={`${location.pathname.includes(item.path) ? "active" : ""}`}>
-            <ListItemButton
-              onClick={() => {
-                toggleDrawer(false);
-                setTimeout(() => {
-                  navigate(item.path);
-                }, 250);
-              }}
-            >
-              <ListItemIcon>
-                <item.iconComp />
-              </ListItemIcon>
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          </ListItem>
+        {sidebarItems.map((item) => (
+          <>
+            {!item.isConfigration ? (
+              <ListItem key={item.path} disablePadding className={`${location.pathname.includes(item.path) ? "active" : ""}`}>
+                <ListItemButton
+                  onClick={() => {
+                    toggleDrawer(false);
+                    setTimeout(() => {
+                      navigate(item.path);
+                    }, 250);
+                  }}
+                >
+                  <ListItemIcon>
+                    <item.iconComp />
+                  </ListItemIcon>
+                  <ListItemText primary={item.name} />
+                </ListItemButton>
+              </ListItem>
+            ) : null}
+          </>
+        ))}
+        <Divider />
+        {sidebarItems.map((item) => (
+          <>
+            {item.isConfigration ? (
+              <ListItem key={item.path} disablePadding className={`${location.pathname.includes(item.path) ? "active" : ""}`}>
+                <ListItemButton
+                  onClick={() => {
+                    toggleDrawer(false);
+                    setTimeout(() => {
+                      navigate(item.path);
+                    }, 250);
+                  }}
+                >
+                  <ListItemIcon>
+                    <item.iconComp />
+                  </ListItemIcon>
+                  <ListItemText primary={item.name} />
+                </ListItemButton>
+              </ListItem>
+            ) : null}
+          </>
         ))}
       </List>
     </Box>

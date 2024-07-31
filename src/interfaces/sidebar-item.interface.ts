@@ -5,4 +5,5 @@ export interface ISidebarItem {
   path: string;
   roles: `${UserRoles}`[];
   iconComp: any;
+  isConfigration: boolean;
 }

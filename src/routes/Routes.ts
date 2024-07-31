@@ -66,6 +66,24 @@ export function RouterElement() {
         ? LazyLoadRoutes("VehicleType", "VehicleTypes")
         : AuthenticateRoute("/login"),
     },
+    {
+      path: "vehicles",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
+        ? LazyLoadRoutes("Vehicle", "Vehicles")
+        : AuthenticateRoute("/login"),
+    },
+    {
+      path: "vehicles/new",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
+        ? LazyLoadRoutes("Vehicle", "AddVehicle")
+        : AuthenticateRoute("/login"),
+    },
+    {
+      path: "vehicles/:id/edit",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
+        ? LazyLoadRoutes("Vehicle", "EditVehicle")
+        : AuthenticateRoute("/login"),
+    },
   ];
 
   const routing = useRoutes(routes);

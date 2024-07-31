@@ -86,7 +86,7 @@ const Register = () => {
           <h2 className="text-center text-primary heading">Sign Up</h2>
           <p className="text-center --bs-secondary-color ">Enter your credentials to continue</p>
         </>
-        {showCropper ? <ImageCropper file={values.file} onCrop={onImageCrop} /> : null}
+        {showCropper ? <ImageCropper file={values.file} aspectRatio={1 / 1} onCrop={onImageCrop} /> : null}
 
         <div className="justify-content-center">
           <form onSubmit={handleSubmit}>

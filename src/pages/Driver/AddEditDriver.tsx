@@ -117,7 +117,7 @@ const AddEditDriver = () => {
         </div>
       </div>
       <Card>
-        <CardHeader title={id ? "Edit Driver" : "Add Driver"} className="card-heading"></CardHeader>
+        <CardHeader title={id ? "Edit Driver" : "Add Driver"} className="card-heading" />
         <Divider />
         <CardContent>
           <form onSubmit={handleSubmit}>
@@ -141,7 +141,7 @@ const AddEditDriver = () => {
                     ) : (
                       <p className="text-danger text-sm invisible">&nbsp;</p>
                     )}
-                    {showCropper ? <ImageCropper file={values.file} onCrop={onImageCrop} /> : null}
+                    {showCropper ? <ImageCropper file={values.file} aspectRatio={1 / 1} onCrop={onImageCrop} /> : null}
                   </div>
                   <div className="col-12 align-center my-4">
                     <DriverImage imageUrl={imageUrl} height={180} width={180} />

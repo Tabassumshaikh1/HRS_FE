@@ -1,22 +1,20 @@
-import BlockTwoToneIcon from "@mui/icons-material/BlockTwoTone";
 import CallTwoToneIcon from "@mui/icons-material/CallTwoTone";
-import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
+import ChatBubbleTwoToneIcon from "@mui/icons-material/ChatBubbleTwoTone";
 import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
 import { Button, Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AccountType, AccountTypeLabel, ActivityStatus, DateFormats } from "../../data/app.constant";
+import { StatusColors } from "../../data/color.constant";
 import { IUser } from "../../interfaces/user.interface";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { CustomerService } from "../../services/customer.service";
 import { UtilService } from "../../services/util.service";
+import ActivateDeactivateStatus from "../../shared/components/ActivateDeactivateStatus";
 import BackButton from "../../shared/components/BackButton";
 import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
 import CustomerImage from "./components/CustomerImage";
-import ActivateDeactivateStatus from "../../shared/components/ActivateDeactivateStatus";
-import ChatBubbleTwoToneIcon from "@mui/icons-material/ChatBubbleTwoTone";
-import { StatusColors } from "../../data/color.constant";
 
 const CustomerDetails = () => {
   const [customer, setCustomer] = useState<IUser | null>(null);
