@@ -20,6 +20,7 @@ import SearchBox from "../../shared/components/SearchBox";
 import AddEditVehicleType from "./components/AddEditVehicleType";
 import VehicleTypeAction from "./components/VehicleTypeAction";
 import VehicleTypeCards from "./components/VehicleTypeCards";
+import VehicleTypeList from "./components/VehicleTypeList";
 
 const initialValues: any = {
   q: "",
@@ -29,7 +30,7 @@ const initialValues: any = {
   sortBy: AppDefaults.SORT_BY,
 };
 
-const VehicleTypeList = () => {
+const VehicleTypes = () => {
   const notifySvc = new AppNotificationService();
   const vehicleTypeSvc = new VehicleTypeService();
   const utilSvc = new UtilService();
@@ -39,41 +40,6 @@ const VehicleTypeList = () => {
   });
   const [showAddDialog, setShowAddDialog] = useState<boolean>(false);
   const [showListView, setShowListView] = useState<boolean>(!utilSvc.isMobile());
-
-  const columns: GridColDef[] = [
-    {
-      field: "name",
-      headerName: "Name",
-      sortable: true,
-      width: 350,
-      headerClassName: "ps-4",
-      cellClassName: "ps-4",
-    },
-    {
-      field: "createdAt",
-      headerName: "Created On",
-      sortable: true,
-      width: 350,
-      valueGetter: (value) => `${utilSvc.formatDate(value)}`,
-    },
-    {
-      field: "updatedAt",
-      headerName: "Updated On",
-      sortable: true,
-      width: 350,
-      valueGetter: (value) => `${utilSvc.formatDate(value)}`,
-    },
-    {
-      field: "action",
-      headerName: "Actions",
-      sortable: false,
-      width: 200,
-      renderCell: (params) => (
-        <VehicleTypeAction vehicleType={{ ...params.row }} onUpdate={() => loadVehicleTypes(values)} onDelete={deleteVehicleType} />
-      ),
-      cellClassName: "ps-0",
-    },
-  ];
 
   const { values, setFieldValue } = useFormik({
     initialValues,
@@ -204,38 +170,11 @@ const VehicleTypeList = () => {
 
             <div className="col-12 mt-4">
               {showListView ? (
-                <DataGrid
-                  className="data-grid-table"
-                  rows={vehicleTypes.data}
-                  columns={columns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: values.page, pageSize: values.limit },
-                    },
-                    sorting: {
-                      sortModel: [
-                        {
-                          field: values.sort,
-                          sort: values.sortBy as GridSortDirection,
-                        },
-                      ],
-                    },
-                  }}
-                  paginationMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
-                  sortingMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
-                  rowCount={vehicleTypes.total}
-                  pageSizeOptions={PageSizeOptions}
-                  getRowId={(row) => row._id}
-                  rowSelection={false}
-                  disableColumnResize={true}
-                  paginationModel={{ page: values.page, pageSize: values.limit }}
-                  rowHeight={AppDefaults.LIST_ROW_HEIGHT as number}
-                  sortModel={[
-                    {
-                      field: values.sort,
-                      sort: values.sortBy as GridSortDirection,
-                    },
-                  ]}
+                <VehicleTypeList
+                  vehicleTypes={vehicleTypes}
+                  values={values}
+                  onUpdate={() => loadVehicleTypes(values)}
+                  onDelete={deleteVehicleType}
                   onPaginationModelChange={paginatorModelChange}
                   onSortModelChange={sortingModelChange}
                 />
@@ -256,4 +195,4 @@ const VehicleTypeList = () => {
   );
 };
 
-export default VehicleTypeList;
+export default VehicleTypes;

@@ -4,11 +4,11 @@ import FormatListBulletedTwoToneIcon from "@mui/icons-material/FormatListBullete
 import WindowTwoToneIcon from "@mui/icons-material/WindowTwoTone";
 import { Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { DataGrid, GridColDef, GridPaginationModel, GridSortDirection, GridSortModel } from "@mui/x-data-grid";
+import { GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { AccountType, AccountTypeLabel, AppDefaults, DateFormats, PageSizeOptions, SortBy } from "../../data/app.constant";
+import { AccountType, AccountTypeLabel, AppDefaults, DateFormats, SortBy } from "../../data/app.constant";
 import { ICustomerFilters } from "../../interfaces/filter.interface";
 import { IListResponse } from "../../interfaces/response.interface";
 import { IUser } from "../../interfaces/user.interface";
@@ -17,66 +17,9 @@ import { CustomerService } from "../../services/customer.service";
 import { UtilService } from "../../services/util.service";
 import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
 import SearchBox from "../../shared/components/SearchBox";
-import CustomerAction from "./components/CustomerAction";
 import CustomerCards from "./components/CustomerCards";
-import CustomerContactNo from "./components/CustomerContactNo";
-import CustomerCreatedOn from "./components/CustomerCreatedOn";
-import CustomerEmail from "./components/CustomerEmail";
 import CustomerFilters from "./components/CustomerFilters";
-import CustomerImage from "./components/CustomerImage";
-import CustomerStatus from "./components/CustomerStatus";
-
-const columns: GridColDef[] = [
-  {
-    field: "imageUrl",
-    headerName: "",
-    sortable: false,
-    width: 100,
-    renderCell: (params) => <CustomerImage imageUrl={params.row?.imageUrl} />,
-  },
-  {
-    field: "name",
-    headerName: "Name",
-    sortable: true,
-    width: 200,
-  },
-  {
-    field: "contactNumber",
-    headerName: "Contact Number",
-    sortable: true,
-    width: 200,
-    renderCell: (params) => <CustomerContactNo customer={{ ...params.row }} />,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    sortable: true,
-    width: 230,
-    renderCell: (params) => <CustomerEmail customer={{ ...params.row }} />,
-  },
-  {
-    field: "status",
-    headerName: "Status",
-    sortable: true,
-    width: 200,
-    renderCell: (params) => <CustomerStatus customer={{ ...params.row }} />,
-  },
-  {
-    field: "createdAt",
-    headerName: "Created On",
-    sortable: true,
-    width: 200,
-    renderCell: (params) => <CustomerCreatedOn customer={{ ...params.row }} />,
-  },
-  {
-    field: "action",
-    headerName: "Action",
-    sortable: false,
-    width: 200,
-    renderCell: (params) => <CustomerAction customer={{ ...params.row }} />,
-    cellClassName: "ps-0",
-  },
-];
+import CustomerList from "./components/CustomerList";
 
 const initialValues: any = {
   q: "",
@@ -88,7 +31,7 @@ const initialValues: any = {
   sortBy: AppDefaults.SORT_BY,
 };
 
-const CustomerList = () => {
+const Customers = () => {
   const notifySvc = new AppNotificationService();
   const customerSvc = new CustomerService();
   const utilSvc = new UtilService();
@@ -217,38 +160,9 @@ const CustomerList = () => {
 
             <div className="col-12 mt-4">
               {showListView ? (
-                <DataGrid
-                  className="data-grid-table"
-                  rows={customers.data}
-                  columns={columns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: values.page, pageSize: values.limit },
-                    },
-                    sorting: {
-                      sortModel: [
-                        {
-                          field: values.sort,
-                          sort: values.sortBy as GridSortDirection,
-                        },
-                      ],
-                    },
-                  }}
-                  paginationMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
-                  sortingMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
-                  rowCount={customers.total}
-                  pageSizeOptions={PageSizeOptions}
-                  getRowId={(row) => row._id}
-                  rowSelection={false}
-                  disableColumnResize={true}
-                  paginationModel={{ page: values.page, pageSize: values.limit }}
-                  rowHeight={AppDefaults.LIST_ROW_HEIGHT as number}
-                  sortModel={[
-                    {
-                      field: values.sort,
-                      sort: values.sortBy as GridSortDirection,
-                    },
-                  ]}
+                <CustomerList
+                  customers={customers}
+                  values={values}
                   onPaginationModelChange={paginatorModelChange}
                   onSortModelChange={sortingModelChange}
                 />
@@ -263,4 +177,4 @@ const CustomerList = () => {
   );
 };
 
-export default CustomerList;
+export default Customers;

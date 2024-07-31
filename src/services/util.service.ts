@@ -69,7 +69,7 @@ export class UtilService {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-  isMobile() {
+  isMobile(): boolean {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 }

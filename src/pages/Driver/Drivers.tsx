@@ -5,12 +5,12 @@ import FormatListBulletedTwoToneIcon from "@mui/icons-material/FormatListBullete
 import WindowTwoToneIcon from "@mui/icons-material/WindowTwoTone";
 import { Button, Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { DataGrid, GridColDef, GridPaginationModel, GridSortDirection, GridSortModel } from "@mui/x-data-grid";
+import { GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDebouncedCallback } from "use-debounce";
-import { AccountType, AccountTypeLabel, AppDefaults, AppMessages, DateFormats, PageSizeOptions, SortBy } from "../../data/app.constant";
+import { AccountType, AccountTypeLabel, AppDefaults, AppMessages, DateFormats, SortBy } from "../../data/app.constant";
 import { IDriverFilters } from "../../interfaces/filter.interface";
 import { IListResponse } from "../../interfaces/response.interface";
 import { IUser } from "../../interfaces/user.interface";
@@ -19,13 +19,9 @@ import { DriverService } from "../../services/driver.service";
 import { UtilService } from "../../services/util.service";
 import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
 import SearchBox from "../../shared/components/SearchBox";
-import DriverAction from "./components/DriverAction";
 import DriverCards from "./components/DriverCards";
-import DriverContactNo from "./components/DriverContactNo";
-import DriverCreatedOn from "./components/DriverCreatedOn";
 import DriverFilters from "./components/DriverFilters";
-import DriverImage from "./components/DriverImage";
-import DriverStatus from "./components/DriverStatus";
+import DriverList from "./components/DriverList";
 
 const initialValues: any = {
   q: "",
@@ -36,7 +32,7 @@ const initialValues: any = {
   sortBy: AppDefaults.SORT_BY,
 };
 
-const DriverList = () => {
+const Drivers = () => {
   const notifySvc = new AppNotificationService();
   const driverSvc = new DriverService();
   const utilSvc = new UtilService();
@@ -47,57 +43,6 @@ const DriverList = () => {
   });
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [showListView, setShowListView] = useState<boolean>(!utilSvc.isMobile());
-
-  const columns: GridColDef[] = [
-    {
-      field: "imageUrl",
-      headerName: "",
-      sortable: false,
-      width: 100,
-      renderCell: (params) => <DriverImage imageUrl={params?.row?.imageUrl} />,
-    },
-    {
-      field: "name",
-      headerName: "Name",
-      sortable: true,
-      width: 200,
-    },
-    {
-      field: "contactNumber",
-      headerName: "Contact Number",
-      sortable: true,
-      width: 200,
-      renderCell: (params) => <DriverContactNo driver={{ ...params.row }} />,
-    },
-    {
-      field: "licenseNumber",
-      headerName: "License Number",
-      sortable: true,
-      width: 200,
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      sortable: true,
-      width: 200,
-      renderCell: (params) => <DriverStatus driver={{ ...params.row }} />,
-    },
-    {
-      field: "createdAt",
-      headerName: "Created On",
-      sortable: true,
-      width: 200,
-      renderCell: (params) => <DriverCreatedOn driver={{ ...params.row }} />,
-    },
-    {
-      field: "action",
-      headerName: "Actions",
-      sortable: false,
-      width: 200,
-      renderCell: (params) => <DriverAction driver={{ ...params.row }} onDelete={deleteDriver} />,
-      cellClassName: "ps-0",
-    },
-  ];
 
   const { values, setFieldValue } = useFormik({
     initialValues,
@@ -202,7 +147,7 @@ const DriverList = () => {
         </div>
       </div>
       <Card>
-        <CardHeader title="Drivers" className="card-heading"></CardHeader>
+        <CardHeader title="Drivers" className="card-heading" />
         <Divider />
         <CardContent>
           <div className="row">
@@ -234,40 +179,12 @@ const DriverList = () => {
 
             <div className="col-12 mt-4">
               {showListView ? (
-                <DataGrid
-                  className="data-grid-table"
-                  rows={drivers.data}
-                  columns={columns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: values.page, pageSize: values.limit },
-                    },
-                    sorting: {
-                      sortModel: [
-                        {
-                          field: values.sort,
-                          sort: values.sortBy as GridSortDirection,
-                        },
-                      ],
-                    },
-                  }}
-                  paginationMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
-                  sortingMode={AppDefaults.PAGINATION_AND_SORTING_MODE}
-                  rowCount={drivers.total}
-                  pageSizeOptions={PageSizeOptions}
-                  getRowId={(row) => row._id}
-                  rowSelection={false}
-                  disableColumnResize={true}
-                  paginationModel={{ page: values.page, pageSize: values.limit }}
-                  rowHeight={AppDefaults.LIST_ROW_HEIGHT as number}
-                  sortModel={[
-                    {
-                      field: values.sort,
-                      sort: values.sortBy as GridSortDirection,
-                    },
-                  ]}
-                  onPaginationModelChange={paginatorModelChange}
+                <DriverList
+                  values={values}
+                  drivers={drivers}
+                  onDelete={deleteDriver}
                   onSortModelChange={sortingModelChange}
+                  onPaginationModelChange={paginatorModelChange}
                 />
               ) : (
                 <DriverCards drivers={drivers} values={values} setFieldValue={setFieldValue} onDelete={deleteDriver} />
@@ -280,4 +197,4 @@ const DriverList = () => {
   );
 };
 
-export default DriverList;
+export default Drivers;

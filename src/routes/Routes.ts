@@ -27,7 +27,7 @@ export function RouterElement() {
     {
       path: "customers",
       element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
-        ? LazyLoadRoutes("Customer", "CustomerList")
+        ? LazyLoadRoutes("Customer", "Customers")
         : AuthenticateRoute("/login"),
     },
     {
@@ -39,7 +39,7 @@ export function RouterElement() {
     {
       path: "drivers",
       element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
-        ? LazyLoadRoutes("Driver", "DriverList")
+        ? LazyLoadRoutes("Driver", "Drivers")
         : AuthenticateRoute("/login"),
     },
     {
@@ -63,7 +63,7 @@ export function RouterElement() {
     {
       path: "vehicle-types",
       element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
-        ? LazyLoadRoutes("VehicleType", "VehicleTypeList")
+        ? LazyLoadRoutes("VehicleType", "VehicleTypes")
         : AuthenticateRoute("/login"),
     },
   ];
