@@ -8,6 +8,7 @@ export enum AppMessages {
   LOGIN_SUCCESS = "Login successfully",
   REGISTER_SUCCESS = "Registered successfully",
   LOGOUT_SUCCESS = "Logged out successfully",
+  DEFAULT_DELETE_CONFIRM = "Do you want to delete this item?",
   DRIVER_ADDED = "Driver added successfully",
   DRIVER_UPDATED = "Driver update successfully",
   DRIVER_DELETED = "Driver deleted successfully",

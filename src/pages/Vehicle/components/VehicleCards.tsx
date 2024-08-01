@@ -5,9 +5,8 @@ import { FormikErrors } from "formik";
 import { PageSizeOptions } from "../../../data/app.constant";
 import { IVehicleFilters } from "../../../interfaces/filter.interface";
 import { IListResponse } from "../../../interfaces/response.interface";
-import { IUser } from "../../../interfaces/user.interface";
-import VehicleSingleCard from "./VehicleSingleCard";
 import { IVehicle } from "../../../interfaces/vehicle.interface";
+import VehicleSingleCard from "./VehicleSingleCard";
 
 interface IProps {
   vehicles: IListResponse;

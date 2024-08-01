@@ -4,7 +4,7 @@ import { IconButton } from "@mui/material";
 import { useState } from "react";
 import { AppMessages } from "../../../data/app.constant";
 import { IVehicleType } from "../../../interfaces/vehicle-type.interface";
-import BootstrapTooltip from "../../../shared/components/BootstrapTooltip";
+import BootstrapTooltip from "../../../shared/components/Styled/BootstrapTooltip";
 import ConfirmDialog from "../../../shared/components/ConfirmDialog";
 import AddEditVehicleType from "./AddEditVehicleType";
 

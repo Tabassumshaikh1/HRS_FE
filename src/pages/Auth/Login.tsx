@@ -1,8 +1,7 @@
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Button, Checkbox, Container } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
@@ -93,6 +92,7 @@ const Login = () => {
           <Button
             startIcon={
               <img
+                alt="google-logo"
                 className="h-20-px"
                 src="https://firebasestorage.googleapis.com/v0/b/hrs-uat.appspot.com/o/UI%2FGoogle%20Logo.png?alt=media&token=17d8fb7c-cd9f-4f22-983d-79f51741d04e"
               />

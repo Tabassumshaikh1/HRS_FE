@@ -1,12 +1,12 @@
 import { DataGrid, GridCallbackDetails, GridColDef, GridPaginationModel, GridSortDirection, GridSortModel } from "@mui/x-data-grid";
 import { AppDefaults, PageSizeOptions } from "../../../data/app.constant";
 import { IListResponse } from "../../../interfaces/response.interface";
-import CustomerAction from "./CustomerAction";
-import CustomerContactNo from "./CustomerContactNo";
-import CustomerCreatedOn from "./CustomerCreatedOn";
-import CustomerEmail from "./CustomerEmail";
-import CustomerImage from "./CustomerImage";
-import CustomerStatus from "./CustomerStatus";
+import ActivityStatusChip from "../../../shared/components/Common/ActivityStatusChip";
+import AvatarImage from "../../../shared/components/Common/AvatarImage";
+import GridActions from "../../../shared/components/Common/GridActions";
+import GridCreatedOn from "../../../shared/components/Common/GridCreatedOn";
+import UserContactNo from "../../../shared/components/Common/UserContactNo";
+import UserEmail from "../../../shared/components/Common/UserEmail";
 
 interface IProps {
   customers: IListResponse;
@@ -21,7 +21,7 @@ const columns: GridColDef[] = [
     headerName: "",
     sortable: false,
     width: 100,
-    renderCell: (params) => <CustomerImage imageUrl={params.row?.imageUrl} />,
+    renderCell: (params) => <AvatarImage imageUrl={params.row?.imageUrl} />,
   },
   {
     field: "name",
@@ -34,35 +34,35 @@ const columns: GridColDef[] = [
     headerName: "Contact Number",
     sortable: true,
     width: 200,
-    renderCell: (params) => <CustomerContactNo customer={{ ...params.row }} />,
+    renderCell: (params) => <UserContactNo user={{ ...params.row }} />,
   },
   {
     field: "email",
     headerName: "Email",
     sortable: true,
     width: 230,
-    renderCell: (params) => <CustomerEmail customer={{ ...params.row }} />,
+    renderCell: (params) => <UserEmail user={{ ...params.row }} />,
   },
   {
     field: "status",
     headerName: "Status",
     sortable: true,
     width: 200,
-    renderCell: (params) => <CustomerStatus customer={{ ...params.row }} />,
+    renderCell: (params) => <ActivityStatusChip info={{ ...params.row }} />,
   },
   {
     field: "createdAt",
     headerName: "Created On",
     sortable: true,
     width: 200,
-    renderCell: (params) => <CustomerCreatedOn customer={{ ...params.row }} />,
+    renderCell: (params) => <GridCreatedOn info={{ ...params.row }} />,
   },
   {
     field: "action",
     headerName: "Action",
     sortable: false,
     width: 200,
-    renderCell: (params) => <CustomerAction customer={{ ...params.row }} />,
+    renderCell: (params) => <GridActions info={{ ...params.row }} path="/customers" hideEditBtn={true} hideDeleteBtn={true} />,
     cellClassName: "ps-0",
   },
 ];

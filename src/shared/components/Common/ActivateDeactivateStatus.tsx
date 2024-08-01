@@ -1,10 +1,10 @@
 import BlockTwoToneIcon from "@mui/icons-material/BlockTwoTone";
 import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
 import { Button } from "@mui/material";
-import { ActivityStatus } from "../../data/app.constant";
-import { IUser } from "../../interfaces/user.interface";
-import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
-import { IVehicle } from "../../interfaces/vehicle.interface";
+import { ActivityStatus } from "../../../data/app.constant";
+import { IUser } from "../../../interfaces/user.interface";
+import BootstrapTooltip from "../Styled/BootstrapTooltip";
+import { IVehicle } from "../../../interfaces/vehicle.interface";
 
 interface IProps {
   user: IUser | IVehicle;

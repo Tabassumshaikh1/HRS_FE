@@ -12,7 +12,7 @@ import { IVehicleType } from "../../../interfaces/vehicle-type.interface";
 import { AddEditVehicleTypeSchema } from "../../../schemas/vehicle-type.schema";
 import { AppNotificationService } from "../../../services/app-notification.service";
 import { VehicleTypeService } from "../../../services/vehicle-type.service";
-import BootstrapDialog from "../../../shared/components/BootstrapDialog";
+import BootstrapDialog from "../../../shared/components/Styled/BootstrapDialog";
 
 interface IProps {
   vehicleType?: IVehicleType;

@@ -11,10 +11,10 @@ import { IUser } from "../../interfaces/user.interface";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { CustomerService } from "../../services/customer.service";
 import { UtilService } from "../../services/util.service";
-import ActivateDeactivateStatus from "../../shared/components/ActivateDeactivateStatus";
 import BackButton from "../../shared/components/BackButton";
-import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
-import CustomerImage from "./components/CustomerImage";
+import ActivateDeactivateStatus from "../../shared/components/Common/ActivateDeactivateStatus";
+import AvatarImage from "../../shared/components/Common/AvatarImage";
+import BootstrapTooltip from "../../shared/components/Styled/BootstrapTooltip";
 
 const CustomerDetails = () => {
   const [customer, setCustomer] = useState<IUser | null>(null);
@@ -74,7 +74,7 @@ const CustomerDetails = () => {
               >
                 <div className="row">
                   <div className="col-12 align-center mb-4">
-                    <CustomerImage imageUrl={customer.imageUrl} height={220} width={220} />
+                    <AvatarImage imageUrl={customer.imageUrl} height={220} width={220} />
                   </div>
                   <div className="col-12 align-center">
                     <BootstrapTooltip title="Call">

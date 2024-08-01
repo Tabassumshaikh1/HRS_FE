@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import { useEffect, useRef, useState } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import { UtilService } from "../../services/util.service";
-import BootstrapDialog from "./BootstrapDialog";
+import BootstrapDialog from "./Styled/BootstrapDialog";
 
 interface ImageCropperProps {
   file: File | string;

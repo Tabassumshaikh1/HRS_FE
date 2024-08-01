@@ -1,34 +1,22 @@
-import styled from "@emotion/styled";
 import CallTwoToneIcon from "@mui/icons-material/CallTwoTone";
 import ChatBubbleTwoToneIcon from "@mui/icons-material/ChatBubbleTwoTone";
 import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
-import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone";
-import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
-import { IconButton, Menu, MenuItem } from "@mui/material";
-import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { MaterialColorsCode300 } from "../../../data/color.constant";
 import { IUser } from "../../../interfaces/user.interface";
 import { UtilService } from "../../../services/util.service";
-import BootstrapTooltip from "../../../shared/components/BootstrapTooltip";
-import CustomerImage from "./CustomerImage";
-import CustomerStatus from "./CustomerStatus";
-import { MaterialColorsCode300 } from "../../../data/color.constant";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: "#fff",
-  textAlign: "center",
-}));
+import ActivityStatusChip from "../../../shared/components/Common/ActivityStatusChip";
+import AvatarImage from "../../../shared/components/Common/AvatarImage";
+import MenuActionsBtn from "../../../shared/components/Common/MenuActionsBtn";
+import BootstrapTooltip from "../../../shared/components/Styled/BootstrapTooltip";
+import GridItem from "../../../shared/components/Styled/GridItem";
 
 interface IProps {
   customer: IUser;
 }
 
 const CustomerSingleCard = ({ customer }: IProps) => {
-  const navigate = useNavigate();
   const [backgroundColor, setBackgroundColor] = useState<string>("");
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
   useEffect(() => {
     setBackgroundColor(
@@ -38,60 +26,24 @@ const CustomerSingleCard = ({ customer }: IProps) => {
     );
   }, []);
 
-  const menuBtnClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
-    <Item
+    <GridItem
       style={{
         background: backgroundColor,
       }}
     >
       <div className="row pb-4">
         <div className="col-12 text-end mt-2 me-2">
-          <BootstrapTooltip title="Actions">
-            <IconButton
-              aria-label="more"
-              id="long-button"
-              aria-controls={open ? "long-menu" : undefined}
-              aria-expanded={open ? "true" : undefined}
-              aria-haspopup="true"
-              onClick={menuBtnClick}
-            >
-              <MoreHorizTwoToneIcon htmlColor="black" />
-            </IconButton>
-          </BootstrapTooltip>
-          <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleMenuClose}
-            id="composition-menu"
-            aria-labelledby="composition-button"
-            className="card-action-menu"
-          >
-            <MenuItem
-              onClick={() => {
-                handleMenuClose();
-                navigate(`/customers/${customer._id}`);
-              }}
-            >
-              <VisibilityTwoToneIcon color="primary" className="me-2" /> Details
-            </MenuItem>
-          </Menu>
+          <MenuActionsBtn info={customer} path="/customers" hideEditBtn={true} hideDeleteBtn={true} />
         </div>
         <div className="col-12 align-center">
-          <CustomerImage imageUrl={customer.imageUrl} height={100} width={100} />
+          <AvatarImage imageUrl={customer.imageUrl} height={100} width={100} />
         </div>
         <div className="col-12 align-center my-2">
           <p className="detail-label">{customer.name}</p>
         </div>
         <div className="col-12 align-center mb-2">
-          <CustomerStatus customer={customer} verient="filled" />
+          <ActivityStatusChip info={customer} verient="filled" />
         </div>
         <div className="col-12 align-center">
           <BootstrapTooltip title="Call">
@@ -111,7 +63,7 @@ const CustomerSingleCard = ({ customer }: IProps) => {
           </BootstrapTooltip>
         </div>
       </div>
-    </Item>
+    </GridItem>
   );
 };
 

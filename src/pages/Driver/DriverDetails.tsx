@@ -7,15 +7,15 @@ import Divider from "@mui/material/Divider";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ActivityStatus, DateFormats } from "../../data/app.constant";
+import { StatusColors } from "../../data/color.constant";
 import { IUser } from "../../interfaces/user.interface";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { DriverService } from "../../services/driver.service";
 import { UtilService } from "../../services/util.service";
-import ActivateDeactivateStatus from "../../shared/components/ActivateDeactivateStatus";
 import BackButton from "../../shared/components/BackButton";
-import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
-import DriverImage from "./components/DriverImage";
-import { StatusColors } from "../../data/color.constant";
+import ActivateDeactivateStatus from "../../shared/components/Common/ActivateDeactivateStatus";
+import AvatarImage from "../../shared/components/Common/AvatarImage";
+import BootstrapTooltip from "../../shared/components/Styled/BootstrapTooltip";
 
 const DriverDetails = () => {
   const [driver, setDriver] = useState<IUser | null>(null);
@@ -82,7 +82,7 @@ const DriverDetails = () => {
               >
                 <div className="row">
                   <div className="col-12 align-center mb-4">
-                    <DriverImage imageUrl={driver.imageUrl} height={220} width={220} />
+                    <AvatarImage imageUrl={driver.imageUrl} height={220} width={220} />
                   </div>
                   <div className="col-12 align-center">
                     <BootstrapTooltip title="Call">

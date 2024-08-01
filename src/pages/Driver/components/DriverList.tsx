@@ -1,11 +1,11 @@
 import { DataGrid, GridCallbackDetails, GridColDef, GridPaginationModel, GridSortDirection, GridSortModel } from "@mui/x-data-grid";
-import { AppDefaults, PageSizeOptions } from "../../../data/app.constant";
+import { AppDefaults, AppMessages, PageSizeOptions } from "../../../data/app.constant";
 import { IListResponse } from "../../../interfaces/response.interface";
-import DriverAction from "./DriverAction";
-import DriverContactNo from "./DriverContactNo";
-import DriverCreatedOn from "./DriverCreatedOn";
-import DriverImage from "./DriverImage";
-import DriverStatus from "./DriverStatus";
+import ActivityStatusChip from "../../../shared/components/Common/ActivityStatusChip";
+import AvatarImage from "../../../shared/components/Common/AvatarImage";
+import GridActions from "../../../shared/components/Common/GridActions";
+import GridCreatedOn from "../../../shared/components/Common/GridCreatedOn";
+import UserContactNo from "../../../shared/components/Common/UserContactNo";
 
 interface IProps {
   drivers: IListResponse;
@@ -22,7 +22,7 @@ const DriverList = ({ drivers, values, onDelete, onPaginationModelChange, onSort
       headerName: "",
       sortable: false,
       width: 100,
-      renderCell: (params) => <DriverImage imageUrl={params?.row?.imageUrl} />,
+      renderCell: (params) => <AvatarImage imageUrl={params?.row?.imageUrl} />,
     },
     {
       field: "name",
@@ -35,7 +35,7 @@ const DriverList = ({ drivers, values, onDelete, onPaginationModelChange, onSort
       headerName: "Contact Number",
       sortable: true,
       width: 200,
-      renderCell: (params) => <DriverContactNo driver={{ ...params.row }} />,
+      renderCell: (params) => <UserContactNo user={{ ...params.row }} />,
     },
     {
       field: "licenseNumber",
@@ -48,21 +48,23 @@ const DriverList = ({ drivers, values, onDelete, onPaginationModelChange, onSort
       headerName: "Status",
       sortable: true,
       width: 200,
-      renderCell: (params) => <DriverStatus driver={{ ...params.row }} />,
+      renderCell: (params) => <ActivityStatusChip info={{ ...params.row }} />,
     },
     {
       field: "createdAt",
       headerName: "Created On",
       sortable: true,
       width: 200,
-      renderCell: (params) => <DriverCreatedOn driver={{ ...params.row }} />,
+      renderCell: (params) => <GridCreatedOn info={{ ...params.row }} />,
     },
     {
       field: "action",
       headerName: "Actions",
       sortable: false,
       width: 200,
-      renderCell: (params) => <DriverAction driver={{ ...params.row }} onDelete={onDelete} />,
+      renderCell: (params) => (
+        <GridActions info={{ ...params.row }} path="/drivers" deleteConfirmMsg={AppMessages.DRIVER_DELETE_CONFIRM} onDelete={onDelete} />
+      ),
       cellClassName: "ps-0",
     },
   ];

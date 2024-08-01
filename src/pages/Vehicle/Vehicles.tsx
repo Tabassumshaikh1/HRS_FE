@@ -18,8 +18,8 @@ import { AppNotificationService } from "../../services/app-notification.service"
 import { UtilService } from "../../services/util.service";
 import { VehicleTypeService } from "../../services/vehicle-type.service";
 import { VehicleService } from "../../services/vehicle.service";
-import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
-import SearchBox from "../../shared/components/SearchBox";
+import BootstrapTooltip from "../../shared/components/Styled/BootstrapTooltip";
+import SearchBox from "../../shared/components/Common/SearchBox";
 import VehicleCards from "./components/VehicleCards";
 import VehicleFilters from "./components/VehicleFilters";
 import VehicleList from "./components/VehicleList";

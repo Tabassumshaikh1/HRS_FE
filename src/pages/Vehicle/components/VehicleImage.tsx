@@ -1,13 +1,7 @@
-import styled from "@emotion/styled";
 import DeleteOutlineTwoToneIcon from "@mui/icons-material/DeleteOutlineTwoTone";
-import Paper from "@mui/material/Paper";
-import BootstrapTooltip from "../../../shared/components/BootstrapTooltip";
 import { UtilService } from "../../../services/util.service";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: "#fff",
-  textAlign: "center",
-}));
+import BootstrapTooltip from "../../../shared/components/Styled/BootstrapTooltip";
+import GridItem from "../../../shared/components/Styled/GridItem";
 
 interface IProps {
   imageUrl: string;
@@ -22,7 +16,7 @@ const VehicleImage = ({ imageUrl, height = "", hideDeleteBtn = false, onDelete }
   return (
     <>
       {imageUrl ? (
-        <Item
+        <GridItem
           className="vehicle-image-card"
           style={{
             height: height ? height : `${utilSvc.isMobile() ? "140px" : "120px"}`,
@@ -38,15 +32,15 @@ const VehicleImage = ({ imageUrl, height = "", hideDeleteBtn = false, onDelete }
               </div>
             </div>
           ) : null}
-        </Item>
+        </GridItem>
       ) : (
-        <Item
+        <GridItem
           className="vehicle-image-card"
           style={{
             height: height ? height : `${utilSvc.isMobile() ? "140px" : "120px"}`,
             backgroundImage: `url(https://firebasestorage.googleapis.com/v0/b/hrs-uat.appspot.com/o/UI%2Fdefault-vehicle.png?alt=media&token=25332901-9ff1-4c8e-a691-9f8ee97f5afd)`,
           }}
-        ></Item>
+        ></GridItem>
       )}
     </>
   );

@@ -1,28 +1,16 @@
-import styled from "@emotion/styled";
 import CallTwoToneIcon from "@mui/icons-material/CallTwoTone";
 import ChatBubbleTwoToneIcon from "@mui/icons-material/ChatBubbleTwoTone";
-import CreateTwoToneIcon from "@mui/icons-material/CreateTwoTone";
-import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
-import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone";
-import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
-import { IconButton, Menu, MenuItem } from "@mui/material";
-import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { AppMessages } from "../../../data/app.constant";
+import { MaterialColorsCode300 } from "../../../data/color.constant";
 import { IUser } from "../../../interfaces/user.interface";
 import { UtilService } from "../../../services/util.service";
-import BootstrapTooltip from "../../../shared/components/BootstrapTooltip";
-import ConfirmDialog from "../../../shared/components/ConfirmDialog";
-import DriverImage from "./DriverImage";
-import DriverStatus from "./DriverStatus";
-import { MaterialColorsCode300 } from "../../../data/color.constant";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: "#fff",
-  textAlign: "center",
-}));
+import ActivityStatusChip from "../../../shared/components/Common/ActivityStatusChip";
+import AvatarImage from "../../../shared/components/Common/AvatarImage";
+import MenuActionsBtn from "../../../shared/components/Common/MenuActionsBtn";
+import BootstrapTooltip from "../../../shared/components/Styled/BootstrapTooltip";
+import GridItem from "../../../shared/components/Styled/GridItem";
 
 interface IProps {
   driver: IUser;
@@ -30,11 +18,7 @@ interface IProps {
 }
 
 const DriverSingleCard = ({ driver, onDelete }: IProps) => {
-  const navigate = useNavigate();
   const [backgroundColor, setBackgroundColor] = useState<string>("");
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [showConfirm, setShowConfirm] = useState<boolean>(false);
-  const open = Boolean(anchorEl);
 
   useEffect(() => {
     setBackgroundColor(
@@ -44,85 +28,24 @@ const DriverSingleCard = ({ driver, onDelete }: IProps) => {
     );
   }, []);
 
-  const menuBtnClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  const onConfirmDialogClose = (result: boolean) => {
-    setShowConfirm(false);
-    if (result) {
-      onDelete(driver._id as string);
-    }
-  };
-
   return (
-    <Item
+    <GridItem
       style={{
         background: backgroundColor,
       }}
     >
       <div className="row pb-4">
         <div className="col-12 text-end mt-2 me-2">
-          <BootstrapTooltip title="Actions">
-            <IconButton
-              aria-label="more"
-              id="long-button"
-              aria-controls={open ? "long-menu" : undefined}
-              aria-expanded={open ? "true" : undefined}
-              aria-haspopup="true"
-              onClick={menuBtnClick}
-            >
-              <MoreHorizTwoToneIcon htmlColor="black" />
-            </IconButton>
-          </BootstrapTooltip>
-          <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleMenuClose}
-            id="composition-menu"
-            aria-labelledby="composition-button"
-            className="card-action-menu"
-          >
-            <MenuItem
-              onClick={() => {
-                handleMenuClose();
-                navigate(`/drivers/${driver._id}`);
-              }}
-            >
-              <VisibilityTwoToneIcon color="primary" className="me-2" /> Details
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                handleMenuClose();
-                navigate(`/drivers/${driver._id}/edit`);
-              }}
-            >
-              <CreateTwoToneIcon color="secondary" className="me-2" />
-              Edit
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                handleMenuClose();
-                setShowConfirm(true);
-              }}
-            >
-              <DeleteTwoToneIcon color="error" className="me-2" /> Delete
-            </MenuItem>
-          </Menu>
-          {showConfirm ? <ConfirmDialog message={AppMessages.DRIVER_DELETE_CONFIRM} onClose={onConfirmDialogClose} /> : null}
+          <MenuActionsBtn info={driver} path="/drivers" deleteConfirmMsg={AppMessages.DRIVER_DELETE_CONFIRM} onDelete={onDelete} />
         </div>
         <div className="col-12 align-center">
-          <DriverImage imageUrl={driver.imageUrl} height={100} width={100} />
+          <AvatarImage imageUrl={driver.imageUrl} height={100} width={100} />
         </div>
         <div className="col-12 align-center my-2">
           <p className="detail-label">{driver.name}</p>
         </div>
         <div className="col-12 align-center mb-2">
-          <DriverStatus driver={driver} verient="filled" />
+          <ActivityStatusChip info={driver} verient="filled" />
         </div>
         <div className="col-12 align-center">
           <BootstrapTooltip title="Call">
@@ -142,7 +65,7 @@ const DriverSingleCard = ({ driver, onDelete }: IProps) => {
           </BootstrapTooltip>
         </div>
       </div>
-    </Item>
+    </GridItem>
   );
 };
 

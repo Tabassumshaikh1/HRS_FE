@@ -1,11 +1,11 @@
 import { DataGrid, GridCallbackDetails, GridColDef, GridPaginationModel, GridSortDirection, GridSortModel } from "@mui/x-data-grid";
+import { AppDefaults, AppMessages, PageSizeOptions } from "../../../data/app.constant";
 import { IListResponse } from "../../../interfaces/response.interface";
-import { AppDefaults, PageSizeOptions } from "../../../data/app.constant";
 import { IVehicle } from "../../../interfaces/vehicle.interface";
-import { UtilService } from "../../../services/util.service";
-import VehicleStatus from "./VehicleStatus";
+import ActivityStatusChip from "../../../shared/components/Common/ActivityStatusChip";
+import GridActions from "../../../shared/components/Common/GridActions";
+import GridCreatedOn from "../../../shared/components/Common/GridCreatedOn";
 import VehicleImage from "./VehicleImage";
-import VehicleActions from "./VehicleActions";
 
 interface IProps {
   vehicles: IListResponse;
@@ -49,21 +49,23 @@ const VehicleList = ({ vehicles, values, onDelete, onPaginationModelChange, onSo
       headerName: "Status",
       sortable: true,
       width: 200,
-      renderCell: (params) => <VehicleStatus vehicle={{ ...params.row }} />,
+      renderCell: (params) => <ActivityStatusChip info={{ ...params.row }} />,
     },
     {
       field: "createdAt",
       headerName: "Created On",
       sortable: true,
       width: 200,
-      valueGetter: (params, value: IVehicle) => `${new UtilService().formatDate(value.createdAt)}`,
+      renderCell: (params) => <GridCreatedOn info={{ ...params.row }} />,
     },
     {
       field: "action",
       headerName: "Actions",
       sortable: false,
       width: 200,
-      renderCell: (params) => <VehicleActions vehicle={{ ...params.row }} onDelete={onDelete} />,
+      renderCell: (params) => (
+        <GridActions info={{ ...params.row }} path="/vehicles" deleteConfirmMsg={AppMessages.VEHICLE_DELETE_CONFIRM} onDelete={onDelete} />
+      ),
       cellClassName: "ps-0",
     },
   ];

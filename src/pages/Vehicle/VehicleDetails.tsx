@@ -8,10 +8,10 @@ import { IVehicle } from "../../interfaces/vehicle.interface";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { UtilService } from "../../services/util.service";
 import { VehicleService } from "../../services/vehicle.service";
-import ActivateDeactivateStatus from "../../shared/components/ActivateDeactivateStatus";
 import BackButton from "../../shared/components/BackButton";
+import ActivateDeactivateStatus from "../../shared/components/Common/ActivateDeactivateStatus";
+import ActivityStatusChip from "../../shared/components/Common/ActivityStatusChip";
 import VehicleSlider from "./components/VehicleSlider";
-import VehicleStatus from "./components/VehicleStatus";
 
 const VehicleDetails = () => {
   const [vehicle, setVehicle] = useState<IVehicle | null>(null);
@@ -80,7 +80,7 @@ const VehicleDetails = () => {
                   <div className="col-6 mb-4">
                     <p className="detail-label">Status</p>
                     <p className="detail-value">
-                      <VehicleStatus vehicle={vehicle} verient="filled" />
+                      <ActivityStatusChip info={vehicle} verient="filled" />
                     </p>
                   </div>
                   <div className="col-6 mb-4">

@@ -11,8 +11,8 @@ import { AppNotificationService } from "../../services/app-notification.service"
 import { DriverService } from "../../services/driver.service";
 import { UtilService } from "../../services/util.service";
 import BackButton from "../../shared/components/BackButton";
+import AvatarImage from "../../shared/components/Common/AvatarImage";
 import ImageCropper from "../../shared/components/ImageCropper";
-import DriverImage from "./components/DriverImage";
 
 const initialValues = {
   file: "",
@@ -144,7 +144,7 @@ const AddEditDriver = () => {
                     {showCropper ? <ImageCropper file={values.file} aspectRatio={1 / 1} onCrop={onImageCrop} /> : null}
                   </div>
                   <div className="col-12 align-center my-4">
-                    <DriverImage imageUrl={imageUrl} height={180} width={180} />
+                    <AvatarImage imageUrl={imageUrl} height={180} width={180} />
                   </div>
                 </div>
               </div>

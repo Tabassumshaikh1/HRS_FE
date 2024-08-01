@@ -1,22 +1,16 @@
-import styled from "@emotion/styled";
 import CreateTwoToneIcon from "@mui/icons-material/CreateTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone";
 import { IconButton, Menu, MenuItem } from "@mui/material";
-import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import { AppMessages } from "../../../data/app.constant";
+import { MaterialColorsCode100 } from "../../../data/color.constant";
 import { IVehicleType } from "../../../interfaces/vehicle-type.interface";
 import { UtilService } from "../../../services/util.service";
-import BootstrapTooltip from "../../../shared/components/BootstrapTooltip";
 import ConfirmDialog from "../../../shared/components/ConfirmDialog";
+import BootstrapTooltip from "../../../shared/components/Styled/BootstrapTooltip";
+import GridItem from "../../../shared/components/Styled/GridItem";
 import AddEditVehicleType from "./AddEditVehicleType";
-import { MaterialColorsCode100 } from "../../../data/color.constant";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: "#fff",
-  textAlign: "center",
-}));
 
 interface IProps {
   vehicleType: IVehicleType;
@@ -52,7 +46,7 @@ const VehicleTypeSingleCard = ({ vehicleType, onUpdate, onDelete }: IProps) => {
   };
 
   return (
-    <Item style={{ backgroundColor }}>
+    <GridItem style={{ backgroundColor }}>
       <div className="row py-2">
         <div className="col-6 my-2 text-start ps-4">
           <p className="detail-label">{vehicleType.name}</p>
@@ -117,7 +111,7 @@ const VehicleTypeSingleCard = ({ vehicleType, onUpdate, onDelete }: IProps) => {
           <p className="card-detail-value">{utilSvc.formatDate(vehicleType.updatedAt)}</p>
         </div>
       </div>
-    </Item>
+    </GridItem>
   );
 };
 

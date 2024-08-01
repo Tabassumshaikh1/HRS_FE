@@ -6,7 +6,7 @@ interface IProps {
   width?: number;
 }
 
-const CustomerImage = ({ imageUrl, height, width }: IProps) => {
+const AvatarImage = ({ imageUrl, height, width }: IProps) => {
   return (
     <>
       {imageUrl ? (
@@ -22,4 +22,4 @@ const CustomerImage = ({ imageUrl, height, width }: IProps) => {
   );
 };
 
-export default CustomerImage;
+export default AvatarImage;
