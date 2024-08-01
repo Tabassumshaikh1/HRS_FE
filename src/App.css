@@ -291,4 +291,6 @@ input[type="file"]::file-selector-button:active {
 
 .vehicle-image-slider img {
   width: 100%;
+  max-width: 100%;
+  background: #ffffff;
 }

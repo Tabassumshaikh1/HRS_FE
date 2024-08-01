@@ -25,13 +25,13 @@ const VehicleSlider = ({ vehicle, height = "" }: IProps) => {
       {vehicle.imageUrls?.length ? (
         vehicle.imageUrls.map((vehicleImage, index) => (
           <SwiperSlide key={index}>
-            <img style={{ height: height ? height : "150px" }} src={vehicleImage.imageUrl} />
+            <img style={{ height: height ? height : "180px" }} src={vehicleImage.imageUrl} />
           </SwiperSlide>
         ))
       ) : (
         <SwiperSlide>
           <img
-            style={{ height: height ? height : "150px" }}
+            style={{ height: height ? height : "180px" }}
             src="https://firebasestorage.googleapis.com/v0/b/hrs-uat.appspot.com/o/UI%2Fdefault-vehicle.png?alt=media&token=25332901-9ff1-4c8e-a691-9f8ee97f5afd"
           />
         </SwiperSlide>
