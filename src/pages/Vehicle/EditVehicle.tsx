@@ -40,7 +40,7 @@ const EditVehicle = () => {
   }>({ imageUrls: [], files: [] });
   const [vehicleTypes, setVehicleTypes] = useState<IVehicleType[]>([]);
   const [vehicle, setVehicle] = useState<IVehicle | null>(null);
-  const [showConfirm, setShowConfirm] = useState<boolean>(false);
+  const [deleteImageUrl, setDeleteImageUrl] = useState<string | null>(null);
   const navigate = useNavigate();
   const fileInputRef = useRef<any>(null);
   const notifySvc = new AppNotificationService();
@@ -151,11 +151,12 @@ const EditVehicle = () => {
     }
   };
 
-  const onConfirmDialogClose = (result: boolean, vehicleImage: IVehicleImage) => {
-    setShowConfirm(false);
-    if (result) {
+  const onConfirmDialogClose = (result: boolean) => {
+    const vehicleImage = vehicle?.imageUrls?.find((image) => image.imageUrl === deleteImageUrl);
+    if (result && vehicleImage?.id) {
       deleteImageFromServer(vehicleImage.id);
     }
+    setDeleteImageUrl(null);
   };
 
   return (
@@ -224,14 +225,14 @@ const EditVehicle = () => {
                             <VehicleImage
                               imageUrl={vehicleImage.imageUrl}
                               onDelete={() => {
-                                setShowConfirm(true);
+                                setDeleteImageUrl(vehicleImage.imageUrl);
                               }}
                             />
-                            {showConfirm ? (
+                            {deleteImageUrl ? (
                               <ConfirmDialog
                                 message={AppMessages.UPLOADED_IMAGE_DELETE_CONFIRM}
                                 onClose={(result) => {
-                                  onConfirmDialogClose(result, vehicleImage);
+                                  onConfirmDialogClose(result);
                                 }}
                               />
                             ) : null}

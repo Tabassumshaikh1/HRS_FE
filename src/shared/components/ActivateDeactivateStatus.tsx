@@ -4,23 +4,25 @@ import { Button } from "@mui/material";
 import { ActivityStatus } from "../../data/app.constant";
 import { IUser } from "../../interfaces/user.interface";
 import BootstrapTooltip from "../../shared/components/BootstrapTooltip";
+import { IVehicle } from "../../interfaces/vehicle.interface";
 
 interface IProps {
-  user: IUser;
+  user: IUser | IVehicle;
+  moduleTextName: string;
   onClick: () => void;
 }
 
-const ActivateDeactivateStatus = ({ user, onClick }: IProps) => {
+const ActivateDeactivateStatus = ({ user, moduleTextName, onClick }: IProps) => {
   return (
     <>
       {user?.status === ActivityStatus.ACTIVE ? (
-        <BootstrapTooltip title="Deactivate Driver">
+        <BootstrapTooltip title={`Deactivate ${moduleTextName}`}>
           <Button variant="outlined" color="error" onClick={onClick}>
             <BlockTwoToneIcon className="me-2" /> Deactivate
           </Button>
         </BootstrapTooltip>
       ) : (
-        <BootstrapTooltip title="Activate Driver">
+        <BootstrapTooltip title={`Activate ${moduleTextName}`}>
           <Button variant="outlined" color="success" onClick={onClick}>
             <DoneTwoToneIcon className="me-2" /> Activate
           </Button>

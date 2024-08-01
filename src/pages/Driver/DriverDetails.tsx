@@ -66,7 +66,7 @@ const DriverDetails = () => {
         <CardHeader
           title="Driver Details"
           className="card-heading"
-          action={driver ? <ActivateDeactivateStatus user={driver} onClick={updateStatus} /> : null}
+          action={driver ? <ActivateDeactivateStatus user={driver} moduleTextName="Driver" onClick={updateStatus} /> : null}
         />
         <Divider />
         {driver?._id ? (

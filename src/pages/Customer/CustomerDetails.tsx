@@ -58,7 +58,7 @@ const CustomerDetails = () => {
         <CardHeader
           title="Customer Details"
           className="card-heading"
-          action={customer ? <ActivateDeactivateStatus user={customer} onClick={updateStatus} /> : null}
+          action={customer ? <ActivateDeactivateStatus user={customer} moduleTextName="Customer" onClick={updateStatus} /> : null}
         />
         <Divider />
         {customer?._id ? (

@@ -20,6 +20,8 @@ export enum AppMessages {
   FILE_TYPE = "File type should be an image",
   VEHICLE_ADDED = "Vehicle added successfully",
   VEHICLE_UPDATED = "Vehicle update successfully",
+  VEHICLE_DELETE_CONFIRM = "Do you want to delete this vehicle?",
+  VEHICLE_DELETED = "Vehicle deleted successfully",
   UPLOADED_IMAGE_DELETE_CONFIRM = "Do you want to delete this uploaded image?",
   VEHICLE_IMAGE_DELETED = "Vehicle image deleted successfully",
 }
@@ -100,6 +102,7 @@ export enum RouteType {
 export enum DateFormats {
   DD_MM_YYYY = "DD/MM/YYYY",
   DD_MM_YYYY_H_MM_A = "DD/MM/YYYY h:mm A",
+  MMMM_YYYY = "MMMM YYYY",
 }
 
 export const PageSizeOptions = [5, 10, 25, 50];

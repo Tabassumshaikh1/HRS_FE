@@ -11,27 +11,44 @@ const Item = styled(Paper)(({ theme }) => ({
 
 interface IProps {
   imageUrl: string;
-  onDelete: () => void;
+  height?: string;
+  hideDeleteBtn?: boolean;
+  onDelete?: () => void;
 }
 
-const VehicleImage = ({ imageUrl, onDelete }: IProps) => {
+const VehicleImage = ({ imageUrl, height = "", hideDeleteBtn = false, onDelete }: IProps) => {
   const utilSvc = new UtilService();
+
   return (
-    <Item
-      className="vehicle-image-card"
-      style={{
-        height: `${utilSvc.isMobile() ? "140px" : "120px"}`,
-        backgroundImage: `url(${imageUrl})`,
-      }}
-    >
-      <div className="row">
-        <div className="col-12 text-end">
-          <BootstrapTooltip title="Delete" onClick={onDelete}>
-            <DeleteOutlineTwoToneIcon color="error" className="vehicle-image-card-delete-btn" />
-          </BootstrapTooltip>
-        </div>
-      </div>
-    </Item>
+    <>
+      {imageUrl ? (
+        <Item
+          className="vehicle-image-card"
+          style={{
+            height: height ? height : `${utilSvc.isMobile() ? "140px" : "120px"}`,
+            backgroundImage: `url(${imageUrl})`,
+          }}
+        >
+          {!hideDeleteBtn ? (
+            <div className="row">
+              <div className="col-12 text-end">
+                <BootstrapTooltip title="Delete" onClick={onDelete}>
+                  <DeleteOutlineTwoToneIcon color="error" className="vehicle-image-card-delete-btn" />
+                </BootstrapTooltip>
+              </div>
+            </div>
+          ) : null}
+        </Item>
+      ) : (
+        <Item
+          className="vehicle-image-card"
+          style={{
+            height: height ? height : `${utilSvc.isMobile() ? "140px" : "120px"}`,
+            backgroundImage: `url(https://firebasestorage.googleapis.com/v0/b/hrs-uat.appspot.com/o/UI%2Fdefault-vehicle.png?alt=media&token=25332901-9ff1-4c8e-a691-9f8ee97f5afd)`,
+          }}
+        ></Item>
+      )}
+    </>
   );
 };
 

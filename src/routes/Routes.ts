@@ -73,6 +73,12 @@ export function RouterElement() {
         : AuthenticateRoute("/login"),
     },
     {
+      path: "vehicles/:id",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
+        ? LazyLoadRoutes("Vehicle", "VehicleDetails")
+        : AuthenticateRoute("/login"),
+    },
+    {
       path: "vehicles/new",
       element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
         ? LazyLoadRoutes("Vehicle", "AddVehicle")

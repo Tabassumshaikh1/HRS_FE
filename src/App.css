@@ -284,3 +284,11 @@ input[type="file"]::file-selector-button:active {
 .vehicle-image-card-delete-btn {
   color: #ffffff !important;
 }
+
+.vehicle-image-slider {
+  border-radius: 4px;
+}
+
+.vehicle-image-slider img {
+  width: 100%;
+}
