@@ -36,10 +36,9 @@ const DriverFilters = ({ values, setFieldValue }: IProps) => {
       <div className="col-12 text-end mt-2">
         <Button
           color="inherit"
-          disabled={!values.status && !values.accountType}
+          disabled={!values.status}
           onClick={async () => {
             setFieldValue("status", "");
-            setFieldValue("accountType", "");
             await setFieldValue("page", 0);
             await setFieldValue("limit", values.limit);
           }}

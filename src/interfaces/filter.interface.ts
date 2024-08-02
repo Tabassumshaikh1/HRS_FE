@@ -1,4 +1,4 @@
-import { AccountType, ActivityStatus, SortBy } from "../data/app.constant";
+import { AccountType, ActivityStatus, DailyExpenseStatus, SortBy } from "../data/app.constant";
 
 interface CommonFilters {
   q?: string;
@@ -23,4 +23,12 @@ export interface IVehicleTypeFilters extends CommonFilters {}
 export interface IVehicleFilters extends CommonFilters {
   status?: `${ActivityStatus}`;
   vehicleType?: string;
+}
+
+export interface IDailyExpenseFilters extends CommonFilters {
+  status?: `${DailyExpenseStatus}`;
+  vehicle?: string;
+  fromDate?: string;
+  toDate?: string;
+  createdBy?: string;
 }

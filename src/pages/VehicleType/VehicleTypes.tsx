@@ -4,21 +4,20 @@ import FormatListBulletedTwoToneIcon from "@mui/icons-material/FormatListBullete
 import WindowTwoToneIcon from "@mui/icons-material/WindowTwoTone";
 import { Button, Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { DataGrid, GridColDef, GridPaginationModel, GridSortDirection, GridSortModel } from "@mui/x-data-grid";
+import { GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { AppDefaults, AppMessages, DateFormats, PageSizeOptions, SortBy } from "../../data/app.constant";
+import { AppDefaults, AppMessages, DateFormats, SortBy } from "../../data/app.constant";
 import { IVehicleTypeFilters } from "../../interfaces/filter.interface";
 import { IListResponse } from "../../interfaces/response.interface";
 import { IVehicleType } from "../../interfaces/vehicle-type.interface";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { UtilService } from "../../services/util.service";
 import { VehicleTypeService } from "../../services/vehicle-type.service";
-import BootstrapTooltip from "../../shared/components/Styled/BootstrapTooltip";
 import SearchBox from "../../shared/components/Common/SearchBox";
+import BootstrapTooltip from "../../shared/components/Styled/BootstrapTooltip";
 import AddEditVehicleType from "./components/AddEditVehicleType";
-import VehicleTypeAction from "./components/VehicleTypeAction";
 import VehicleTypeCards from "./components/VehicleTypeCards";
 import VehicleTypeList from "./components/VehicleTypeList";
 

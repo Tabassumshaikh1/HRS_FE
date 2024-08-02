@@ -25,6 +25,8 @@ export enum AppMessages {
   VEHICLE_DELETED = "Vehicle deleted successfully",
   UPLOADED_IMAGE_DELETE_CONFIRM = "Do you want to delete this uploaded image?",
   VEHICLE_IMAGE_DELETED = "Vehicle image deleted successfully",
+  DAILY_EXPENS_DELETE_CONFIRM = "Do you want to delete this daily expense?",
+  DAILY_EXPENSE_DELETED = "Daily expense deleted successfully",
 }
 
 export enum SortBy {
@@ -40,6 +42,9 @@ export enum AppDefaults {
   SORT_BY = "desc",
   LIST_ROW_HEIGHT = 50,
   PAGINATION_AND_SORTING_MODE = "server",
+  RUPEE_SYMBOL = "₹",
+  SHOW_MULTI_COLOR_CARDS = 0,
+  DEFAULT_CARD_COLOR = "#eef2f6",
 }
 
 const API_HOST = process.env.REACT_APP_API_HOST;
@@ -55,6 +60,7 @@ export const API_URLS = {
   DRIVERS: `${API_HOST}/drivers`,
   VEHICLE_TYPES: `${API_HOST}/vehicle-type`,
   VEHICLES: `${API_HOST}/vehicles`,
+  DAILY_EXPENSE: `${API_HOST}/daily-expense`,
 };
 
 export enum ImageMimeType {
@@ -104,6 +110,11 @@ export enum DateFormats {
   DD_MM_YYYY = "DD/MM/YYYY",
   DD_MM_YYYY_H_MM_A = "DD/MM/YYYY h:mm A",
   MMMM_YYYY = "MMMM YYYY",
+}
+
+export enum DailyExpenseStatus {
+  PENDING = "Pending",
+  APPROVED = "Approved",
 }
 
 export const PageSizeOptions = [5, 10, 25, 50];

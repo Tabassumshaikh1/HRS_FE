@@ -2,6 +2,7 @@ import CommuteTwoToneIcon from "@mui/icons-material/CommuteTwoTone";
 import Diversity3TwoToneIcon from "@mui/icons-material/Diversity3TwoTone";
 import Groups2TwoToneIcon from "@mui/icons-material/Groups2TwoTone";
 import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
+import PriceChangeTwoToneIcon from "@mui/icons-material/PriceChangeTwoTone";
 import TableChartTwoToneIcon from "@mui/icons-material/TableChartTwoTone";
 import { UserRoles } from "../data/app.constant";
 import { ISidebarItem } from "../interfaces/sidebar-item.interface";
@@ -38,6 +39,13 @@ export class SidebarService {
       path: "/vehicles",
       iconComp: LocalShippingTwoToneIcon,
       roles: [UserRoles.ADMIN],
+      isConfigration: false,
+    },
+    {
+      name: "Daily Expenses",
+      path: "/daily-expenses",
+      iconComp: PriceChangeTwoToneIcon,
+      roles: [UserRoles.ADMIN, UserRoles.DRIVER],
       isConfigration: false,
     },
     {

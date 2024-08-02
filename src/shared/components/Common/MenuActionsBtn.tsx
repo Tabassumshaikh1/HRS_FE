@@ -10,9 +10,10 @@ import { IUser } from "../../../interfaces/user.interface";
 import { IVehicle } from "../../../interfaces/vehicle.interface";
 import ConfirmDialog from "../../../shared/components/ConfirmDialog";
 import BootstrapTooltip from "../../../shared/components/Styled/BootstrapTooltip";
+import { IDailyExpense } from "../../../interfaces/daily-expense.interface";
 
 interface IProps {
-  info: IUser | IVehicle;
+  info: IUser | IVehicle | IDailyExpense;
   path: string;
   deleteConfirmMsg?: string;
   hideDetailsBtn?: boolean;

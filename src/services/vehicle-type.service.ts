@@ -1,5 +1,5 @@
 import { API_URLS } from "../data/app.constant";
-import { IDriverFilters, IVehicleTypeFilters } from "../interfaces/filter.interface";
+import { IVehicleTypeFilters } from "../interfaces/filter.interface";
 import { IListResponse } from "../interfaces/response.interface";
 import { IUser } from "../interfaces/user.interface";
 import { IVehicleType } from "../interfaces/vehicle-type.interface";

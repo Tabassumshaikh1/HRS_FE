@@ -3,7 +3,7 @@ import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useEffect, useState } from "react";
-import { AppMessages } from "../../../data/app.constant";
+import { AppDefaults, AppMessages } from "../../../data/app.constant";
 import { MaterialColorsCode100 } from "../../../data/color.constant";
 import { IVehicleType } from "../../../interfaces/vehicle-type.interface";
 import { UtilService } from "../../../services/util.service";
@@ -46,7 +46,7 @@ const VehicleTypeSingleCard = ({ vehicleType, onUpdate, onDelete }: IProps) => {
   };
 
   return (
-    <GridItem style={{ backgroundColor }}>
+    <GridItem style={{ backgroundColor: AppDefaults.SHOW_MULTI_COLOR_CARDS ? backgroundColor : AppDefaults.DEFAULT_CARD_COLOR }}>
       <div className="row py-2">
         <div className="col-6 my-2 text-start ps-4">
           <p className="detail-label">{vehicleType.name}</p>

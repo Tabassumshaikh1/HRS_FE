@@ -90,6 +90,30 @@ export function RouterElement() {
         ? LazyLoadRoutes("Vehicle", "EditVehicle")
         : AuthenticateRoute("/login"),
     },
+    {
+      path: "daily-expenses",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN, UserRoles.DRIVER])
+        ? LazyLoadRoutes("DailyExpense", "DailyExpenses")
+        : AuthenticateRoute("/login"),
+    },
+    {
+      path: "daily-expenses/:id",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN, UserRoles.DRIVER])
+        ? LazyLoadRoutes("DailyExpense", "DailyExpenseDetails")
+        : AuthenticateRoute("/login"),
+    },
+    {
+      path: "daily-expenses/new",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN, UserRoles.DRIVER])
+        ? LazyLoadRoutes("DailyExpense", "AddEditDailyExpense")
+        : AuthenticateRoute("/login"),
+    },
+    {
+      path: "daily-expenses/:id/edit",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN, UserRoles.DRIVER])
+        ? LazyLoadRoutes("DailyExpense", "AddEditDailyExpense")
+        : AuthenticateRoute("/login"),
+    },
   ];
 
   const routing = useRoutes(routes);

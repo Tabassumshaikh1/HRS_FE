@@ -64,7 +64,7 @@ const VehicleFilters = ({ vehicleTypes, values, setFieldValue }: IProps) => {
       <div className="col-12 text-end mt-2">
         <Button
           color="inherit"
-          disabled={!values.status && !values.accountType}
+          disabled={!values.status && !values.vehicleType}
           onClick={async () => {
             setFieldValue("status", "");
             setFieldValue("vehicleType", "");

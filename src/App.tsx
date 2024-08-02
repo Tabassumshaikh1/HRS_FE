@@ -7,7 +7,7 @@ import { RouterElement } from "./routes/Routes";
 import Loader from "./shared/components/Loader";
 
 const App = () => {
-  const showLoader = useAppSelector((state) => state.loader);
+  const showLoader = useAppSelector((store) => store.loader);
   return (
     <>
       <RouterElement />

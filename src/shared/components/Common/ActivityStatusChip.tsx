@@ -1,20 +1,38 @@
 import { Chip } from "@mui/material";
 import { IUser } from "../../../interfaces/user.interface";
-import { ActivityStatus } from "../../../data/app.constant";
+import { ActivityStatus, DailyExpenseStatus } from "../../../data/app.constant";
 import { IVehicle } from "../../../interfaces/vehicle.interface";
+import { IDailyExpense } from "../../../interfaces/daily-expense.interface";
 
 interface IProps {
-  info: IUser | IVehicle;
+  info: IUser | IVehicle | IDailyExpense;
   verient?: "outlined" | "filled";
+  statusType?: "ActivityStatus" | "DailyExpenseStatus";
 }
 
-const ActivityStatusChip = ({ info, verient = "outlined" }: IProps) => {
+const ActivityStatusChip = ({ info, verient = "outlined", statusType = "ActivityStatus" }: IProps) => {
   return (
     <>
-      {info.status === ActivityStatus.ACTIVE ? (
-        <Chip variant={verient || "outlined"} color="success" size="small" label={info.status} />
+      {statusType === "ActivityStatus" ? (
+        <>
+          {info.status === ActivityStatus.ACTIVE ? (
+            <Chip variant={verient || "outlined"} color="success" size="small" label={info.status} />
+          ) : (
+            <Chip variant={verient || "outlined"} color="error" size="small" label={info.status} />
+          )}
+        </>
       ) : (
-        <Chip variant={verient || "outlined"} color="error" size="small" label={info.status} />
+        <>
+          {statusType === "DailyExpenseStatus" ? (
+            <>
+              {info.status === DailyExpenseStatus.APPROVED ? (
+                <Chip variant={verient || "outlined"} color="success" size="small" label={info.status} />
+              ) : (
+                <Chip variant={verient || "outlined"} color="warning" size="small" label={info.status} />
+              )}
+            </>
+          ) : null}
+        </>
       )}
     </>
   );
