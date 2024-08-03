@@ -199,6 +199,17 @@ input[type="file"]::file-selector-button:active {
   background-color: #e5e7eb;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .content-wrapper {
   margin: 2.5% 5%;
 }
@@ -328,4 +339,10 @@ input[type="file"]::file-selector-button:active {
 .date-range-picker .css-xpa0r5-MuiButtonBase-root-MuiIconButton-root,
 .date-range-picker .css-xpa0r5-MuiButtonBase-root-MuiIconButton-root:hover {
   background-color: #1976d2;
+}
+
+.datepicker-error label,
+.datepicker-error fieldset {
+  color: #dc3545;
+  border-color: #dc3545;
 }

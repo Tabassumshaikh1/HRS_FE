@@ -1,7 +1,4 @@
 import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { FormikErrors } from "formik";
 import { DailyExpenseStatus } from "../../../data/app.constant";
 import { IUser } from "../../../interfaces/user.interface";
@@ -49,7 +46,7 @@ const DailyExpenseFilters = ({ vehicles, drivers, values, setFieldValue }: IProp
             labelId="demo-select-small-label"
             id="demo-select-small"
             value={values.vehicle}
-            label="Vehicle Type"
+            label="Vehicle"
             onChange={async (e) => {
               setFieldValue("vehicle", e.target.value);
               await setFieldValue("page", 0);

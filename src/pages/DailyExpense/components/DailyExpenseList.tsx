@@ -1,14 +1,12 @@
 import { DataGrid, GridCallbackDetails, GridColDef, GridPaginationModel, GridSortDirection, GridSortModel } from "@mui/x-data-grid";
-import { AppDefaults, AppMessages, DailyExpenseStatus, PageSizeOptions } from "../../../data/app.constant";
-import { IListResponse } from "../../../interfaces/response.interface";
+import { AppDefaults, AppMessages, DailyExpenseStatus, InternalStatusTypes, PageSizeOptions } from "../../../data/app.constant";
 import { IDailyExpense } from "../../../interfaces/daily-expense.interface";
+import { IListResponse } from "../../../interfaces/response.interface";
 import { UtilService } from "../../../services/util.service";
 import ActivityStatusChip from "../../../shared/components/Common/ActivityStatusChip";
-import { IUser } from "../../../interfaces/user.interface";
-import { useAppSelector } from "../../../redux/hooks";
-import GridCreatedOn from "../../../shared/components/Common/GridCreatedOn";
-import GridActions from "../../../shared/components/Common/GridActions";
 import ExternalLink from "../../../shared/components/Common/ExternalLink";
+import GridActions from "../../../shared/components/Common/GridActions";
+import GridCreatedOn from "../../../shared/components/Common/GridCreatedOn";
 
 interface IProps {
   dailyExpenses: IListResponse;
@@ -48,7 +46,7 @@ const DailyExpenseList = ({ dailyExpenses, values, onDelete, onPaginationModelCh
       headerName: "Status",
       sortable: true,
       width: 190,
-      renderCell: (params) => <ActivityStatusChip info={{ ...params.row }} statusType="DailyExpenseStatus" />,
+      renderCell: (params) => <ActivityStatusChip info={{ ...params.row }} statusType={InternalStatusTypes.DAILY_EXPENSE_STATUS} />,
     },
     {
       field: "createdBy",
@@ -73,7 +71,7 @@ const DailyExpenseList = ({ dailyExpenses, values, onDelete, onPaginationModelCh
         <GridActions
           info={{ ...params.row }}
           path="/daily-expenses"
-          deleteConfirmMsg={AppMessages.DAILY_EXPENS_DELETE_CONFIRM}
+          deleteConfirmMsg={AppMessages.DAILY_EXPENSE_DELETE_CONFIRM}
           hideEditBtn={params.row.status === DailyExpenseStatus.APPROVED}
           onDelete={onDelete}
         />

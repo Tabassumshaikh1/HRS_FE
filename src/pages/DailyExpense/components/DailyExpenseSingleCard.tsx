@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { AppDefaults, AppMessages, DailyExpenseStatus, InternalStatusTypes } from "../../../data/app.constant";
+import { MaterialColorsCode100 } from "../../../data/color.constant";
 import { IDailyExpense } from "../../../interfaces/daily-expense.interface";
 import { UtilService } from "../../../services/util.service";
 import ActivityStatusChip from "../../../shared/components/Common/ActivityStatusChip";
+import ExternalLink from "../../../shared/components/Common/ExternalLink";
 import MenuActionsBtn from "../../../shared/components/Common/MenuActionsBtn";
 import GridItem from "../../../shared/components/Styled/GridItem";
-import { AppDefaults, AppMessages, DailyExpenseStatus } from "../../../data/app.constant";
-import { MaterialColorsCode100 } from "../../../data/color.constant";
-import ExternalLink from "../../../shared/components/Common/ExternalLink";
 
 interface IProps {
   dailyExpense: IDailyExpense;
@@ -28,13 +28,13 @@ const DailyExpenseSingleCard = ({ dailyExpense, onDelete }: IProps) => {
           <p className="detail-label">{utilSvc.formatDate(dailyExpense.date)}</p>
         </div>
         <div className="col-4 mt-4">
-          <ActivityStatusChip info={dailyExpense} verient="filled" statusType="DailyExpenseStatus" />
+          <ActivityStatusChip info={dailyExpense} verient="filled" statusType={InternalStatusTypes.DAILY_EXPENSE_STATUS} />
         </div>
         <div className="col-2 mt-3 ps-0">
           <MenuActionsBtn
             info={dailyExpense}
             path="/daily-expenses"
-            deleteConfirmMsg={AppMessages.DAILY_EXPENS_DELETE_CONFIRM}
+            deleteConfirmMsg={AppMessages.DAILY_EXPENSE_DELETE_CONFIRM}
             onDelete={onDelete}
             hideEditBtn={dailyExpense.status === DailyExpenseStatus.APPROVED}
           />

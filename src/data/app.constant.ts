@@ -25,7 +25,9 @@ export enum AppMessages {
   VEHICLE_DELETED = "Vehicle deleted successfully",
   UPLOADED_IMAGE_DELETE_CONFIRM = "Do you want to delete this uploaded image?",
   VEHICLE_IMAGE_DELETED = "Vehicle image deleted successfully",
-  DAILY_EXPENS_DELETE_CONFIRM = "Do you want to delete this daily expense?",
+  DAILY_EXPENSE_ADDED = "Daily expense added successfully",
+  DAILY_EXPENSE_UPDATED = "Daily expense update successfully",
+  DAILY_EXPENSE_DELETE_CONFIRM = "Do you want to delete this daily expense?",
   DAILY_EXPENSE_DELETED = "Daily expense deleted successfully",
 }
 
@@ -115,6 +117,11 @@ export enum DateFormats {
 export enum DailyExpenseStatus {
   PENDING = "Pending",
   APPROVED = "Approved",
+}
+
+export enum InternalStatusTypes {
+  ACTIVITY_STATUS = "ActivityStatus",
+  DAILY_EXPENSE_STATUS = "DailyExpenseStatus",
 }
 
 export const PageSizeOptions = [5, 10, 25, 50];
