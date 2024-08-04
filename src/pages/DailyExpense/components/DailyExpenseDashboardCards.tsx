@@ -41,7 +41,7 @@ const DailyExpenseDashboardCards = ({ dailyExpenseAnalytics }: IProps) => {
                 <LocalGasStationTwoToneIcon fontSize="large" color="inherit" />
               </div>
             </div>
-            <div className="row pb-3">
+            <div className="row pb-3 px-3">
               <div className="col-12">
                 <SparkLineChart
                   data={fuelChartData}
@@ -68,7 +68,7 @@ const DailyExpenseDashboardCards = ({ dailyExpenseAnalytics }: IProps) => {
                 <MoneyOffTwoToneIcon fontSize="large" color="inherit" />
               </div>
             </div>
-            <div className="row pb-3">
+            <div className="row pb-3 px-3">
               <div className="col-12">
                 <SparkLineChart
                   data={challanChartData}
@@ -95,7 +95,7 @@ const DailyExpenseDashboardCards = ({ dailyExpenseAnalytics }: IProps) => {
                 <RequestQuoteTwoToneIcon fontSize="large" color="inherit" />
               </div>
             </div>
-            <div className="row pb-3">
+            <div className="row pb-3 px-3">
               <div className="col-12">
                 <SparkLineChart
                   data={otherExpensesChartData}
@@ -122,7 +122,7 @@ const DailyExpenseDashboardCards = ({ dailyExpenseAnalytics }: IProps) => {
                 <PriceChangeTwoToneIcon fontSize="large" color="inherit" />
               </div>
             </div>
-            <div className="row pb-3">
+            <div className="row pb-3 px-3">
               <div className="col-12">
                 <SparkLineChart
                   data={totalChartData}
