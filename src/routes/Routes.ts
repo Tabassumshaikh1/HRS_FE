@@ -97,6 +97,12 @@ export function RouterElement() {
         : AuthenticateRoute("/login"),
     },
     {
+      path: "daily-expenses/list",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN, UserRoles.DRIVER])
+        ? LazyLoadRoutes("DailyExpense", "DailyExpensesListCardView")
+        : AuthenticateRoute("/login"),
+    },
+    {
       path: "daily-expenses/:id",
       element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN, UserRoles.DRIVER])
         ? LazyLoadRoutes("DailyExpense", "DailyExpenseDetails")

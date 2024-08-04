@@ -4,6 +4,7 @@ import { MaterialColorsCode100 } from "../../../data/color.constant";
 import { IDailyExpense } from "../../../interfaces/daily-expense.interface";
 import { UtilService } from "../../../services/util.service";
 import ActivityStatusChip from "../../../shared/components/Common/ActivityStatusChip";
+import Currency from "../../../shared/components/Common/Currency";
 import ExternalLink from "../../../shared/components/Common/ExternalLink";
 import MenuActionsBtn from "../../../shared/components/Common/MenuActionsBtn";
 import GridItem from "../../../shared/components/Styled/GridItem";
@@ -42,7 +43,7 @@ const DailyExpenseSingleCard = ({ dailyExpense, onDelete }: IProps) => {
         <div className="col-6 text-start ps-4 mt-2">
           <p className="card-detail-label">Total Expense</p>
           <p className="card-detail-value text-danger fw-bold">
-            {AppDefaults.RUPEE_SYMBOL} {(dailyExpense.expenseOnFuel || 0) + (dailyExpense.challan || 0) + (dailyExpense.otherExpenses || 0)}
+            <Currency value={(dailyExpense.expenseOnFuel || 0) + (dailyExpense.challan || 0) + (dailyExpense.otherExpenses || 0)} />
           </p>
         </div>
         <div className="col-6 text-start ps-4 mt-2">

@@ -3,7 +3,7 @@ import { Button, Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AppDefaults, DailyExpenseStatus, DateFormats, InternalStatusTypes } from "../../data/app.constant";
+import { DailyExpenseStatus, DateFormats, InternalStatusTypes } from "../../data/app.constant";
 import { IDailyExpense } from "../../interfaces/daily-expense.interface";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { DailyExpenseService } from "../../services/daily-expense.service";
@@ -11,6 +11,7 @@ import { UtilService } from "../../services/util.service";
 import BackButton from "../../shared/components/BackButton";
 import ActivateDeactivateStatus from "../../shared/components/Common/ActivateDeactivateStatus";
 import ActivityStatusChip from "../../shared/components/Common/ActivityStatusChip";
+import Currency from "../../shared/components/Common/Currency";
 import ExternalLink from "../../shared/components/Common/ExternalLink";
 
 const DailyExpenseDetails = () => {
@@ -107,26 +108,25 @@ const DailyExpenseDetails = () => {
               <div className="col-lg-3 col-md-4 col-6 mb-4">
                 <p className="detail-label">Expense On Fuel</p>
                 <p className="detail-value">
-                  {AppDefaults.RUPEE_SYMBOL} {dailyExpense.expenseOnFuel || 0}
+                  <Currency value={dailyExpense.expenseOnFuel} />
                 </p>
               </div>
               <div className="col-lg-3 col-md-4 col-6 mb-4">
                 <p className="detail-label">Challan</p>
                 <p className="detail-value">
-                  {AppDefaults.RUPEE_SYMBOL} {dailyExpense.challan || 0}
+                  <Currency value={dailyExpense.challan} />
                 </p>
               </div>
               <div className="col-lg-3 col-md-4 col-6 mb-4">
                 <p className="detail-label">Other Expenses</p>
                 <p className="detail-value">
-                  {AppDefaults.RUPEE_SYMBOL} {dailyExpense.otherExpenses || 0}
+                  <Currency value={dailyExpense.otherExpenses} />
                 </p>
               </div>
               <div className="col-lg-3 col-md-4 col-6 mb-4">
                 <p className="detail-label">Total Expense</p>
                 <p className="detail-value text-danger fw-bold">
-                  {AppDefaults.RUPEE_SYMBOL}{" "}
-                  {(dailyExpense.expenseOnFuel || 0) + (dailyExpense.challan || 0) + (dailyExpense.otherExpenses || 0)}
+                  <Currency value={(dailyExpense.expenseOnFuel || 0) + (dailyExpense.challan || 0) + (dailyExpense.otherExpenses || 0)} />
                 </p>
               </div>
               <div className="col-lg-3 col-md-4 col-6 mb-4">

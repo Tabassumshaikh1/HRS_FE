@@ -112,6 +112,7 @@ export enum DateFormats {
   DD_MM_YYYY = "DD/MM/YYYY",
   DD_MM_YYYY_H_MM_A = "DD/MM/YYYY h:mm A",
   MMMM_YYYY = "MMMM YYYY",
+  MMM_YYYY = "MMM YYYY",
 }
 
 export enum DailyExpenseStatus {
@@ -122,6 +123,19 @@ export enum DailyExpenseStatus {
 export enum InternalStatusTypes {
   ACTIVITY_STATUS = "ActivityStatus",
   DAILY_EXPENSE_STATUS = "DailyExpenseStatus",
+}
+
+export enum DateRangeDurationTypes {
+  THIS_YEAR = "This Year",
+  THIS_MONTH = "This Month",
+  LAST_1_MONTH = "Last 1 Month",
+  LAST_3_MONTHS = "Last 3 Months",
+  LAST_6_MONTHS = "Last 6 Months",
+  LAST_1_YEAR = "Last 1 Year",
+}
+
+export enum CurrencyCode {
+  INDIA = "en-IN",
 }
 
 export const PageSizeOptions = [5, 10, 25, 50];

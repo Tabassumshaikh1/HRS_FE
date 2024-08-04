@@ -346,3 +346,46 @@ input[type="number"] {
   color: #dc3545;
   border-color: #dc3545;
 }
+
+.analytics-card {
+  .analytics-card-content {
+    height: 95px;
+    text-align: unset !important;
+    color: #ffffff !important;
+    padding-top: 15px !important;
+    padding-left: 25px;
+
+    .analytics-card-data {
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    .analytics-card-icon {
+      text-align: center;
+      svg {
+        opacity: 0.4;
+        font-size: 60px;
+        transition: 0.3s ease-in-out;
+      }
+    }
+  }
+}
+
+.analytics-card:hover {
+  .analytics-card-icon {
+    svg {
+      opacity: 1 !important;
+      transition: 0.3s ease-in-out;
+      font-size: 62px;
+    }
+  }
+}
+
+.per-month-expense-list {
+  max-height: 300px;
+  overflow: auto;
+  .css-yw020d-MuiAccordionSummary-expandIconWrapper.Mui-expanded,
+  .css-yw020d-MuiAccordionSummary-expandIconWrapper {
+    transform: none !important;
+  }
+}

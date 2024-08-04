@@ -4,6 +4,7 @@ import { IDailyExpense } from "../../../interfaces/daily-expense.interface";
 import { IListResponse } from "../../../interfaces/response.interface";
 import { UtilService } from "../../../services/util.service";
 import ActivityStatusChip from "../../../shared/components/Common/ActivityStatusChip";
+import Currency from "../../../shared/components/Common/Currency";
 import ExternalLink from "../../../shared/components/Common/ExternalLink";
 import GridActions from "../../../shared/components/Common/GridActions";
 import GridCreatedOn from "../../../shared/components/Common/GridCreatedOn";
@@ -30,8 +31,9 @@ const DailyExpenseList = ({ dailyExpenses, values, onDelete, onPaginationModelCh
       headerName: "Total Expense (Per Day)",
       sortable: false,
       width: 190,
-      valueGetter: (params, value: IDailyExpense) =>
-        `${AppDefaults.RUPEE_SYMBOL} ${(value.expenseOnFuel || 0) + (value.challan || 0) + (value.otherExpenses || 0)}`,
+      renderCell: (params) => (
+        <Currency value={(params.row.expenseOnFuel || 0) + (params.row.challan || 0) + (params.row.otherExpenses || 0)} />
+      ),
       cellClassName: "text-danger fw-bold",
     },
     {
@@ -39,7 +41,7 @@ const DailyExpenseList = ({ dailyExpenses, values, onDelete, onPaginationModelCh
       headerName: "Vehicle",
       sortable: false,
       width: 190,
-      renderCell: (params) => <ExternalLink path={`/vehicles/${params.row.vehicle._id}`} text={params.row.vehicle.vehicleNumber} />,
+      renderCell: (params) => <ExternalLink path={`/vehicles/${params.row.vehicle?._id}`} text={params.row.vehicle?.vehicleNumber} />,
     },
     {
       field: "status",

@@ -41,8 +41,9 @@ const AddEditDailyExpense = () => {
 
     onSubmit: async (values) => {
       try {
-        const payload = { ...values };
+        const payload: any = { ...values };
         payload.date = payload.date ? dayjs(payload.date).toISOString() : "";
+        payload.vehicle = payload.vehicle || null;
         if (id) {
           await dailyExpenseSvc.updateDailyExpense(id, payload as any);
           notifySvc.showSucces(AppMessages.DAILY_EXPENSE_UPDATED);
