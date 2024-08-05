@@ -11,14 +11,10 @@ const loggedInUserSlice = createSlice({
   reducers: {
     setLoggedInUser: (state: IUser, action): IUser => {
       storageSvc.setItem(LocalStorageKeys.LOGGED_IN_USER, action.payload);
-      // TODO: Need to remove this hard relaod check the routes.ts files login
-      window.location.reload();
       return action.payload;
     },
     removeLoggedInUser: (state: IUser): null => {
       storageSvc.removeItem(LocalStorageKeys.LOGGED_IN_USER);
-      // TODO: Need to remove this hard relaod check the routes.ts files login
-      window.location.reload();
       return null;
     },
   },

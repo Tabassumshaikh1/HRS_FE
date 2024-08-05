@@ -1,28 +1,29 @@
+import { API_URLS, LocalStorageKeys, RouteType, UserRoles } from "../data/app.constant";
 import { IGoogleLoginCredentials, ILoginCredentials } from "../interfaces/auth.interface";
-import { API_URLS, RouteType, UserRoles } from "../data/app.constant";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { removeLoggedInUser, setLoggedInUser } from "../redux/slices/loggedInUser.slice";
-import { removeToken, setToken } from "../redux/slices/token.slice";
-import { HttpService } from "./http.service";
 import { IUser } from "../interfaces/user.interface";
+import { useAppSelector } from "../redux/hooks";
+import { HttpService } from "./http.service";
+import { StorageService } from "./storage.service";
 
 export class AuthService {
   private httpSvc = new HttpService();
-  private appDispatch = useAppDispatch();
+  private storageSvc = new StorageService();
   private loggedInUser: IUser = useAppSelector((store) => store.loggedInUser);
   private token: string = useAppSelector((store) => store.token);
 
   async login(payload: ILoginCredentials) {
     const response = await this.httpSvc.post(API_URLS.LOGIN, payload);
-    this.appDispatch(setLoggedInUser(response.data.user));
-    this.appDispatch(setToken(response.data.token));
+    this.storageSvc.setItem(LocalStorageKeys.LOGGED_IN_USER, response.data.user);
+    this.storageSvc.setItem(LocalStorageKeys.TOKEN, response.data.token);
+    window.location.reload();
     return true;
   }
 
   async loginWithGoogle(payload: IGoogleLoginCredentials) {
     const response = await this.httpSvc.post(API_URLS.GOOGLE_LOGIN, payload);
-    this.appDispatch(setLoggedInUser(response.data.user));
-    this.appDispatch(setToken(response.data.token));
+    this.storageSvc.setItem(LocalStorageKeys.LOGGED_IN_USER, response.data.user);
+    this.storageSvc.setItem(LocalStorageKeys.TOKEN, response.data.token);
+    window.location.reload();
     return true;
   }
 
@@ -33,8 +34,9 @@ export class AuthService {
 
   async logout() {
     await this.httpSvc.post(API_URLS.LOGOUT, {});
-    this.appDispatch(removeLoggedInUser());
-    this.appDispatch(removeToken());
+    this.storageSvc.removeItem(LocalStorageKeys.LOGGED_IN_USER);
+    this.storageSvc.removeItem(LocalStorageKeys.TOKEN);
+    window.location.reload();
     return true;
   }
 
