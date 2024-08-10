@@ -28,7 +28,7 @@ const VehicleTypeAction = ({ vehicleType, onUpdate, onDelete }: IProps) => {
   return (
     <>
       <BootstrapTooltip title="Edit">
-        <IconButton color="secondary" onClick={() => setShowEditDialog(true)}>
+        <IconButton color="primary" onClick={() => setShowEditDialog(true)}>
           <CreateTwoToneIcon />
         </IconButton>
       </BootstrapTooltip>

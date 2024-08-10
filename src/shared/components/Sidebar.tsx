@@ -54,9 +54,9 @@ export default function Sidebar() {
       </DrawerHeader>
       <Divider />
       <List className="drawer-items">
-        {sidebarItems.map((item) => (
-          <>
-            {!item.isConfigration ? (
+        {sidebarItems.map(
+          (item) =>
+            !item.isConfigration && (
               <ListItem key={item.path} disablePadding className={`${location.pathname.includes(item.path) ? "active" : ""}`}>
                 <ListItemButton
                   onClick={() => {
@@ -72,13 +72,12 @@ export default function Sidebar() {
                   <ListItemText primary={item.name} />
                 </ListItemButton>
               </ListItem>
-            ) : null}
-          </>
-        ))}
+            )
+        )}
         <Divider />
-        {sidebarItems.map((item) => (
-          <>
-            {item.isConfigration ? (
+        {sidebarItems.map(
+          (item) =>
+            item.isConfigration && (
               <ListItem key={item.path} disablePadding className={`${location.pathname.includes(item.path) ? "active" : ""}`}>
                 <ListItemButton
                   onClick={() => {
@@ -94,9 +93,8 @@ export default function Sidebar() {
                   <ListItemText primary={item.name} />
                 </ListItemButton>
               </ListItem>
-            ) : null}
-          </>
-        ))}
+            )
+        )}
       </List>
     </Box>
   );

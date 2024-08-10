@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { AppDefaults, AppMessages, DailyExpenseStatus, InternalStatusTypes } from "../../../data/app.constant";
+import { AppDefaults, AppMessages, DailyExpenseStatus, InternalStatusTypes, UserRoles } from "../../../data/app.constant";
 import { MaterialColorsCode100 } from "../../../data/color.constant";
 import { IDailyExpense } from "../../../interfaces/daily-expense.interface";
+import { IUser } from "../../../interfaces/user.interface";
+import { useAppSelector } from "../../../redux/hooks";
 import { UtilService } from "../../../services/util.service";
 import ActivityStatusChip from "../../../shared/components/Common/ActivityStatusChip";
 import Currency from "../../../shared/components/Common/Currency";
@@ -17,6 +19,7 @@ interface IProps {
 const DailyExpenseSingleCard = ({ dailyExpense, onDelete }: IProps) => {
   const utilSvc = new UtilService();
   const [backgroundColor, setBackgroundColor] = useState<string>("");
+  const loggedInUser: IUser = useAppSelector((store) => store.loggedInUser);
 
   useEffect(() => {
     setBackgroundColor(MaterialColorsCode100[new UtilService().getRandomNumber(0, MaterialColorsCode100.length - 1)]);
@@ -38,6 +41,7 @@ const DailyExpenseSingleCard = ({ dailyExpense, onDelete }: IProps) => {
             deleteConfirmMsg={AppMessages.DAILY_EXPENSE_DELETE_CONFIRM}
             onDelete={onDelete}
             hideEditBtn={dailyExpense.status === DailyExpenseStatus.APPROVED}
+            hideDeleteBtn={dailyExpense.status === DailyExpenseStatus.APPROVED && loggedInUser.role === UserRoles.DRIVER}
           />
         </div>
         <div className="col-6 text-start ps-4 mt-2">
@@ -50,7 +54,13 @@ const DailyExpenseSingleCard = ({ dailyExpense, onDelete }: IProps) => {
           <p className="card-detail-label">Vehicle</p>
           <p className="card-detail-value">
             {dailyExpense.vehicle ? (
-              <ExternalLink path={`/vehicles/${dailyExpense.vehicle?._id}`} text={dailyExpense.vehicle?.vehicleNumber} />
+              <>
+                {loggedInUser.role === UserRoles.ADMIN ? (
+                  <ExternalLink path={`/vehicles/${dailyExpense.vehicle?._id}`} text={dailyExpense.vehicle?.vehicleNumber} />
+                ) : (
+                  <>{dailyExpense.vehicle?.vehicleNumber}</>
+                )}
+              </>
             ) : (
               ""
             )}

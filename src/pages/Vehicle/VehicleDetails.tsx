@@ -53,7 +53,7 @@ const VehicleDetails = () => {
           <BackButton />
         </div>
         <div className="col-6 text-end">
-          <Button variant="outlined" color="secondary" startIcon={<CreateTwoToneIcon />} onClick={() => navigate(`/vehicles/${id}/edit`)}>
+          <Button variant="outlined" color="primary" startIcon={<CreateTwoToneIcon />} onClick={() => navigate(`/vehicles/${id}/edit`)}>
             Edit Vehicle
           </Button>
         </div>

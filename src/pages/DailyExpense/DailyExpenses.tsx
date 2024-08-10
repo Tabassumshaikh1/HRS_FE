@@ -108,7 +108,7 @@ const DailyExpenses = () => {
             title={`${utilSvc.formatDate(values.fromDate)} - ${utilSvc.formatDate(values.toDate)}`}
             className="card-heading"
             action={
-              <Button variant="outlined" color="secondary" onClick={() => navigate("/daily-expenses/list")}>
+              <Button variant="outlined" color="primary" onClick={() => navigate("/daily-expenses/list")}>
                 <PriceChangeTwoToneIcon fontSize="small" className="me-2" /> Daily Expenses
               </Button>
             }

@@ -48,7 +48,7 @@ export const MaterialColorsCode100 = [
 ];
 
 export enum DailyExpenseCardColors {
-  expenseOnFuel = "#3949ab",
+  expenseOnFuel = "#673ab7",
   challan = "#1e88e5",
   otherExpenses = "#364152",
   total = "#f44336",

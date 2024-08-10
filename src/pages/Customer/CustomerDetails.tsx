@@ -93,7 +93,7 @@ const CustomerDetails = () => {
                     </BootstrapTooltip>
                     <BootstrapTooltip title="Email">
                       <a href={`mailto:${customer.email}`}>
-                        <Button variant="outlined" color="secondary">
+                        <Button variant="outlined" color="primary">
                           <EmailTwoToneIcon />
                         </Button>
                       </a>

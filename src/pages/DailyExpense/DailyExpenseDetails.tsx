@@ -3,8 +3,10 @@ import { Button, Card, CardContent, CardHeader } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { DailyExpenseStatus, DateFormats, InternalStatusTypes } from "../../data/app.constant";
+import { DailyExpenseStatus, DateFormats, InternalStatusTypes, UserRoles } from "../../data/app.constant";
 import { IDailyExpense } from "../../interfaces/daily-expense.interface";
+import { IUser } from "../../interfaces/user.interface";
+import { useAppSelector } from "../../redux/hooks";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { DailyExpenseService } from "../../services/daily-expense.service";
 import { UtilService } from "../../services/util.service";
@@ -16,6 +18,7 @@ import ExternalLink from "../../shared/components/Common/ExternalLink";
 
 const DailyExpenseDetails = () => {
   const [dailyExpense, setDailyExpense] = useState<IDailyExpense | null>(null);
+  const loggedInUser: IUser = useAppSelector((store) => store.loggedInUser);
   const { id } = useParams();
   const navigate = useNavigate();
   const notifySvc = new AppNotificationService();
@@ -57,7 +60,7 @@ const DailyExpenseDetails = () => {
           {dailyExpense?.status === DailyExpenseStatus.PENDING ? (
             <Button
               variant="outlined"
-              color="secondary"
+              color="primary"
               startIcon={<CreateTwoToneIcon />}
               onClick={() => navigate(`/daily-expenses/${id}/edit`)}
             >
@@ -71,7 +74,7 @@ const DailyExpenseDetails = () => {
           title="Daily Expense Details"
           className="card-heading"
           action={
-            dailyExpense ? (
+            dailyExpense && loggedInUser.role === UserRoles.ADMIN ? (
               <ActivateDeactivateStatus
                 user={dailyExpense}
                 moduleTextName="Daily Expense"

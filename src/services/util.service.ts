@@ -1,6 +1,6 @@
-import { CurrencyCode, DateFormats, DateRangeDurationTypes } from "../data/app.constant";
 import moment from "moment";
 import XLSX from "xlsx-js-style";
+import { CurrencyCode, DateFormats, DateRangeDurationTypes } from "../data/app.constant";
 import { IDailyExpense, IDailyExpenseAnalytics } from "../interfaces/daily-expense.interface";
 
 export class UtilService {
@@ -191,5 +191,23 @@ export class UtilService {
       default:
         return today;
     }
+  }
+
+  isSelectedDateRangeFromChip(values: any, selectedRange: `${DateRangeDurationTypes}`): boolean {
+    if (!values.fromDate || !values.toDate) {
+      return false;
+    }
+
+    const fromDate = this.getDateRangeStartDate(selectedRange).toISOString().split("T")[0];
+    const toDate = new Date().toISOString().split("T")[0];
+
+    const fromDateValue = new Date(values.fromDate).toISOString().split("T")[0];
+    const toDateValue = new Date(values.toDate).toISOString().split("T")[0];
+
+    if (fromDate === fromDateValue && toDate === toDateValue) {
+      return true;
+    }
+
+    return false;
   }
 }

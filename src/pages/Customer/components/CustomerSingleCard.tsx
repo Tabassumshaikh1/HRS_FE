@@ -58,7 +58,7 @@ const CustomerSingleCard = ({ customer }: IProps) => {
           </BootstrapTooltip>
           <BootstrapTooltip title="Email">
             <a href={`mailto:${customer.email}`}>
-              <EmailTwoToneIcon color="secondary" />
+              <EmailTwoToneIcon color="primary" />
             </a>
           </BootstrapTooltip>
         </div>

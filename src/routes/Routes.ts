@@ -1,11 +1,14 @@
 import { RouteObject, useRoutes } from "react-router-dom";
 import { RouteType, UserRoles } from "../data/app.constant";
+import { IUser } from "../interfaces/user.interface";
+import { useAppSelector } from "../redux/hooks";
 import { AuthService } from "../services/auth.service";
 import AuthenticateRoute from "./AuthenticateRoute";
 import LazyLoadRoutes from "./LazyLoadRoutes";
 
 export function RouterElement() {
   const authSvc = new AuthService();
+  const loggedInUser: IUser = useAppSelector((store) => store.loggedInUser);
 
   const routes: RouteObject[] = [
     {
@@ -93,7 +96,7 @@ export function RouterElement() {
     {
       path: "daily-expenses",
       element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN, UserRoles.DRIVER])
-        ? LazyLoadRoutes("DailyExpense", "DailyExpenses")
+        ? LazyLoadRoutes("DailyExpense", loggedInUser.role === UserRoles.ADMIN ? "DailyExpenses" : "DailyExpensesListCardView")
         : AuthenticateRoute("/login"),
     },
     {

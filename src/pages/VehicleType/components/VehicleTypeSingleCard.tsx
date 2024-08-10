@@ -78,7 +78,7 @@ const VehicleTypeSingleCard = ({ vehicleType, onUpdate, onDelete }: IProps) => {
                 setShowEditDialog(true);
               }}
             >
-              <CreateTwoToneIcon color="secondary" className="me-2" />
+              <CreateTwoToneIcon color="primary" className="me-2" />
               Edit
             </MenuItem>
             <MenuItem

@@ -22,12 +22,12 @@ import { DailyExpenseService } from "../../services/daily-expense.service";
 import { DriverService } from "../../services/driver.service";
 import { UtilService } from "../../services/util.service";
 import { VehicleService } from "../../services/vehicle.service";
+import BackButton from "../../shared/components/BackButton";
 import SearchBox from "../../shared/components/Common/SearchBox";
 import BootstrapTooltip from "../../shared/components/Styled/BootstrapTooltip";
 import DailyExpenseCards from "./components/DailyExpenseCards";
 import DailyExpenseFilters from "./components/DailyExpenseFilters";
 import DailyExpenseList from "./components/DailyExpenseList";
-import BackButton from "../../shared/components/BackButton";
 
 const initialValues: any = {
   q: "",
@@ -182,11 +182,9 @@ const DailyExpensesListCardView = () => {
   return (
     <div className="content-wrapper">
       <div className="row my-4">
-        <div className="col-4">
-          <BackButton />
-        </div>
+        <div className="col-4">{loggedInUser.role === UserRoles.ADMIN ? <BackButton /> : null}</div>
         <div className="col-8 text-end">
-          <Button variant="contained" color="secondary" onClick={() => navigate("/daily-expenses/new")}>
+          <Button variant="contained" color="primary" onClick={() => navigate("/daily-expenses/new")}>
             <AddTwoToneIcon fontSize="small" className="me-1" /> Add Daily Expense
           </Button>
         </div>

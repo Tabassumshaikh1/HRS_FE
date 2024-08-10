@@ -130,7 +130,7 @@ const VehicleTypes = () => {
     <div className="content-wrapper">
       <div className="row my-4">
         <div className="col-12 text-end">
-          <Button variant="contained" color="secondary" onClick={() => setShowAddDialog(true)}>
+          <Button variant="contained" color="primary" onClick={() => setShowAddDialog(true)}>
             <AddTwoToneIcon fontSize="small" className="me-1" /> Add Vehicle Type
           </Button>
           {showAddDialog ? (

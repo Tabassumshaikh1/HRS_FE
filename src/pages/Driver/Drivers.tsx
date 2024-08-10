@@ -141,7 +141,7 @@ const Drivers = () => {
     <div className="content-wrapper">
       <div className="row my-4">
         <div className="col-12 text-end">
-          <Button variant="contained" color="secondary" onClick={() => navigate("/drivers/new")}>
+          <Button variant="contained" color="primary" onClick={() => navigate("/drivers/new")}>
             <AddTwoToneIcon fontSize="small" className="me-1" /> Add Driver
           </Button>
         </div>

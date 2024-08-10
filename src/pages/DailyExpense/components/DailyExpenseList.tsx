@@ -1,7 +1,9 @@
 import { DataGrid, GridCallbackDetails, GridColDef, GridPaginationModel, GridSortDirection, GridSortModel } from "@mui/x-data-grid";
-import { AppDefaults, AppMessages, DailyExpenseStatus, InternalStatusTypes, PageSizeOptions } from "../../../data/app.constant";
+import { AppDefaults, AppMessages, DailyExpenseStatus, InternalStatusTypes, PageSizeOptions, UserRoles } from "../../../data/app.constant";
 import { IDailyExpense } from "../../../interfaces/daily-expense.interface";
 import { IListResponse } from "../../../interfaces/response.interface";
+import { IUser } from "../../../interfaces/user.interface";
+import { useAppSelector } from "../../../redux/hooks";
 import { UtilService } from "../../../services/util.service";
 import ActivityStatusChip from "../../../shared/components/Common/ActivityStatusChip";
 import Currency from "../../../shared/components/Common/Currency";
@@ -18,6 +20,7 @@ interface IProps {
 }
 
 const DailyExpenseList = ({ dailyExpenses, values, onDelete, onPaginationModelChange, onSortModelChange }: IProps) => {
+  const loggedInUser: IUser = useAppSelector((store) => store.loggedInUser);
   const columns: GridColDef[] = [
     {
       field: "date",
@@ -41,7 +44,12 @@ const DailyExpenseList = ({ dailyExpenses, values, onDelete, onPaginationModelCh
       headerName: "Vehicle",
       sortable: false,
       width: 190,
-      renderCell: (params) => <ExternalLink path={`/vehicles/${params.row.vehicle?._id}`} text={params.row.vehicle?.vehicleNumber} />,
+      renderCell: (params) =>
+        loggedInUser.role === UserRoles.ADMIN ? (
+          <ExternalLink path={`/vehicles/${params.row.vehicle?._id}`} text={params.row.vehicle?.vehicleNumber} />
+        ) : (
+          <>{params.row.vehicle?.vehicleNumber}</>
+        ),
     },
     {
       field: "status",
@@ -75,6 +83,7 @@ const DailyExpenseList = ({ dailyExpenses, values, onDelete, onPaginationModelCh
           path="/daily-expenses"
           deleteConfirmMsg={AppMessages.DAILY_EXPENSE_DELETE_CONFIRM}
           hideEditBtn={params.row.status === DailyExpenseStatus.APPROVED}
+          hideDeleteBtn={params.row.status === DailyExpenseStatus.APPROVED && loggedInUser.role === UserRoles.DRIVER}
           onDelete={onDelete}
         />
       ),

@@ -298,7 +298,7 @@ const AddEditDriver = () => {
               <div className="col-md-3 col-12"></div>
               <div className="col-md-3 col-12"></div>
               <div className="col-md-3 col-12 mt-2">
-                <Button type="submit" variant="contained" color="secondary" fullWidth>
+                <Button type="submit" variant="contained" color="primary" fullWidth>
                   Submit
                 </Button>
               </div>

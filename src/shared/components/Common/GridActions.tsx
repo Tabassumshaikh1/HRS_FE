@@ -43,14 +43,14 @@ const GridActions = ({
     <>
       {!hideDetailsBtn ? (
         <BootstrapTooltip title="Details">
-          <IconButton color="primary" onClick={() => navigate(`${path}/${info._id}`)}>
+          <IconButton color="secondary" onClick={() => navigate(`${path}/${info._id}`)}>
             <VisibilityTwoToneIcon />
           </IconButton>
         </BootstrapTooltip>
       ) : null}
       {!hideEditBtn ? (
         <BootstrapTooltip title="Edit">
-          <IconButton color="secondary" onClick={() => navigate(`${path}/${info._id}/edit`)}>
+          <IconButton color="primary" onClick={() => navigate(`${path}/${info._id}/edit`)}>
             <CreateTwoToneIcon />
           </IconButton>
         </BootstrapTooltip>

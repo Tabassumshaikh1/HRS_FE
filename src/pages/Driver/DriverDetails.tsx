@@ -57,7 +57,7 @@ const DriverDetails = () => {
           <BackButton />
         </div>
         <div className="col-6 text-end">
-          <Button variant="outlined" color="secondary" startIcon={<CreateTwoToneIcon />} onClick={() => navigate(`/drivers/${id}/edit`)}>
+          <Button variant="outlined" color="primary" startIcon={<CreateTwoToneIcon />} onClick={() => navigate(`/drivers/${id}/edit`)}>
             Edit Driver
           </Button>
         </div>
@@ -101,7 +101,7 @@ const DriverDetails = () => {
                     </BootstrapTooltip>
                     <BootstrapTooltip title="Email">
                       <a href={`mailto:${driver.email}`}>
-                        <Button variant="outlined" color="secondary">
+                        <Button variant="outlined" color="primary">
                           <EmailTwoToneIcon />
                         </Button>
                       </a>

@@ -80,7 +80,7 @@ const MenuActionsBtn = ({
               navigate(`${path}/${info._id}`);
             }}
           >
-            <VisibilityTwoToneIcon color="primary" className="me-2" /> Details
+            <VisibilityTwoToneIcon color="secondary" className="me-2" /> Details
           </MenuItem>
         ) : null}
         {!hideEditBtn ? (
@@ -90,7 +90,7 @@ const MenuActionsBtn = ({
               navigate(`${path}/${info._id}/edit`);
             }}
           >
-            <CreateTwoToneIcon color="secondary" className="me-2" />
+            <CreateTwoToneIcon color="primary" className="me-2" />
             Edit
           </MenuItem>
         ) : null}

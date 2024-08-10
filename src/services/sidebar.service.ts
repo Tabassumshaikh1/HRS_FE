@@ -1,9 +1,9 @@
 import CommuteTwoToneIcon from "@mui/icons-material/CommuteTwoTone";
+import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone";
 import Diversity3TwoToneIcon from "@mui/icons-material/Diversity3TwoTone";
 import Groups2TwoToneIcon from "@mui/icons-material/Groups2TwoTone";
 import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
 import PriceChangeTwoToneIcon from "@mui/icons-material/PriceChangeTwoTone";
-import TableChartTwoToneIcon from "@mui/icons-material/TableChartTwoTone";
 import { UserRoles } from "../data/app.constant";
 import { ISidebarItem } from "../interfaces/sidebar-item.interface";
 import { IUser } from "../interfaces/user.interface";
@@ -16,7 +16,7 @@ export class SidebarService {
     {
       name: "Dashboard",
       path: "/dashboard",
-      iconComp: TableChartTwoToneIcon,
+      iconComp: DashboardTwoToneIcon,
       roles: [UserRoles.ADMIN, UserRoles.DRIVER, UserRoles.CUSTOMER],
       isConfigration: false,
     },

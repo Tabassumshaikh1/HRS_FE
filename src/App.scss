@@ -30,11 +30,11 @@
 }
 
 .text-primary {
-  color: #9c27b0 !important;
+  color: #673ab7 !important;
 }
 
 .bg-primary {
-  background-color: #9c27b0 !important;
+  background-color: #673ab7 !important;
 }
 
 .heading {
@@ -112,7 +112,7 @@ hr {
 }
 
 .submit-btn {
-  background-color: #9c27b0 !important;
+  background-color: #673ab7 !important;
   color: white !important;
 }
 
@@ -169,7 +169,7 @@ hr {
 
 .sidebar-branding {
   margin-right: 100px;
-  color: #9c27b0;
+  color: #673ab7;
 }
 
 .h-20-px {
@@ -225,7 +225,7 @@ input[type="number"] {
 .reset-filters {
   text-align: right;
   font-style: italic;
-  color: #9c27b0;
+  color: #673ab7;
   cursor: pointer;
 }
 
@@ -269,8 +269,14 @@ input[type="number"] {
   font-size: 0.8rem;
 }
 
+.drawer-items li:hover,
 .drawer-items > .active {
-  background-color: #e1bee7;
+  background-color: #ede7f6;
+  color: #673ab7;
+
+  svg {
+    color: #673ab7 !important;
+  }
 }
 
 .card-action-menu li {
@@ -313,32 +319,30 @@ input[type="number"] {
   left: 0;
   width: 100%;
   height: 100%;
+
+  ul {
+    display: none;
+  }
+  // .MuiGrid-root:nth-child(1) {
+  //   hr {
+  //     display: none;
+  //   }
+  // }
 }
 
-.date-range-picker .css-vj1n65-MuiGrid-root {
-  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
-}
+// .date-range-picker .css-vj1n65-MuiGrid-root {
+//   box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+// }
 
-.date-range-picker .css-h4y409-MuiList-root,
-.date-range-picker .css-1j13ek9-MuiGrid-root,
-.date-range-picker .css-ttghbg-MuiPaper-root:nth-child(3) {
-  display: none;
-}
+// .date-range-picker .css-h4y409-MuiList-root,
+// .date-range-picker .css-1j13ek9-MuiGrid-root,
+// .date-range-picker .css-ttghbg-MuiPaper-root:nth-child(3) {
+//   display: none;
+// }
 
-.date-range-picker .css-pad2pl-MuiGrid-root,
+// .date-range-picker .css-pad2pl-MuiGrid-root,
 #target-portal-div {
   position: absolute;
-}
-
-.date-range-picker .css-1xisk3n,
-.date-range-picker .css-bc1jo5,
-.date-range-picker .css-k0gbvj {
-  background-color: #1976d21f;
-}
-
-.date-range-picker .css-xpa0r5-MuiButtonBase-root-MuiIconButton-root,
-.date-range-picker .css-xpa0r5-MuiButtonBase-root-MuiIconButton-root:hover {
-  background-color: #1976d2;
 }
 
 .datepicker-error label,

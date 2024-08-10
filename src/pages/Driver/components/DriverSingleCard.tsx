@@ -60,7 +60,7 @@ const DriverSingleCard = ({ driver, onDelete }: IProps) => {
           </BootstrapTooltip>
           <BootstrapTooltip title="Email">
             <a href={`mailto:${driver.email}`}>
-              <EmailTwoToneIcon color="secondary" />
+              <EmailTwoToneIcon color="primary" />
             </a>
           </BootstrapTooltip>
         </div>

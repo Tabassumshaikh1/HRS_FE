@@ -1,9 +1,10 @@
 import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import { FormikErrors } from "formik";
-import { DailyExpenseStatus, DateRangeDurationTypes } from "../../../data/app.constant";
+import { DailyExpenseStatus, DateRangeDurationTypes, UserRoles } from "../../../data/app.constant";
 import { IUser } from "../../../interfaces/user.interface";
 import { IVehicle } from "../../../interfaces/vehicle.interface";
+import { useAppSelector } from "../../../redux/hooks";
 import { UtilService } from "../../../services/util.service";
 import DateRangePickerComp from "../../../shared/components/Common/DateRangePickerComp";
 
@@ -27,6 +28,7 @@ const DailyExpenseFilters = ({
   setFieldValue,
 }: IProps) => {
   const utilSvc = new UtilService();
+  const loggedInUser: IUser = useAppSelector((store) => store.loggedInUser);
 
   const handleDurationChange = async (selectedRange: `${DateRangeDurationTypes}`) => {
     const fromDate: Date = utilSvc.getDateRangeStartDate(selectedRange);
@@ -40,6 +42,7 @@ const DailyExpenseFilters = ({
         <div className="col-12">
           <Chip
             className="me-2 mb-4"
+            color={utilSvc.isSelectedDateRangeFromChip(values, DateRangeDurationTypes.THIS_YEAR) ? "primary" : "default"}
             label={DateRangeDurationTypes.THIS_YEAR}
             onClick={() => {
               handleDurationChange(DateRangeDurationTypes.THIS_YEAR);
@@ -47,6 +50,7 @@ const DailyExpenseFilters = ({
           />
           <Chip
             className="me-2 mb-4"
+            color={utilSvc.isSelectedDateRangeFromChip(values, DateRangeDurationTypes.THIS_MONTH) ? "primary" : "default"}
             label={DateRangeDurationTypes.THIS_MONTH}
             onClick={() => {
               handleDurationChange(DateRangeDurationTypes.THIS_MONTH);
@@ -54,6 +58,7 @@ const DailyExpenseFilters = ({
           />
           <Chip
             className="me-2 mb-4"
+            color={utilSvc.isSelectedDateRangeFromChip(values, DateRangeDurationTypes.LAST_1_MONTH) ? "primary" : "default"}
             label={DateRangeDurationTypes.LAST_1_MONTH}
             onClick={() => {
               handleDurationChange(DateRangeDurationTypes.LAST_1_MONTH);
@@ -61,6 +66,7 @@ const DailyExpenseFilters = ({
           />
           <Chip
             className="me-2 mb-4"
+            color={utilSvc.isSelectedDateRangeFromChip(values, DateRangeDurationTypes.LAST_3_MONTHS) ? "primary" : "default"}
             label={DateRangeDurationTypes.LAST_3_MONTHS}
             onClick={() => {
               handleDurationChange(DateRangeDurationTypes.LAST_3_MONTHS);
@@ -68,6 +74,7 @@ const DailyExpenseFilters = ({
           />
           <Chip
             className="me-2 mb-4"
+            color={utilSvc.isSelectedDateRangeFromChip(values, DateRangeDurationTypes.LAST_6_MONTHS) ? "primary" : "default"}
             label={DateRangeDurationTypes.LAST_6_MONTHS}
             onClick={() => {
               handleDurationChange(DateRangeDurationTypes.LAST_6_MONTHS);
@@ -75,6 +82,7 @@ const DailyExpenseFilters = ({
           />
           <Chip
             className="me-2 mb-4"
+            color={utilSvc.isSelectedDateRangeFromChip(values, DateRangeDurationTypes.LAST_1_YEAR) ? "primary" : "default"}
             label={DateRangeDurationTypes.LAST_1_YEAR}
             onClick={() => {
               handleDurationChange(DateRangeDurationTypes.LAST_1_YEAR);
@@ -83,10 +91,10 @@ const DailyExpenseFilters = ({
         </div>
       ) : null}
 
-      <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+      <div className={`${loggedInUser.role === UserRoles.ADMIN ? "col-lg-3" : "col-lg-4"} col-md-4 col-sm-6 col-12 mb-3`}>
         <DateRangePickerComp values={values} setFieldValue={setFieldValue} maxDate={new Date()} />
       </div>
-      <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+      <div className={`${loggedInUser.role === UserRoles.ADMIN ? "col-lg-3" : "col-lg-4"} col-md-4 col-sm-6 col-12 mb-3`}>
         <FormControl fullWidth size="small">
           <InputLabel id="demo-select-small-label">Status</InputLabel>
           <Select
@@ -110,7 +118,7 @@ const DailyExpenseFilters = ({
           </Select>
         </FormControl>
       </div>
-      <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+      <div className={`${loggedInUser.role === UserRoles.ADMIN ? "col-lg-3" : "col-lg-4"} col-md-4 col-sm-6 col-12 mb-3`}>
         <FormControl fullWidth size="small">
           <InputLabel id="demo-select-small-label">Vehicle</InputLabel>
           <Select
@@ -136,32 +144,35 @@ const DailyExpenseFilters = ({
           </Select>
         </FormControl>
       </div>
-      <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
-        <FormControl fullWidth size="small">
-          <InputLabel id="demo-select-small-label">Driver</InputLabel>
-          <Select
-            name="createdBy"
-            labelId="demo-select-small-label"
-            id="demo-select-small"
-            value={values.createdBy}
-            label="Driver"
-            onChange={async (e) => {
-              setFieldValue("createdBy", e.target.value);
-              await setFieldValue("page", 0);
-              await setFieldValue("limit", values.limit);
-            }}
-          >
-            <MenuItem value="">
-              <em>All</em>
-            </MenuItem>
-            {drivers.map((driver) => (
-              <MenuItem key={driver._id} value={driver._id}>
-                {driver.name}
+      {loggedInUser.role === UserRoles.ADMIN ? (
+        <div className={`${loggedInUser.role === UserRoles.ADMIN ? "col-lg-3" : "col-lg-4"} col-md-4 col-sm-6 col-12 mb-3`}>
+          <FormControl fullWidth size="small">
+            <InputLabel id="demo-select-small-label">Driver</InputLabel>
+            <Select
+              name="createdBy"
+              labelId="demo-select-small-label"
+              id="demo-select-small"
+              value={values.createdBy}
+              label="Driver"
+              onChange={async (e) => {
+                setFieldValue("createdBy", e.target.value);
+                await setFieldValue("page", 0);
+                await setFieldValue("limit", values.limit);
+              }}
+            >
+              <MenuItem value="">
+                <em>All</em>
               </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </div>
+              {drivers.map((driver) => (
+                <MenuItem key={driver._id} value={driver._id}>
+                  {driver.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+      ) : null}
+
       {!hideResetBtn ? (
         <div className="col-12 text-end mt-2">
           <Button
