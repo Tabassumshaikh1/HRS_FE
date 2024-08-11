@@ -2,23 +2,27 @@ import CreateTwoToneIcon from "@mui/icons-material/CreateTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone";
 import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
+import WhereToVoteTwoToneIcon from "@mui/icons-material/WhereToVoteTwoTone";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppMessages } from "../../../data/app.constant";
+import { IAddress } from "../../../interfaces/address.interface";
+import { IDailyExpense } from "../../../interfaces/daily-expense.interface";
 import { IUser } from "../../../interfaces/user.interface";
 import { IVehicle } from "../../../interfaces/vehicle.interface";
 import ConfirmDialog from "../../../shared/components/ConfirmDialog";
 import BootstrapTooltip from "../../../shared/components/Styled/BootstrapTooltip";
-import { IDailyExpense } from "../../../interfaces/daily-expense.interface";
 
 interface IProps {
-  info: IUser | IVehicle | IDailyExpense;
+  info: IUser | IVehicle | IDailyExpense | IAddress;
   path: string;
   deleteConfirmMsg?: string;
   hideDetailsBtn?: boolean;
   hideEditBtn?: boolean;
   hideDeleteBtn?: boolean;
+  showMakePrimaryBtn?: boolean;
+  onMakePrimary?: (id: string) => void;
   onDelete?: (id: string) => void;
 }
 
@@ -29,6 +33,8 @@ const MenuActionsBtn = ({
   hideDetailsBtn = false,
   hideEditBtn = false,
   hideDeleteBtn = false,
+  showMakePrimaryBtn = false,
+  onMakePrimary = (id) => {},
   onDelete = (id) => {},
 }: IProps) => {
   const navigate = useNavigate();
@@ -102,6 +108,18 @@ const MenuActionsBtn = ({
             }}
           >
             <DeleteTwoToneIcon color="error" className="me-2" /> Delete
+          </MenuItem>
+        ) : null}
+        {showMakePrimaryBtn ? (
+          <MenuItem
+            onClick={() => {
+              handleMenuClose();
+              setTimeout(() => {
+                onMakePrimary(info._id as string);
+              }, 500);
+            }}
+          >
+            <WhereToVoteTwoToneIcon color="success" className="me-2" /> Make Primary
           </MenuItem>
         ) : null}
       </Menu>

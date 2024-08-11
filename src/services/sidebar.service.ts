@@ -2,6 +2,7 @@ import CommuteTwoToneIcon from "@mui/icons-material/CommuteTwoTone";
 import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone";
 import Diversity3TwoToneIcon from "@mui/icons-material/Diversity3TwoTone";
 import Groups2TwoToneIcon from "@mui/icons-material/Groups2TwoTone";
+import HomeWorkTwoToneIcon from "@mui/icons-material/HomeWorkTwoTone";
 import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
 import PriceChangeTwoToneIcon from "@mui/icons-material/PriceChangeTwoTone";
 import { UserRoles } from "../data/app.constant";
@@ -54,6 +55,13 @@ export class SidebarService {
       iconComp: CommuteTwoToneIcon,
       roles: [UserRoles.ADMIN],
       isConfigration: true,
+    },
+    {
+      name: "Address",
+      path: "/address",
+      iconComp: HomeWorkTwoToneIcon,
+      roles: [UserRoles.CUSTOMER],
+      isConfigration: false,
     },
   ];
 

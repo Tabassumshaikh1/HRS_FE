@@ -29,6 +29,11 @@ export enum AppMessages {
   DAILY_EXPENSE_UPDATED = "Daily expense update successfully",
   DAILY_EXPENSE_DELETE_CONFIRM = "Do you want to delete this daily expense?",
   DAILY_EXPENSE_DELETED = "Daily expense deleted successfully",
+  ADDRESS_ADDED = "Address added successfully",
+  ADDRESS_UPDATED = "Address update successfully",
+  ADDRESS_DELETE_CONFIRM = "Do you want to delete this address?",
+  ADDRESS_DELETED = "Address deleted successfully",
+  ADDRESS_MADE_PRIMARY = "Address made primary successfully",
 }
 
 export enum SortBy {
@@ -63,6 +68,7 @@ export const API_URLS = {
   VEHICLE_TYPES: `${API_HOST}/vehicle-type`,
   VEHICLES: `${API_HOST}/vehicles`,
   DAILY_EXPENSE: `${API_HOST}/daily-expense`,
+  ADDRESS: `${API_HOST}/address`,
 };
 
 export enum ImageMimeType {

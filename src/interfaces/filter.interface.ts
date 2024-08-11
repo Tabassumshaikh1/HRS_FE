@@ -32,3 +32,5 @@ export interface IDailyExpenseFilters extends CommonFilters {
   toDate?: string;
   createdBy?: string;
 }
+
+export interface IAddressFilters extends CommonFilters {}

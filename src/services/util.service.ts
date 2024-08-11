@@ -1,6 +1,7 @@
 import moment from "moment";
 import XLSX from "xlsx-js-style";
 import { CurrencyCode, DateFormats, DateRangeDurationTypes } from "../data/app.constant";
+import { IAddress, IGeoAddress } from "../interfaces/address.interface";
 import { IDailyExpense, IDailyExpenseAnalytics } from "../interfaces/daily-expense.interface";
 
 export class UtilService {
@@ -209,5 +210,31 @@ export class UtilService {
     }
 
     return false;
+  }
+
+  getFullAddress(address: IAddress | IGeoAddress) {
+    if (!address) {
+      return "";
+    }
+    let fullAddress: string[] = [];
+    if (address.flatNo) {
+      fullAddress.push(address.flatNo);
+    }
+    if (address.streetName) {
+      fullAddress.push(address.streetName);
+    }
+    if (address.area) {
+      fullAddress.push(address.area);
+    }
+    if (address.city) {
+      fullAddress.push(address.city);
+    }
+    if (address.state) {
+      fullAddress.push(address.state);
+    }
+    if (address.pincode) {
+      fullAddress.push(`${address.pincode}`);
+    }
+    return fullAddress.join(", ") || "";
   }
 }

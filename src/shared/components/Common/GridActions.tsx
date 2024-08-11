@@ -1,14 +1,15 @@
 import CreateTwoToneIcon from "@mui/icons-material/CreateTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
+import WhereToVoteTwoToneIcon from "@mui/icons-material/WhereToVoteTwoTone";
 import { IconButton } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BootstrapTooltip from "../Styled/BootstrapTooltip";
-import ConfirmDialog from "../ConfirmDialog";
 import { AppMessages } from "../../../data/app.constant";
 import { IUser } from "../../../interfaces/user.interface";
 import { IVehicle } from "../../../interfaces/vehicle.interface";
+import ConfirmDialog from "../ConfirmDialog";
+import BootstrapTooltip from "../Styled/BootstrapTooltip";
 
 interface IProps {
   info: IUser | IVehicle;
@@ -17,6 +18,8 @@ interface IProps {
   hideDetailsBtn?: boolean;
   hideEditBtn?: boolean;
   hideDeleteBtn?: boolean;
+  showMakePrimaryBtn?: boolean;
+  onMakePrimary?: (id: string) => void;
   onDelete?: (id: string) => void;
 }
 
@@ -27,6 +30,8 @@ const GridActions = ({
   hideDetailsBtn = false,
   hideEditBtn = false,
   hideDeleteBtn = false,
+  showMakePrimaryBtn = false,
+  onMakePrimary = (id) => {},
   onDelete = (id) => {},
 }: IProps) => {
   const navigate = useNavigate();
@@ -63,6 +68,13 @@ const GridActions = ({
         </BootstrapTooltip>
       ) : null}
       {showConfirm ? <ConfirmDialog message={deleteConfirmMsg} onClose={onConfirmDialogClose} /> : null}
+      {showMakePrimaryBtn ? (
+        <BootstrapTooltip title="Make Primary">
+          <IconButton color="success" onClick={() => onMakePrimary(info._id as string)}>
+            <WhereToVoteTwoToneIcon />
+          </IconButton>
+        </BootstrapTooltip>
+      ) : null}
     </>
   );
 };

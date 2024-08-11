@@ -102,10 +102,14 @@ const DailyExpenseDetails = () => {
                 <p className="detail-label">Vehicle</p>
                 <p className="detail-value">
                   {dailyExpense.vehicle ? (
-                    <ExternalLink path={`/vehicles/${dailyExpense.vehicle?._id}`} text={dailyExpense.vehicle?.vehicleNumber} />
-                  ) : (
-                    ""
-                  )}
+                    <>
+                      {loggedInUser.role === UserRoles.ADMIN ? (
+                        <ExternalLink path={`/vehicles/${dailyExpense.vehicle?._id}`} text={dailyExpense.vehicle?.vehicleNumber} />
+                      ) : (
+                        <>{dailyExpense.vehicle?.vehicleNumber}</>
+                      )}
+                    </>
+                  ) : null}
                 </p>
               </div>
               <div className="col-lg-3 col-md-4 col-6 mb-4">
