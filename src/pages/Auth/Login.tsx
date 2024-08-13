@@ -90,6 +90,8 @@ const Login = () => {
           <h2 className="text-center text-primary mt-2 heading">Hi, Welcome Back</h2>
           <p className="text-center --bs-secondary-color ">Enter your credentials to continue</p>
           <Button
+            variant="outlined"
+            color="primary"
             startIcon={
               <img
                 alt="google-logo"

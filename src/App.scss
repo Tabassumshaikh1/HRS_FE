@@ -87,13 +87,10 @@ hr {
 
 .google-signIn-btn {
   margin-top: 8px !important;
-  border: 0.3px solid rgb(233, 230, 230) !important;
+  border-width: 1px !important;
   color: rgb(101, 98, 98) !important;
   font-weight: 650 !important;
   background-color: rgb(248, 246, 246) !important;
-}
-.google-signIn-btn:hover {
-  border: 0.8px solid rgb(39, 157, 236) !important;
 }
 
 .divide-line {
@@ -319,15 +316,35 @@ input[type="number"] {
   left: 0;
   width: 100%;
   height: 100%;
-
-  ul {
-    display: none;
+  > div {
+    > div {
+      > .MuiGrid-root {
+        &:first-child {
+          ul {
+            display: none;
+          }
+        }
+      }
+    }
   }
-  // .MuiGrid-root:nth-child(1) {
-  //   hr {
-  //     display: none;
-  //   }
-  // }
+
+  > div {
+    > div {
+      > div {
+        > .MuiGrid-root {
+          &:first-child {
+            display: none;
+          }
+
+          &:last-child {
+            @media screen and (max-width: 768px) {
+              flex-direction: column;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 // .date-range-picker .css-vj1n65-MuiGrid-root {
