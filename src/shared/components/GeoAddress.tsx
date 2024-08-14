@@ -52,7 +52,7 @@ const GeoAddress = ({ address, geoAddressChange }: IProps) => {
   }, [address]);
 
   const { ref } = usePlacesWidget({
-    apiKey: "AIzaSyCaKbVhcX_22R_pRKDYuNA7vox-PtGaDkI",
+    apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     options: {
       componentRestrictions: { country: "in" },
       types: ["address"],

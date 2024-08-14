@@ -1,4 +1,4 @@
-import { AppMessages } from "../../../data/app.constant";
+import { AppDefaults, AppMessages } from "../../../data/app.constant";
 import { IVehicle } from "../../../interfaces/vehicle.interface";
 import { UtilService } from "../../../services/util.service";
 import ActivityStatusChip from "../../../shared/components/Common/ActivityStatusChip";
@@ -13,7 +13,7 @@ interface IProps {
 
 const VehicleSingleCard = ({ vehicle, onDelete }: IProps) => {
   return (
-    <GridItem>
+    <GridItem style={{ backgroundColor: AppDefaults.DEFAULT_CARD_COLOR }}>
       <VehicleSlider vehicle={vehicle} />
       <div className="row pb-4">
         <div className="col-6 text-start ps-4 mt-4">
