@@ -86,14 +86,14 @@ const CustomerDetails = () => {
                     </BootstrapTooltip>
                     <BootstrapTooltip title="Message">
                       <a href={`sms:${customer.contactNumber}`} className="me-3">
-                        <Button variant="outlined" color="info">
+                        <Button variant="outlined" color="secondary">
                           <ChatBubbleTwoToneIcon />
                         </Button>
                       </a>
                     </BootstrapTooltip>
                     <BootstrapTooltip title="Email">
                       <a href={`mailto:${customer.email}`}>
-                        <Button variant="outlined" color="primary">
+                        <Button variant="outlined" color="error">
                           <EmailTwoToneIcon />
                         </Button>
                       </a>

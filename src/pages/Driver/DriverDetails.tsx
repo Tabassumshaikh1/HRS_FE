@@ -101,7 +101,7 @@ const DriverDetails = () => {
                     </BootstrapTooltip>
                     <BootstrapTooltip title="Email">
                       <a href={`mailto:${driver.email}`}>
-                        <Button variant="outlined" color="primary">
+                        <Button variant="outlined" color="error">
                           <EmailTwoToneIcon />
                         </Button>
                       </a>

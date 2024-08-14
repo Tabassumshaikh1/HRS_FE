@@ -55,7 +55,7 @@ const PerMonthExpenseList = ({ dailyExpenseAnalytics }: IProps) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="row">
-                      <div className="col-md-4 col-4">
+                      <div className="col-md-4 col-3">
                         <p className="card-detail-label">Fuel</p>
                         <p className="card-detail-value">
                           <Currency value={perMonthExpense.expenseOnFuel} />
@@ -67,7 +67,7 @@ const PerMonthExpenseList = ({ dailyExpenseAnalytics }: IProps) => {
                           <Currency value={perMonthExpense.challan} />
                         </p>
                       </div>
-                      <div className="col-md-4 col-5">
+                      <div className="col-md-4 col-6">
                         <p className="card-detail-label">Other Expenses</p>
                         <p className="card-detail-value">
                           <Currency value={perMonthExpense.otherExpenses} />
