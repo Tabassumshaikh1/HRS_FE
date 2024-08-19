@@ -147,6 +147,12 @@ export function RouterElement() {
         ? LazyLoadRoutes("Address", "AddEditAddress")
         : AuthenticateRoute("/login"),
     },
+    {
+      path: "settings",
+      element: authSvc.canActivateRoute(RouteType.PRIVATE, [UserRoles.ADMIN])
+        ? LazyLoadRoutes("Setting", "Settings")
+        : AuthenticateRoute("/login"),
+    },
   ];
 
   const routing = useRoutes(routes);

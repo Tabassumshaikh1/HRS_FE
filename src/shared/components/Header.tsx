@@ -16,7 +16,7 @@ import Typography from "@mui/material/Typography";
 import { alpha, styled } from "@mui/material/styles";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { AppMessages } from "../../data/app.constant";
+import { AppMessages, UserRoles } from "../../data/app.constant";
 import { AppNotificationService } from "../../services/app-notification.service";
 import { AuthService } from "../../services/auth.service";
 import { UtilService } from "../../services/util.service";
@@ -72,7 +72,6 @@ export default function Header() {
   const loggedInUser: IUser = useAppSelector((store) => store.loggedInUser);
   const navigate = useNavigate();
   const authSvc = new AuthService();
-  const utilSvc = new UtilService();
   const notifySvc = new AppNotificationService();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -127,9 +126,18 @@ export default function Header() {
       <MenuItem onClick={handleMenuClose}>
         <Avatar className="me-2 profile-avatar" /> Profile
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-        <Settings className="me-2" /> Settings
-      </MenuItem>
+      {loggedInUser.role === UserRoles.ADMIN && (
+        <MenuItem
+          onClick={() => {
+            handleMenuClose();
+            setTimeout(() => {
+              navigate("/settings");
+            }, 500);
+          }}
+        >
+          <Settings className="me-2" color="action" /> Project Settings
+        </MenuItem>
+      )}
       <Divider />
       <MenuItem onClick={logout} className="text-danger">
         <Logout className="me-2" /> Logout
