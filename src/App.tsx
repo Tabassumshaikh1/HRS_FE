@@ -1,11 +1,22 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { Button } from "@mui/material";
-import Login from "./pages/Login";
+import { ThemeProvider } from "@emotion/react";
+import "cropperjs/dist/cropper.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.scss";
+import { useAppSelector } from "./redux/hooks";
+import { RouterElement } from "./routes/Routes";
+import Loader from "./shared/components/Loader";
+import theme from "./utils/theme.utils";
 
-function App() {
-  return <Login />;
-}
+const App = () => {
+  const showLoader = useAppSelector((store) => store.loader);
+  return (
+    <ThemeProvider theme={theme}>
+      <RouterElement />
+      <ToastContainer />
+      {showLoader ? <Loader /> : null}
+    </ThemeProvider>
+  );
+};
 
 export default App;
